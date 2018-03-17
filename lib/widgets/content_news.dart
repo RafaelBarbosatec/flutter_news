@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'notice.dart';
 
 class ContentNewsPage extends StatefulWidget{
 
@@ -19,10 +20,15 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
   @override
   void initState() {
-    _news.add("oi");
-    _news.add("oi");
-    _news.add("oi");
-    _news.add("oi");
+    _news.add(new Notice(
+      "https://pbs.twimg.com/profile_images/760249570085314560/yCrkrbl3_400x400.jpg","Titulo","25 de Abril de 2018","descrição"
+    ));
+    _news.add(new Notice(
+        "https://pbs.twimg.com/profile_images/760249570085314560/yCrkrbl3_400x400.jpg","Titulo","25 de Abril de 2018","descrição"
+    ));
+    _news.add(new Notice(
+        "https://pbs.twimg.com/profile_images/760249570085314560/yCrkrbl3_400x400.jpg","Titulo","25 de Abril de 2018","descridescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãoção"
+    ));
 
     super.initState();
   }
@@ -50,8 +56,9 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
           //final Map notice = _news[index];
 
-          return _getListItemWidget(_news[index]);
-        });
+          return _news[index];
+        }
+        );
 
     RefreshIndicator refreshIndicator = new RefreshIndicator(
         onRefresh: onRefresh,
@@ -59,8 +66,27 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
     );
 
     return new Flexible(
-        child: refreshIndicator
+        child: new Stack(
+          children: <Widget>[
+            refreshIndicator,
+            _getProgress()
+          ],
+        )
     );
+
+  }
+
+  Widget _getProgress(){
+
+    if(carregando){
+      return new Container(
+        child: new Center(
+          child: new CircularProgressIndicator(),
+        ),
+      );
+    }else{
+      return new Container();
+    }
 
   }
 
@@ -68,16 +94,14 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
   }
 
-  Widget _getListItemWidget(notice){
-
-    return new Text(notice);
-  }
-
   loadCategory(category){
     print(category);
     setState((){
       current_category = category;
-      _news.add(current_category);
+      _news.add(new Notice(
+          "https://pbs.twimg.com/profile_images/760249570085314560/yCrkrbl3_400x400.jpg","Titulo","25 de Abril de 2018","descrição"
+      ));
+      carregando = !carregando;
       }
     );
   }

@@ -30,9 +30,15 @@ class _HomePageState extends State<HomePage> {
     if(index != widget._current_tab) {
 
       widget._current_tab = index;
-      print( widget._current_tab);
 
-      content.state.loadCategory("artes:${widget._current_tab}");
+      var cat = '';
+      switch(widget._current_tab){
+        case 0: cat = '';break;
+        case 1: cat = 'technology';break;
+        case 2: cat = 'sports';break;
+        case 3: cat = 'entertainment';break;
+      }
+      content.state.loadCategory(cat);
 
     }
 

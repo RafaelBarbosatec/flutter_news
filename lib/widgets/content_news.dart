@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'notice.dart';
+import '../conection/api.dart';
 
 class ContentNewsPage extends StatefulWidget{
 
@@ -18,17 +19,12 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
   bool carregando = false;
 
+  var repository = new NewsApi();
+
   @override
   void initState() {
-    _news.add(new Notice(
-      "https://pbs.twimg.com/profile_images/760249570085314560/yCrkrbl3_400x400.jpg","Titulo","25 de Abril de 2018","descrição"
-    ));
-    _news.add(new Notice(
-        "https://pbs.twimg.com/profile_images/760249570085314560/yCrkrbl3_400x400.jpg","Titulo","25 de Abril de 2018","descrição"
-    ));
-    _news.add(new Notice(
-        "https://pbs.twimg.com/profile_images/760249570085314560/yCrkrbl3_400x400.jpg","Titulo","25 de Abril de 2018","descridescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãodescriçãoção"
-    ));
+
+    loadCategory(current_category);
 
     super.initState();
   }
@@ -91,17 +87,35 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
   }
 
   onRefresh() async{
-
+    loadCategory(current_category);
   }
 
-  loadCategory(category){
-    print(category);
+  loadCategory(category) async{
+
     setState((){
+
       current_category = category;
-      _news.add(new Notice(
-          "https://pbs.twimg.com/profile_images/760249570085314560/yCrkrbl3_400x400.jpg","Titulo","25 de Abril de 2018","descrição"
-      ));
-      carregando = !carregando;
+      _news.clear();
+      carregando = true;
+    });
+    Map result = await repository.loadNews('br', category);
+
+    setState((){
+
+
+      result['articles'].forEach((item){
+
+        _news.add(new Notice(
+            item['urlToImage'] == null ? '':item['urlToImage'],
+            item['title'] == null ? '':item['title'],
+            item['publishedAt'] == null ? '':item['publishedAt'],
+            item['description'] == null ? '':item['description']
+        ));
+
+      });
+
+      carregando = false;
+
       }
     );
   }

@@ -7,16 +7,22 @@ class Notice extends StatelessWidget{
   var _date;
   var _description;
 
+
+
   Notice(this._img,this._tittle,this._date,this._description);
 
+  BuildContext _context;
 
   @override
   Widget build(BuildContext context) {
+    this._context = context;
     return new GestureDetector(
       onTap: _handleTapUp,
       child: new Container(
-        margin: const EdgeInsets.only(top: 5.0),
-        child: new Card(
+        margin: const EdgeInsets.only(left: 10.0, right: 10.0,top: 10.0),
+        child: new Material(
+          borderRadius: new BorderRadius.circular(6.0),
+          elevation: 2.0,
           child: _getListTile(),
         ),
       ),
@@ -26,7 +32,7 @@ class Notice extends StatelessWidget{
   Widget _getListTile(){
 
     return new Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.zero,
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -41,19 +47,32 @@ class Notice extends StatelessWidget{
 
   _handleTapUp(){
 
-    print(_description);
+    Navigator.of(_context).push(
+      new MaterialPageRoute(builder: (BuildContext context) {
+
+        return new Scaffold(
+          appBar: new AppBar(
+            title: new Text(_tittle),
+          )
+        );
+      }
+      )
+    );
 
   }
 
   Widget _getColumText(tittle,date, description){
 
     return new Expanded(
-        child: new Column(
-          crossAxisAlignment:CrossAxisAlignment.start,
-          children: <Widget>[
-            _getTittleWidget(_tittle),
-            _getDateWidget(_date),
-            _getDescriptionWidget(_description)],
+        child: new Container(
+          margin: new EdgeInsets.all(10.0),
+          child: new Column(
+            crossAxisAlignment:CrossAxisAlignment.start,
+            children: <Widget>[
+              _getTittleWidget(_tittle),
+              _getDateWidget(_date),
+              _getDescriptionWidget(_description)],
+          ),
         )
     );
   }
@@ -62,12 +81,11 @@ class Notice extends StatelessWidget{
   Widget _getImgWidget(String url){
 
     return new Container(
-      width: 80.0,
-      height: 80.0,
-      margin: new EdgeInsets.only(right: 15.0),
+      width: 90.0,
+      height: 90.0,
       child: new Material(
         elevation: 4.0,
-        borderRadius: new BorderRadius.circular(8.0),
+        borderRadius: new BorderRadius.only(topLeft: const Radius.circular(6.0),bottomLeft: const Radius.circular(6.0)),
         child: _getImageNetwork(url),
       ),
     );
@@ -76,7 +94,7 @@ class Notice extends StatelessWidget{
   Widget _getImageNetwork(url){
 
     try{
-      return new Image.network(url);
+      return new Image.network(url,fit: BoxFit.cover,);
 
     }catch(e){
       return new Text("EMPTY");
@@ -87,6 +105,7 @@ class Notice extends StatelessWidget{
   Text _getTittleWidget(String curencyName){
     return new Text(
       curencyName,
+      maxLines: 1,
       style: new TextStyle(fontWeight: FontWeight.bold),
     );
   }
@@ -94,13 +113,13 @@ class Notice extends StatelessWidget{
   Widget _getDescriptionWidget(String description){
     return new Container(
       margin: new EdgeInsets.only(top: 5.0),
-      child: new Text(description,maxLines: 3,),
+      child: new Text(description,maxLines: 2,),
     );
   }
 
   Widget _getDateWidget(String date){
     return new Text(date,
-    style: new TextStyle(color: Colors.grey),);
+    style: new TextStyle(color: Colors.grey,fontSize: 10.0),);
   }
 
 }

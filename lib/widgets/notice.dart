@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'detail.dart';
 
 class Notice extends StatelessWidget{
 
@@ -6,24 +7,27 @@ class Notice extends StatelessWidget{
   var _tittle;
   var _date;
   var _description;
+  final AnimationController animationController;
 
-
-
-  Notice(this._img,this._tittle,this._date,this._description);
+  Notice(this._img,this._tittle,this._date,this._description, this.animationController);
 
   BuildContext _context;
+
 
   @override
   Widget build(BuildContext context) {
     this._context = context;
-    return new GestureDetector(
-      onTap: _handleTapUp,
-      child: new Container(
-        margin: const EdgeInsets.only(left: 10.0, right: 10.0,top: 10.0),
-        child: new Material(
-          borderRadius: new BorderRadius.circular(6.0),
-          elevation: 2.0,
-          child: _getListTile(),
+    return new FadeTransition(
+      opacity: animationController,
+      child: new GestureDetector(
+        onTap: _handleTapUp,
+        child: new Container(
+          margin: const EdgeInsets.only(left: 10.0, right: 10.0,top: 10.0),
+          child: new Material(
+            borderRadius: new BorderRadius.circular(6.0),
+            elevation: 2.0,
+            child: _getListTile(),
+          ),
         ),
       ),
     );
@@ -49,12 +53,7 @@ class Notice extends StatelessWidget{
 
     Navigator.of(_context).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-
-        return new Scaffold(
-          appBar: new AppBar(
-            title: new Text(_tittle),
-          )
-        );
+        return new DetailPage(_img,_tittle,_date,_description);
       }
       )
     );

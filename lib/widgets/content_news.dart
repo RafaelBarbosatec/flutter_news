@@ -11,14 +11,11 @@ class ContentNewsPage extends StatefulWidget{
 
 }
 
-class _ContentNewsPageState extends State<ContentNewsPage>{
+class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderStateMixin{
 
   var current_category = '';
-
   List _news = new List();
-
   bool carregando = false;
-
   var repository = new NewsApi();
 
   @override
@@ -105,12 +102,18 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
       result['articles'].forEach((item){
 
-        _news.add(new Notice(
+        var notice = new Notice(
             item['urlToImage'] == null ? '':item['urlToImage'],
             item['title'] == null ? '':item['title'],
             item['publishedAt'] == null ? '':item['publishedAt'],
-            item['description'] == null ? '':item['description']
-        ));
+            item['description'] == null ? '':item['description'],
+            new AnimationController(
+              duration: new Duration(milliseconds: 600),
+              vsync: this,
+            )
+        );
+        _news.add(notice);
+        notice.animationController.forward();
 
       });
 
@@ -118,6 +121,13 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
       }
     );
+  }
+
+  @override
+  void dispose() {
+    for (Notice n in _news)
+      n.animationController.dispose();
+    super.dispose();
   }
 
 }

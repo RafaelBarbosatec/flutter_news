@@ -35,8 +35,8 @@ class Notice extends StatelessWidget{
 
   Widget _getListTile(){
 
-    return new Padding(
-      padding: EdgeInsets.zero,
+    return new Container(
+      height: 95.0,
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -80,10 +80,9 @@ class Notice extends StatelessWidget{
   Widget _getImgWidget(String url){
 
     return new Container(
-      width: 90.0,
-      height: 90.0,
+      width: 95.0,
+      height: 95.0,
       child: new Material(
-        elevation: 4.0,
         borderRadius: new BorderRadius.only(topLeft: const Radius.circular(6.0),bottomLeft: const Radius.circular(6.0)),
         child: _getImageNetwork(url),
       ),

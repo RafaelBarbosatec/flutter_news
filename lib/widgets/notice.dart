@@ -92,10 +92,18 @@ class Notice extends StatelessWidget{
   Widget _getImageNetwork(url){
 
     try{
-      return new Image.network(url,fit: BoxFit.cover,);
+      if(url != '') {
+
+        return new FadeInImage.assetNetwork(
+          placeholder: 'assets/place_holder.jpg',
+          image: url,
+          fit: BoxFit.cover,);
+      }else{
+        return new Image.asset('assets/place_holder.jpg');
+      }
 
     }catch(e){
-      return new Text("EMPTY");
+      return new Image.asset('assets/place_holder.jpg');
     }
 
   }

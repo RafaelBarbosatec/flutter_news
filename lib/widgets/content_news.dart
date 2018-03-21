@@ -13,15 +13,17 @@ class ContentNewsPage extends StatefulWidget{
 
 class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderStateMixin{
 
-  var current_category = '';
+  var current_category = 'geral';
   List _news = new List();
-  bool carregando = false;
+  var carregando = false;
   var repository = new NewsApi();
+  var page = 0;
+  var pages = 1;
 
   @override
   void initState() {
 
-    loadCategory(current_category);
+    loadCategory(current_category,page);
 
     super.initState();
   }
@@ -29,7 +31,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
   @override
   Widget build(BuildContext context) {
 
-    print(current_category);
+    //print(current_category);
 
     return new Container(
       child:new Column(
@@ -48,6 +50,11 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
         itemBuilder: (context, index){
 
           //final Map notice = _news[index];
+          //print(index);
+
+          if(index >= _news.length -4 && !carregando){
+            loadCategory(current_category, page);
+          }
 
           return _news[index];
         }
@@ -84,43 +91,60 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
   }
 
   onRefresh() async{
-    loadCategory(current_category);
+    loadCategory(current_category,page);
   }
 
-  loadCategory(category) async{
+  loadCategory(category,page) async{
 
-    setState((){
+    if(page < pages-1 || page == 0) {
 
-      current_category = category;
-      _news.clear();
-      carregando = true;
-    });
-    Map result = await repository.loadNews('br', category);
+      setState((){
 
-    setState((){
+        current_category = category;
 
+        if(page == 0) {
+          _news.clear();
+        }
 
-      result['articles'].forEach((item){
-
-        var notice = new Notice(
-            item['urlToImage'] == null ? '':item['urlToImage'],
-            item['title'] == null ? '':item['title'],
-            item['publishedAt'] == null ? '':item['publishedAt'],
-            item['description'] == null ? '':item['description'],
-            new AnimationController(
-              duration: new Duration(milliseconds: 600),
-              vsync: this,
-            )
-        );
-        _news.add(notice);
-        notice.animationController.forward();
+        carregando = true;
 
       });
 
-      carregando = false;
+      print(page);
 
+      Map result = await repository.loadNews(category, page.toString());
+
+      setState(() {
+        pages = result['data']['pages'];
+        this.page = page + 1;
+        result['data']['news'].forEach((item) {
+          var notice = new Notice(
+              item['url_img'] == null ? '' : _getImageUrl(
+                  item['url_img'], 200, 200),
+              item['tittle'] == null ? '' : item['tittle'],
+              item['date'] == null ? '' : item['date'],
+              item['description'] == null ? '' : item['description'],
+              new AnimationController(
+                duration: new Duration(milliseconds: 600),
+                vsync: this,
+              )
+          );
+          _news.add(notice);
+          notice.animationController.forward();
+        });
+
+        carregando = false;
       }
-    );
+
+      );
+
+    }
+  }
+
+  String _getImageUrl(url,height,width){
+
+    return 'http://104.131.18.84/notice/tim.php?src=$url&h=$height&w=$width';
+
   }
 
   @override

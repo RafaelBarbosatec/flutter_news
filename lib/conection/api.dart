@@ -4,12 +4,11 @@ import 'package:http/http.dart' as http;
 
 class NewsApi{
 
-  final String apiKey = '448b663c578f4c70846d2e9875b4be5e';
-  final String url = 'https://newsapi.org/v2/top-headlines';
+  final String url = 'http://104.131.18.84';
 
-  Future <Map> loadNews(String country, String category) async{
+  Future <Map> loadNews(String category, String page) async{
 
-    String apiUrl = '$url?country=$country&category=$category&apiKey=$apiKey';
+    String apiUrl = '$url/notice/news/$category/$page';
     // Make a HTTP GET request to the CoinMarketCap API.
     // Await basically pauses execution until the get() function returns a Response
     http.Response response = await http.get(apiUrl);

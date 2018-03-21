@@ -119,8 +119,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
         this.page = page + 1;
         result['data']['news'].forEach((item) {
           var notice = new Notice(
-              item['url_img'] == null ? '' : _getImageUrl(
-                  item['url_img'], 200, 200),
+              item['url_img'] == null ? '' : item['url_img'],
               item['tittle'] == null ? '' : item['tittle'],
               item['date'] == null ? '' : item['date'],
               item['description'] == null ? '' : item['description'],
@@ -139,12 +138,6 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
       );
 
     }
-  }
-
-  String _getImageUrl(url,height,width){
-
-    return 'http://104.131.18.84/notice/tim.php?src=$url&h=$height&w=$width';
-
   }
 
   @override

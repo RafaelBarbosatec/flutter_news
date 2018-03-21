@@ -40,12 +40,18 @@ class Notice extends StatelessWidget{
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _getImgWidget(_img),
+          _getImgWidget(_getImageUrl(_img, 200, 200)),
           _getColumText(_tittle,_date,_description)
         ],
 
       ),
     );
+
+  }
+
+  String _getImageUrl(url,height,width){
+
+    return 'http://104.131.18.84/notice/tim.php?src=$url&h=$height&w=$width';
 
   }
 

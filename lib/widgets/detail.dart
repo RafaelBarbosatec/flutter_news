@@ -18,7 +18,7 @@ class DetailPage extends StatelessWidget{
       body: new Container(
         child: new ListView(
           children: <Widget>[
-            _getImageNetwork(_img),
+            _getImageNetwork(_getImageUrl(_img,250,'')),
             _getBody(_tittle,_date,_description)
           ],
         ),
@@ -29,14 +29,18 @@ class DetailPage extends StatelessWidget{
   Widget _getImageNetwork(url){
 
     try{
+      if(url != '') {
 
-      return new Image.network(url,fit: BoxFit.cover,height: 250.0,);
+        return new FadeInImage.assetNetwork(
+          placeholder: 'assets/place_holder.jpg',
+          image: url,
+          fit: BoxFit.cover,);
+      }else{
+        return new Image.asset('assets/place_holder.jpg');
+      }
 
     }catch(e){
-      return new Container(
-        height: 250.0,
-        color: Colors.grey,
-      );
+      return new Image.asset('assets/place_holder.jpg');
     }
 
   }
@@ -78,6 +82,12 @@ class DetailPage extends StatelessWidget{
       margin: new  EdgeInsets.only(top: 10.0),
       child: new Text(description),
     );
+  }
+
+  String _getImageUrl(url,height,width){
+
+    return 'http://104.131.18.84/notice/tim.php?src=$url&h=$height&w=$width';
+
   }
 
 }

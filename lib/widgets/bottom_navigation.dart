@@ -62,23 +62,29 @@ class _BottomNavigationState extends State<BottomNavigation>
         vsync: this,
       ),
       new NavigationIconView(
-        icon: const Icon(Icons.laptop),
-        title: 'Tecnologia',
-        color: Colors.teal,
-        vsync: this,
-      ),
-      new NavigationIconView(
-        icon: const Icon(Icons.directions_bike),
-        title: 'Esportes',
+        icon: const Icon(Icons.home),
+        title: 'News',
         color: Colors.green,
         vsync: this,
       ),
-      new NavigationIconView(
-        icon: const Icon(Icons.sentiment_very_satisfied),
-        title: 'Entreterimento',
-        color: Colors.red,
-        vsync: this,
-      )
+//      new NavigationIconView(
+//        icon: const Icon(Icons.laptop),
+//        title: 'Tecnologia',
+//        color: Colors.teal,
+//        vsync: this,
+//      ),
+//      new NavigationIconView(
+//        icon: const Icon(Icons.directions_bike),
+//        title: 'Esportes',
+//        color: Colors.green,
+//        vsync: this,
+//      ),
+//      new NavigationIconView(
+//        icon: const Icon(Icons.sentiment_very_satisfied),
+//        title: 'Entreterimento',
+//        color: Colors.red,
+//        vsync: this,
+//      )
     ];
 
     for (NavigationIconView view in _navigationViews)

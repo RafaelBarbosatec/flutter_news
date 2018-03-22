@@ -31,16 +31,25 @@ class DetailPage extends StatelessWidget{
     try{
       if(url != '') {
 
-        return new FadeInImage.assetNetwork(
-          placeholder: 'assets/place_holder.jpg',
-          image: url,
-          fit: BoxFit.cover,);
+        return new Container(
+          height: 200.0,
+          child: new FadeInImage.assetNetwork(
+            placeholder: 'assets/place_holder.jpg',
+            image: url,
+            fit: BoxFit.cover,),
+        );
       }else{
-        return new Image.asset('assets/place_holder.jpg');
+        return new Container(
+          height: 200.0,
+          child: new Image.asset('assets/place_holder.jpg'),
+        );
       }
 
     }catch(e){
-      return new Image.asset('assets/place_holder.jpg');
+      return new Container(
+        height: 200.0,
+        child: new Image.asset('assets/place_holder.jpg'),
+      );
     }
 
   }

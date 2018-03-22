@@ -29,21 +29,19 @@ class ContentFeaturedState extends State<ContentFeaturedPage>{
   @override
   Widget build(BuildContext context) {
     return new Container(
-      child: new SizedBox.fromSize(
-        child: new PageTransformer(
-            pageViewBuilder: (context,visibilityResolver){
-              return new PageView.builder(
+      child: new PageTransformer(
+          pageViewBuilder: (context,visibilityResolver){
+            return new PageView.builder(
                 controller: new PageController(viewportFraction: 0.9),
-                  itemCount: _destaque.length,
-                  itemBuilder:(context,index){
+                itemCount: _destaque.length,
+                itemBuilder:(context,index){
                   final item = _destaque[index];
                   final pageVisibility = visibilityResolver.resolvePageVisibility(index);
 
                   return new IntroNewsItem(item: item,pageVisibility: pageVisibility);
-                  }
-              );
-            }
-        ),
+                }
+            );
+          }
       ),
     );
   }

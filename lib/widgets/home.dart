@@ -15,20 +15,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   var isFeatured = true;
-  var content_news;
-  var content_featured;
 
   @override
   Widget build(BuildContext context) {
 
-    content_news = new ContentNewsPage();
-    content_featured = new ContentFeaturedPage();
 
     return new Scaffold(
-      appBar: new AppBar(),
-      body: isFeatured ? content_featured : content_news,
+      body: new Container(
+        color: Colors.grey[200],
+        child:  new Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Container(
+              height: 100.0,
+            ) ,
+            new Expanded(
+                child: isFeatured ? new ContentFeaturedPage() :  new ContentNewsPage()
+            )
+          ],
+        ),
+      ),
       bottomNavigationBar: new BottomNavigation(onTabNavigationBottom), // This trailing comma makes auto-formatting nicer for build methods.
     );
+
+
   }
 
   onTabNavigationBottom(index){

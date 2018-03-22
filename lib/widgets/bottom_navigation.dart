@@ -48,7 +48,7 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation>
     with TickerProviderStateMixin {
   int _currentIndex = 0;
-  BottomNavigationBarType _type = BottomNavigationBarType.shifting;
+  BottomNavigationBarType _type = BottomNavigationBarType.fixed;
   List<NavigationIconView> _navigationViews;
 
   @override
@@ -62,8 +62,14 @@ class _BottomNavigationState extends State<BottomNavigation>
         vsync: this,
       ),
       new NavigationIconView(
-        icon: const Icon(Icons.home),
+        icon: const Icon(Icons.list),
         title: 'News',
+        color: Colors.green,
+        vsync: this,
+      ),
+      new NavigationIconView(
+        icon: const Icon(Icons.info),
+        title: 'Sobre',
         color: Colors.green,
         vsync: this,
       ),

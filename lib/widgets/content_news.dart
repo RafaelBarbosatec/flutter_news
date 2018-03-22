@@ -4,6 +4,10 @@ import '../conection/api.dart';
 
 class ContentNewsPage extends StatefulWidget{
 
+  final vsync;
+
+  ContentNewsPage(this.vsync);
+
   final state = new _ContentNewsPageState();
 
   @override
@@ -11,7 +15,7 @@ class ContentNewsPage extends StatefulWidget{
 
 }
 
-class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderStateMixin{
+class _ContentNewsPageState extends State<ContentNewsPage>{
 
   var current_category = 'geral';
   List _news = new List();
@@ -124,8 +128,8 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
               item['date'] == null ? '' : item['date'],
               item['description'] == null ? '' : item['description'],
               new AnimationController(
-                duration: new Duration(milliseconds: 600),
-                vsync: this,
+                duration: new Duration(milliseconds: 300),
+                vsync: widget.vsync,
               )
           );
           _news.add(notice);

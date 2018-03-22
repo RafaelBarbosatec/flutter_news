@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'bottom_navigation.dart';
 import 'content_news.dart';
 import 'content_featured.dart';
+import 'search.dart';
 
 class HomePage extends StatefulWidget {
-
-  var _current_tab = 0;
 
   @override
   _HomePageState createState() => new _HomePageState();
 
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
-  var isFeatured = true;
+  var _current_tab = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +27,10 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             new Container(
-              height: 100.0,
+              child: new SearchWidget(),
             ) ,
             new Expanded(
-                child: isFeatured ? new ContentFeaturedPage() :  new ContentNewsPage()
+                child: _getContent(_current_tab)
             )
           ],
         ),
@@ -42,21 +41,32 @@ class _HomePageState extends State<HomePage> {
 
   }
 
+  Widget _getContent(index){
+
+    Widget content;
+    switch(index){
+      case 0: content = new ContentFeaturedPage(this);break;
+      case 1: content = new ContentNewsPage(this);break;
+      default: content = new Container(
+        child: new Center(
+          child: new Text("Em Breve"),
+        ),
+      );
+    }
+
+    return content;
+  }
+
   onTabNavigationBottom(index){
 
 
-    if(index != widget._current_tab) {
+    if(index != _current_tab) {
 
         setState((){
-            if(index == 0) {
-              isFeatured = true;
-            }else{
-              isFeatured = false;
-            }
+          _current_tab = index;
           }
         );
 
-      widget._current_tab = index;
 
       /*if(!isFeatured) {
 

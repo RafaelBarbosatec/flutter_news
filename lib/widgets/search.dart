@@ -24,6 +24,7 @@ class SearchWidget extends StatelessWidget{
                     decoration: new InputDecoration(
                       icon: const Icon(Icons.search,color: Colors.blue,),
                       hintText: "Busque sua noticia aqui",
+                      border: InputBorder.none
                     ),
                     controller: editingController,
                   )

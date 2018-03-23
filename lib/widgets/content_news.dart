@@ -72,7 +72,17 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
     return new Flexible(
         child: new Stack(
           children: <Widget>[
-            refreshIndicator,
+            new Column(
+              children: <Widget>[
+                new Container(
+                  color: Colors.pink,
+                  height: 50.0,
+                ),
+                new Expanded(
+                    child: refreshIndicator
+                )
+              ],
+            ),
             _getProgress()
           ],
         )

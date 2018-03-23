@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'search_result.dart';
 
 class SearchWidget extends StatelessWidget{
 
-  TextEditingController editingController = new TextEditingController();
-  
+  final TextEditingController editingController = new TextEditingController();
+
+  BuildContext _context;
+
   @override
   Widget build(BuildContext context) {
+
+    _context = context;
+
     return new Container(
       padding: new EdgeInsets.only(left: 16.0,right: 16.0,top: 40.0),
       margin: const EdgeInsets.only(),
@@ -26,6 +32,7 @@ class SearchWidget extends StatelessWidget{
                       hintText: "Busque sua noticia aqui",
                       border: InputBorder.none
                     ),
+                    onSubmitted: onSubmitted,
                     controller: editingController,
                   )
               )
@@ -34,6 +41,17 @@ class SearchWidget extends StatelessWidget{
         ),
       ),
     );
+  }
+
+  onSubmitted(query){
+
+    Navigator.of(_context).push(
+        new MaterialPageRoute(builder: (BuildContext context) {
+          return new SearchResultPage(query);
+        }
+        )
+    );
+
   }
   
 }

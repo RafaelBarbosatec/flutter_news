@@ -19,6 +19,7 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
   var current_category = 'geral';
   List _news = new List();
+  List _categorys = new List();
   var carregando = false;
   var repository = new NewsApi();
   var page = 0;
@@ -26,7 +27,8 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
   @override
   void initState() {
-
+    _categorys.add("");
+    _categorys.add("");
     loadCategory(current_category,page);
 
     super.initState();
@@ -38,9 +40,10 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
     //print(current_category);
 
     return new Container(
-      child:new Column(
+      child: new Column(
         children: <Widget>[
-          _getListViewWidget()
+          _getListCategory(),
+          new Expanded(child: _getListViewWidget())
         ],
       )
     );
@@ -69,23 +72,11 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
         child: listView
     );
 
-    return new Flexible(
-        child: new Stack(
-          children: <Widget>[
-            new Column(
-              children: <Widget>[
-                new Container(
-                  color: Colors.pink,
-                  height: 50.0,
-                ),
-                new Expanded(
-                    child: refreshIndicator
-                )
-              ],
-            ),
-            _getProgress()
-          ],
-        )
+    return new Stack(
+      children: <Widget>[
+        refreshIndicator,
+        _getProgress()
+      ],
     );
 
   }
@@ -101,6 +92,30 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
     }else{
       return new Container();
     }
+
+  }
+
+  Widget _getListCategory(){
+
+    ListView listCategory = new ListView.builder(
+        itemCount: _categorys.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index){
+
+
+          return new Container(
+            margin: const EdgeInsets.all(5.0),
+            color: Colors.white,
+            child: new Text(_categorys[index]),
+          );
+        }
+    );
+
+    return new Container(
+      height: 50.0,
+      color: Colors.green,
+      child: listCategory,
+    );
 
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pageTransform/page_transformer.dart';
 import 'pageTransform/intro_page_item.dart';
+import '../conection/api.dart';
 
 class ContentFeaturedPage extends StatefulWidget{
 
@@ -21,6 +22,9 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
 
   List _destaque = new List();
   AnimationController animationController;
+  NewsApi repositoty = new NewsApi();
+
+  var carregando = false;
 
   @override
   void initState() {
@@ -31,40 +35,88 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
         duration: new Duration(milliseconds: 300)
     );
 
-    _destaque.add(new IntroNews("tirulo","categoria","/uploads/news/3abd7dd558a91afd4bcf482077ebc3df.jpg"));
-    _destaque.add(new IntroNews("tirulo","categoria","/uploads/news/37c3980e7c4a144085177492ca52229b.jpg"));
-    _destaque.add(new IntroNews("tirulo","categoria","/uploads/news/197b6dbaaa0b4c9e99c815a40ffc2b7e.jpg"));
-    _destaque.add(new IntroNews("tirulo","categoria",""));
-
-    animationController.forward();
+    loadNewsRecent();
 
   }
   @override
   Widget build(BuildContext context) {
 
-
-
-    return new FadeTransition(
-      opacity: animationController,
-      child: new Container(
-        child: new PageTransformer(
-            pageViewBuilder: (context,visibilityResolver){
-              return new PageView.builder(
-                  controller: new PageController(viewportFraction: 0.9),
-                  itemCount: _destaque.length,
-                  itemBuilder:(context,index){
-                    final item = _destaque[index];
-                    final pageVisibility = visibilityResolver.resolvePageVisibility(index);
-
-                    return new IntroNewsItem(item: item,pageVisibility: pageVisibility);
-                  }
-              );
-            }
+    return new Stack(
+      children: <Widget>[
+        new FadeTransition(
+          opacity: animationController,
+          child: new Container(
+            child: new PageTransformer(
+                pageViewBuilder: (context,visibilityResolver){
+                  return new PageView.builder(
+                      controller: new PageController(viewportFraction: 0.9),
+                      itemCount: _destaque.length,
+                      itemBuilder:(context,index){
+                        final item = _destaque[index];
+                        final pageVisibility = visibilityResolver.resolvePageVisibility(index);
+                        return new IntroNewsItem(item: item,pageVisibility: pageVisibility);
+                      },
+                  );
+                }
+            ),
+          ),
         ),
-      ),
+        _getProgress()
+      ],
     );
-
 
   }
 
+  Widget _getProgress(){
+
+    if(carregando){
+      return new Container(
+        child: new Center(
+          child: new CircularProgressIndicator(),
+        ),
+      );
+    }else{
+      return new Container();
+    }
+
+  }
+
+  void loadNewsRecent() async{
+
+    setState((){
+      _destaque.clear();
+      carregando = true;
+    });
+
+    Map result = await repositoty.loadNewsRecent();
+
+    setState(() {
+
+      result['data'].forEach((item){
+
+        var destaque = new IntroNews(
+            item['tittle'],
+            item['category'],
+            item['url_img']
+        );
+
+        _destaque.add(destaque);
+
+      });
+
+      carregando = false;
+
+      animationController.forward();
+
+    });
+
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
 }
+

@@ -46,9 +46,9 @@ class SearchWidget extends StatelessWidget{
   onSubmitted(query){
 
     Navigator.of(_context).push(
-        new MaterialPageRoute(builder: (BuildContext context) {
-          return new SearchResultPage(query);
-        }
+          new MaterialPageRoute(builder: (BuildContext context) {
+            return new SearchResultPage(query);
+          }
         )
     );
 

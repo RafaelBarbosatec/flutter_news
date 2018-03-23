@@ -16,4 +16,15 @@ class NewsApi{
     return JSON.decode(response.body);
 
   }
+
+  Future <Map> loadNewsRecent() async{
+
+    String apiUrl = '$url/notice/news/recent';
+    // Make a HTTP GET request to the CoinMarketCap API.
+    // Await basically pauses execution until the get() function returns a Response
+    http.Response response = await http.get(apiUrl);
+    // Using the JSON class to decode the JSON String
+    return JSON.decode(response.body);
+
+  }
 }

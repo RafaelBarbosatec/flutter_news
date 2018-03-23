@@ -97,11 +97,11 @@ class IntroNewsItem extends StatelessWidget {
           ),
         );
       }else{
-        return new Image.asset('assets/place_holder.jpg');
+        return new Image.asset('assets/place_holder_2.jpg');
       }
 
     }catch(e){
-      return new Image.asset('assets/place_holder.jpg');
+      return new Image.asset('assets/place_holder_2.jpg');
     }
 
   }

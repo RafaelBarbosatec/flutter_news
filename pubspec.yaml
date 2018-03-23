@@ -26,6 +26,8 @@ flutter:
   uses-material-design: true
   assets:
       - assets/place_holder.jpg
+      - assets/place_holder_2.jpg
+      - assets/place_holder_3.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

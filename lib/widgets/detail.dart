@@ -41,14 +41,14 @@ class DetailPage extends StatelessWidget{
       }else{
         return new Container(
           height: 200.0,
-          child: new Image.asset('assets/place_holder.jpg'),
+          child: new Image.asset('assets/place_holder_3.jpg'),
         );
       }
 
     }catch(e){
       return new Container(
         height: 200.0,
-        child: new Image.asset('assets/place_holder.jpg'),
+        child: new Image.asset('assets/place_holder_3.jpg'),
       );
     }
 

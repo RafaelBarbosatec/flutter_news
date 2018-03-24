@@ -20,15 +20,30 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
   var current_category = 'geral';
   List _news = new List();
   List _categorys = new List();
+  List _category_english = new List();
   var carregando = false;
   var repository = new NewsApi();
   var page = 0;
   var pages = 1;
+  var category_selected = 0;
 
   @override
   void initState() {
-    _categorys.add("");
-    _categorys.add("");
+    _categorys.add("Geral");
+    _categorys.add("Esporte");
+    _categorys.add("Tecnologia");
+    _categorys.add("Entretenimento");
+    _categorys.add("Saúde");
+    _categorys.add("Negócios");
+    _categorys.add("Ciência");
+
+    _category_english.add("geral");
+    _category_english.add("sports");
+    _category_english.add("technology");
+    _category_english.add("entertainment");
+    _category_english.add("health");
+    _category_english.add("business");
+    _category_english.add("science");
     loadCategory(current_category,page);
 
     super.initState();
@@ -103,22 +118,51 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
         itemBuilder: (context, index){
 
 
-          return new Container(
-            margin: const EdgeInsets.all(5.0),
-            color: Colors.white,
-            child: new Text(_categorys[index]),
+          return new GestureDetector(
+            onTap: (){
+              onTabCategory(index);
+            },
+            child: new Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                new Container(
+                  margin: new EdgeInsets.only(left: 10.0,bottom: 5.0),
+                  child: new Material(
+                    elevation: 2.0,
+                    borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
+                    child:  new Container(
+                      padding: new EdgeInsets.only(left: 12.0,top: 7.0,bottom: 7.0,right: 12.0),
+                      color: category_selected == index ? Colors.blue[800]:Colors.blue[500],
+                      child: new Text(_categorys[index],
+                        style: new TextStyle(
+                            color: Colors.white),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           );
         }
     );
 
     return new Container(
       height: 50.0,
-      color: Colors.green,
       child: listCategory,
     );
 
   }
 
+  onTabCategory(index){
+    setState((){
+      category_selected = index;
+      page = 0;
+    });
+
+    loadCategory(_category_english[index], page);
+
+  }
   onRefresh() async{
     loadCategory(current_category,page);
   }

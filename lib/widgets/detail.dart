@@ -25,7 +25,10 @@ class DetailPage extends StatelessWidget{
           borderRadius: new BorderRadius.circular(6.0),
           child: new ListView(
             children: <Widget>[
-              _getImageNetwork(_getImageUrl(_img,250,'')),
+             new Hero(
+                 tag: _tittle,
+                 child: _getImageNetwork(_getImageUrl(_img,250,''))
+             ),
               _getBody(_tittle,_date,_description),
             ],
           ),

@@ -42,7 +42,7 @@ class Notice extends StatelessWidget{
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _getImgWidget(_getImageUrl(_img, 200, 200)),
+          new Hero(tag: _tittle, child: _getImgWidget(_getImageUrl(_img, 200, 200)),),
           _getColumText(_tittle,_date,_description)
         ],
 

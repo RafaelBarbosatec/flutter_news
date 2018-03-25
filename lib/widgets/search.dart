@@ -13,7 +13,7 @@ class SearchWidget extends StatelessWidget{
     _context = context;
 
     return new Container(
-      padding: new EdgeInsets.only(left: 16.0,right: 16.0,top: 40.0),
+      padding: new EdgeInsets.only(left: 10.0,right: 10.0,top: 40.0),
       margin: const EdgeInsets.only(),
       child: new Material(
         borderRadius: const BorderRadius.all(const Radius.circular(25.0)),

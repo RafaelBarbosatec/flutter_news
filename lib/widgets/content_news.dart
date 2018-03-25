@@ -35,7 +35,6 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
     _categorys.add("Entretenimento");
     _categorys.add("Saúde");
     _categorys.add("Negócios");
-    _categorys.add("Ciência");
 
     _category_english.add("geral");
     _category_english.add("sports");
@@ -43,7 +42,6 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
     _category_english.add("entertainment");
     _category_english.add("health");
     _category_english.add("business");
-    _category_english.add("science");
     loadCategory(current_category,page);
 
     super.initState();
@@ -69,6 +67,7 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
     ListView listView = new ListView.builder(
         itemCount: _news.length,
+        padding: new EdgeInsets.only(top: 5.0),
         itemBuilder: (context, index){
 
           //final Map notice = _news[index];
@@ -80,7 +79,7 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
           return _news[index];
         }
-        );
+    );
 
     RefreshIndicator refreshIndicator = new RefreshIndicator(
         onRefresh: onRefresh,
@@ -118,32 +117,7 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
         itemBuilder: (context, index){
 
 
-          return new GestureDetector(
-            onTap: (){
-              onTabCategory(index);
-            },
-            child: new Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                new Container(
-                  margin: new EdgeInsets.only(left: 10.0,bottom: 5.0),
-                  child: new Material(
-                    elevation: 2.0,
-                    borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
-                    child:  new Container(
-                      padding: new EdgeInsets.only(left: 12.0,top: 7.0,bottom: 7.0,right: 12.0),
-                      color: category_selected == index ? Colors.blue[800]:Colors.blue[500],
-                      child: new Text(_categorys[index],
-                        style: new TextStyle(
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          );
+          return _buildCategoryItem(index);
         }
     );
 
@@ -154,13 +128,49 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
   }
 
-  onTabCategory(index){
-    setState((){
-      category_selected = index;
-      page = 0;
-    });
+  Widget _buildCategoryItem(index){
 
-    loadCategory(_category_english[index], page);
+    return new GestureDetector(
+      onTap: (){
+        onTabCategory(index);
+      },
+      child: new Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          new Container(
+            margin: new EdgeInsets.only(left: 10.0),
+            child: new Material(
+              elevation: 2.0,
+              borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
+              child:  new Container(
+                padding: new EdgeInsets.only(left: 12.0,top: 7.0,bottom: 7.0,right: 12.0),
+                color: category_selected == index ? Colors.blue[800]:Colors.blue[500],
+                child: new Text(_categorys[index],
+                  style: new TextStyle(
+                      color: Colors.white),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+
+  }
+
+  onTabCategory(index){
+
+    if(!carregando) {
+
+      setState(() {
+        category_selected = index;
+        page = 0;
+      });
+
+      loadCategory(_category_english[index], page);
+
+    }
 
   }
   onRefresh() async{

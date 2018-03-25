@@ -3,11 +3,19 @@ import 'package:meta/meta.dart';
 import 'page_transformer.dart';
 
 class IntroNews {
-  IntroNews(this.title, this.category, this.imageUrl);
+  IntroNews(this.title,
+      this.category,
+      this.imageUrl,
+      this.description,
+      this.date,
+      this.link);
 
   final String title;
   final String category;
   final String imageUrl;
+  final String date;
+  final String description;
+  final String link;
 }
 
 class IntroNewsItem extends StatelessWidget {

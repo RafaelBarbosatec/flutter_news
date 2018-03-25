@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'pageTransform/page_transformer.dart';
 import 'pageTransform/intro_page_item.dart';
 import '../conection/api.dart';
+import 'detail.dart';
 
 class ContentFeaturedPage extends StatefulWidget{
 
@@ -26,6 +27,10 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
 
   var carregando = false;
 
+  var positionFeatured = 0;
+
+  var _context;
+
   @override
   void initState() {
     super.initState();
@@ -41,28 +46,51 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
   @override
   Widget build(BuildContext context) {
 
-    return new Stack(
-      children: <Widget>[
-        new FadeTransition(
-          opacity: animationController,
-          child: new Container(
-            child: new PageTransformer(
-                pageViewBuilder: (context,visibilityResolver){
-                  return new PageView.builder(
+    _context = context;
+
+    return new GestureDetector(
+      child: new Stack(
+        children: <Widget>[
+          new FadeTransition(
+            opacity: animationController,
+            child: new Container(
+              child: new PageTransformer(
+                  pageViewBuilder: (context,visibilityResolver){
+                    return new PageView.builder(
                       controller: new PageController(viewportFraction: 0.9),
                       itemCount: _destaque.length,
+                      onPageChanged: (position){
+                        setState((){
+                          positionFeatured = position;
+                        });
+                      },
                       itemBuilder:(context,index){
                         final item = _destaque[index];
                         final pageVisibility = visibilityResolver.resolvePageVisibility(index);
                         return new IntroNewsItem(item: item,pageVisibility: pageVisibility);
                       },
-                  );
-                }
+                    );
+                  }
+              ),
             ),
           ),
-        ),
-        _getProgress()
-      ],
+          _getProgress()
+        ],
+      ),
+      onTap: onTabFeatured,
+    );
+
+  }
+
+  onTabFeatured(){
+
+    IntroNews notice = _destaque[positionFeatured];
+
+    Navigator.of(_context).push(
+        new MaterialPageRoute(builder: (BuildContext context) {
+          return new DetailPage(notice.imageUrl,notice.title,notice.date,notice.description,notice.category,notice.link);
+        }
+        )
     );
 
   }
@@ -97,7 +125,10 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
         var destaque = new IntroNews(
             item['tittle'],
             item['category'],
-            item['url_img']
+            item['url_img'],
+            item['description'],
+            item['date'],
+            item['link']
         );
 
         _destaque.add(destaque);

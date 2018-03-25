@@ -7,9 +7,11 @@ class Notice extends StatelessWidget{
   var _tittle;
   var _date;
   var _description;
+  var _category;
+  var _link;
   final AnimationController animationController;
 
-  Notice(this._img,this._tittle,this._date,this._description, this.animationController);
+  Notice(this._img,this._tittle,this._date,this._description,this._category,this._link, this.animationController);
 
   BuildContext _context;
 
@@ -59,7 +61,7 @@ class Notice extends StatelessWidget{
 
     Navigator.of(_context).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-        return new DetailPage(_img,_tittle,_date,_description);
+        return new DetailPage(_img,_tittle,_date,_description,_category,_link);
       }
       )
     );

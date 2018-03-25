@@ -64,13 +64,13 @@ class _BottomNavigationState extends State<BottomNavigation>
       new NavigationIconView(
         icon: const Icon(Icons.list),
         title: 'Noticias',
-        color: Colors.green,
+        color: Colors.blue[800],
         vsync: this,
       ),
       new NavigationIconView(
         icon: const Icon(Icons.info),
         title: 'Sobre',
-        color: Colors.green,
+        color: Colors.blue,
         vsync: this,
       ),
 //      new NavigationIconView(

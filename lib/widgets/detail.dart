@@ -18,7 +18,7 @@ class DetailPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(_category),
+        title: new Text(_origin),
       ),
       body: new Container(
         margin: new EdgeInsets.all(10.0),

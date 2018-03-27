@@ -3,6 +3,7 @@ import 'bottom_navigation.dart';
 import 'content_news.dart';
 import 'content_featured.dart';
 import 'search.dart';
+import 'info.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -47,11 +48,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     switch(index){
       case 0: content = new ContentFeaturedPage(this);break;
       case 1: content = new ContentNewsPage(this);break;
-      default: content = new Container(
-        child: new Center(
-          child: new Text("Em Breve"),
-        ),
-      );
+      default:
+        {
+          content = new Info(new AnimationController(
+              vsync: this,
+              duration: new Duration(milliseconds: 500)
+          ));
+          (content as Info).animationController.forward();
+        }
     }
 
     return content;

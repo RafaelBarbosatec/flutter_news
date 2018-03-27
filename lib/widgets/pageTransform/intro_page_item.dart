@@ -72,7 +72,7 @@ class IntroNewsItem extends StatelessWidget {
         child: new Text(
           item.title,
           style: textTheme.title
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+              .copyWith(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
       ),

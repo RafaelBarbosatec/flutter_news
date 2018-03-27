@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'detail.dart';
+import '../util/date_util.dart';
 
 class Notice extends StatelessWidget{
 
@@ -9,9 +10,11 @@ class Notice extends StatelessWidget{
   var _description;
   var _category;
   var _link;
+  var _origin;
+
   final AnimationController animationController;
 
-  Notice(this._img,this._tittle,this._date,this._description,this._category,this._link, this.animationController);
+  Notice(this._img,this._tittle,this._date,this._description,this._category,this._link,this._origin, this.animationController);
 
   BuildContext _context;
 
@@ -61,7 +64,7 @@ class Notice extends StatelessWidget{
 
     Navigator.of(_context).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-        return new DetailPage(_img,_tittle,_date,_description,_category,_link);
+        return new DetailPage(_img,_tittle,_date,_description,_category,_link,_origin);
       }
       )
     );
@@ -132,7 +135,7 @@ class Notice extends StatelessWidget{
   }
 
   Widget _getDateWidget(String date){
-    return new Text(date,
+    return new Text(new DateUtil().buildDate(date),
     style: new TextStyle(color: Colors.grey,fontSize: 10.0),);
   }
 

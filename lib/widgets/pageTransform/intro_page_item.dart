@@ -8,7 +8,8 @@ class IntroNews {
       this.imageUrl,
       this.description,
       this.date,
-      this.link);
+      this.link,
+      this.origin);
 
   final String title;
   final String category;
@@ -16,6 +17,7 @@ class IntroNews {
   final String date;
   final String description;
   final String link;
+  final String origin;
 }
 
 class IntroNewsItem extends StatelessWidget {

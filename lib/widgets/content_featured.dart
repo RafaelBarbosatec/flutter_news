@@ -88,7 +88,7 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
 
     Navigator.of(_context).push(
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new DetailPage(notice.imageUrl,notice.title,notice.date,notice.description,notice.category,notice.link);
+          return new DetailPage(notice.imageUrl,notice.title,notice.date,notice.description,notice.category,notice.link,notice.origin);
         }
         )
     );
@@ -128,7 +128,8 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
             item['url_img'],
             item['description'],
             item['date'],
-            item['link']
+            item['link'],
+            item['origin']
         );
 
         _destaque.add(destaque);

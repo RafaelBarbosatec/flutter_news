@@ -208,6 +208,7 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
               item['description'] == null ? '' : item['description'],
               item['category'] == null ? '' : item['category'],
               item['link'] == null ? '' : item['link'],
+              item['origin'] == null ? '' : item['origin'],
               new AnimationController(
                 duration: new Duration(milliseconds: 300),
                 vsync: widget.vsync,

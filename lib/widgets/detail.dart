@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../util/date_util.dart';
 
 class DetailPage extends StatelessWidget{
 
@@ -9,8 +10,9 @@ class DetailPage extends StatelessWidget{
   var _description;
   var _link;
   var _category;
+  var _origin;
 
-  DetailPage(this._img,this._tittle,this._date,this._description,this._category,this._link);
+  DetailPage(this._img,this._tittle,this._date,this._description,this._category,this._link,this._origin);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class DetailPage extends StatelessWidget{
                  tag: _tittle,
                  child: _getImageNetwork(_getImageUrl(_img,250,''))
              ),
-              _getBody(_tittle,_date,_description),
+              _getBody(_tittle,_date,_description,_origin),
             ],
           ),
         ),
@@ -65,7 +67,7 @@ class DetailPage extends StatelessWidget{
 
   }
 
-  Widget _getBody(tittle,date,description){
+  Widget _getBody(tittle,date,description,origin){
 
     return new Container(
       margin: new EdgeInsets.all(15.0),
@@ -73,7 +75,7 @@ class DetailPage extends StatelessWidget{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _getTittle(tittle),
-          _getDate(date),
+          _getDate(date,origin),
           _getDescription(description),
           _getAntLink(),
           _getLink(_link)
@@ -84,7 +86,7 @@ class DetailPage extends StatelessWidget{
 
   Widget _getAntLink() {
     return new Container(
-      margin: new EdgeInsets.only(top: 50.0),
+      margin: new EdgeInsets.only(top: 30.0),
       child: new Text("Mais detalhes acesse:",
         style: new TextStyle(fontWeight: FontWeight.bold,
             color: Colors.grey[600]
@@ -114,18 +116,35 @@ class DetailPage extends StatelessWidget{
     );
   }
 
-  _getDate(date) {
-    return new Text(date,
-      style: new TextStyle(
-          fontSize: 10.0,
-          color: Colors.grey
+  _getDate(date,origin) {
+
+    var datatime = DateTime.parse(date);
+
+    return new Container(
+      margin: new EdgeInsets.only(top: 4.0),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          new Text(new DateUtil().buildDate(date),
+            style: new TextStyle(
+                fontSize: 10.0,
+                color: Colors.grey
+            ),
+          ),
+          new Text(origin,
+            style: new TextStyle(
+                fontSize: 10.0,
+                color: Colors.grey
+            ),
+          )
+        ],
       ),
     );
   }
 
   _getDescription(description) {
     return new Container(
-      margin: new  EdgeInsets.only(top: 10.0),
+      margin: new  EdgeInsets.only(top: 20.0),
       child: new Text(description),
     );
   }

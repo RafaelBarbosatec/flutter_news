@@ -15,4 +15,5 @@ class NewsApp extends StatelessWidget {
       home: new HomePage(),
     );
   }
+
 }

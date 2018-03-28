@@ -20,6 +20,8 @@ Aplicação de noticias desenvolvido para prática, aprendizado e teste do poten
 
 (Em breve artigo sobre seu desenvolvimento)
 
+## Download
+<a href='https://play.google.com/store/apps/details?id=com.rafaelbarbosatec.newsflutter&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Disponível no Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/pt-br_badge_web_generic.png' width="200"/></a>
 
 For help getting started with Flutter, view our online
 [documentation](https://flutter.io/).

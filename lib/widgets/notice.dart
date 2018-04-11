@@ -5,7 +5,7 @@ import '../util/date_util.dart';
 class Notice extends StatelessWidget{
 
   var _img;
-  var _tittle;
+  var _title;
   var _date;
   var _description;
   var _category;
@@ -14,7 +14,7 @@ class Notice extends StatelessWidget{
 
   final AnimationController animationController;
 
-  Notice(this._img,this._tittle,this._date,this._description,this._category,this._link,this._origin, this.animationController);
+  Notice(this._img,this._title,this._date,this._description,this._category,this._link,this._origin, this.animationController);
 
   BuildContext _context;
 
@@ -45,8 +45,8 @@ class Notice extends StatelessWidget{
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Hero(tag: _tittle, child: _getImgWidget(_getImageUrl(_img, 200, 200)),),
-          _getColumText(_tittle,_date,_description)
+          new Hero(tag: _title, child: _getImgWidget(_getImageUrl(_img, 200, 200)),),
+          _getColumText(_title,_date,_description)
         ],
 
       ),
@@ -64,7 +64,7 @@ class Notice extends StatelessWidget{
 
     Navigator.of(_context).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-        return new DetailPage(_img,_tittle,_date,_description,_category,_link,_origin);
+        return new DetailPage(_img,_title,_date,_description,_category,_link,_origin);
       }
       )
     );
@@ -79,7 +79,7 @@ class Notice extends StatelessWidget{
           child: new Column(
             crossAxisAlignment:CrossAxisAlignment.start,
             children: <Widget>[
-              _getTittleWidget(_tittle),
+              _getTitleWidget(_title),
               _getDateWidget(_date),
               _getDescriptionWidget(_description)],
           ),
@@ -119,7 +119,7 @@ class Notice extends StatelessWidget{
 
   }
 
-  Text _getTittleWidget(String curencyName){
+  Text _getTitleWidget(String curencyName){
     return new Text(
       curencyName,
       maxLines: 1,

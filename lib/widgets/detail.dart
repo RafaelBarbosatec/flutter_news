@@ -5,14 +5,14 @@ import '../util/date_util.dart';
 class DetailPage extends StatelessWidget{
 
   var _img;
-  var _tittle;
+  var _title;
   var _date;
   var _description;
   var _link;
   var _category;
   var _origin;
 
-  DetailPage(this._img,this._tittle,this._date,this._description,this._category,this._link,this._origin);
+  DetailPage(this._img,this._title,this._date,this._description,this._category,this._link,this._origin);
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +28,10 @@ class DetailPage extends StatelessWidget{
           child: new ListView(
             children: <Widget>[
              new Hero(
-                 tag: _tittle,
+                 tag: _title,
                  child: _getImageNetwork(_getImageUrl(_img,250,''))
              ),
-              _getBody(_tittle,_date,_description,_origin),
+              _getBody(_title,_date,_description,_origin),
             ],
           ),
         ),
@@ -117,8 +117,6 @@ class DetailPage extends StatelessWidget{
   }
 
   _getDate(date,origin) {
-
-    var datatime = DateTime.parse(date);
 
     return new Container(
       margin: new EdgeInsets.only(top: 4.0),

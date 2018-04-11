@@ -71,28 +71,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           }
         );
 
-
-      /*if(!isFeatured) {
-
-        var cat = 'geral';
-        switch (widget._current_tab) {
-          case 0:
-            cat = 'geral';
-            break;
-          case 1:
-            cat = 'technology';
-            break;
-          case 2:
-            cat = 'sports';
-            break;
-          case 3:
-            cat = 'entertainment';
-            break;
-        }
-        content_news.state.loadCategory(cat, 0);
-
-      }*/
-
     }
 
   }

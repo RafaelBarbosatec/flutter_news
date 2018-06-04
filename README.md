@@ -23,7 +23,7 @@ Aplicação de noticias desenvolvido para prática, aprendizado e teste do poten
 
 -Libs: [Url_laucher](https://pub.dartlang.org/packages/url_launcher), [PageTransformer](https://github.com/FlutterRocks/page-transformer)
 
-(Em breve artigo sobre seu desenvolvimento)
+[Tutorial(Medium) - Part 1](https://medium.com/@rafaelbarbosatec/flutter-construindo-uma-linda-aplica%C3%A7%C3%A3o-de-not%C3%ADcias-parte-1-f0cbeecb7ab).
 
 ## Download
 <a href='https://play.google.com/store/apps/details?id=com.rafaelbarbosatec.newsflutter&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Disponível no Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/pt-br_badge_web_generic.png' width="200"/></a>

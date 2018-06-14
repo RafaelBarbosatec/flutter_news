@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'notice.dart';
 import '../conection/api.dart';
@@ -29,6 +31,7 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
   @override
   void initState() {
+
     _categorys.add("Geral");
     _categorys.add("Esporte");
     _categorys.add("Tecnologia");
@@ -42,6 +45,7 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
     _category_english.add("entertainment");
     _category_english.add("health");
     _category_english.add("business");
+
     loadCategory(current_category,page);
 
     super.initState();
@@ -82,7 +86,7 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
     );
 
     RefreshIndicator refreshIndicator = new RefreshIndicator(
-        onRefresh: onRefresh,
+        onRefresh: myRefresh,
         child: listView
     );
 
@@ -173,8 +177,12 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
     }
 
   }
-  onRefresh() async{
-    loadCategory(current_category,page);
+
+  Future<Null> myRefresh() async{
+
+    await loadCategory(current_category,page);
+
+    return null;
   }
 
   loadCategory(category,page) async{
@@ -193,9 +201,9 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
       });
 
-      print(page);
-
       Map result = await repository.loadNews(category, page.toString());
+
+      print(result);
 
       setState(() {
         pages = result['data']['pages'];

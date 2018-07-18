@@ -83,44 +83,9 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
         ),
         onTap: onTabFeatured,
       );
+
     }else{
-      return new Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 50.0,
-            horizontal: 8.0,
-          ),
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Icon(
-                  Icons.cloud_off,
-                  size: 100.0,
-                  color: Colors.blue,
-                ),
-                new Text(
-                    "Erro de conexão",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: new RaisedButton(
-                    onPressed: (){
-                      loadNewsRecent();
-                    },
-                    child: new Text("TENTAR NOVAMENTE"),
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-      );
+      return _buildConnectionError();
     }
 
   }
@@ -149,6 +114,48 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
     }else{
       return new Container();
     }
+
+  }
+
+  Widget _buildConnectionError(){
+
+    return new Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 50.0,
+        horizontal: 8.0,
+      ),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Icon(
+              Icons.cloud_off,
+              size: 100.0,
+              color: Colors.blue,
+            ),
+            new Text(
+              "Erro de conexão",
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: new RaisedButton(
+                onPressed: (){
+                  loadNewsRecent();
+                },
+                child: new Text("TENTAR NOVAMENTE"),
+                color: Colors.blue,
+                textColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
 
   }
 

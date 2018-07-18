@@ -8,6 +8,8 @@ class ContentNewsPage extends StatefulWidget{
 
   final vsync;
 
+  var errorConection = false;
+
   ContentNewsPage(this.vsync);
 
   final state = new _ContentNewsPageState();
@@ -60,9 +62,51 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
       child: new Column(
         children: <Widget>[
           _getListCategory(),
-          new Expanded(child: _getListViewWidget())
+          widget.errorConection ? _buildConnectionError(): new Expanded(child: _getListViewWidget())
         ],
       )
+    );
+
+  }
+
+  Widget _buildConnectionError(){
+
+    return new Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 50.0,
+        horizontal: 8.0,
+      ),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Icon(
+              Icons.cloud_off,
+              size: 100.0,
+              color: Colors.blue,
+            ),
+            new Text(
+              "Erro de conexão",
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: new RaisedButton(
+                onPressed: (){
+                  loadCategory(current_category,page);
+                },
+                child: new Text("TENTAR NOVAMENTE"),
+                color: Colors.blue,
+                textColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
 
   }
@@ -203,33 +247,38 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
       Map result = await repository.loadNews(category, page.toString());
 
-      print(result);
+      if(result != null) {
 
-      setState(() {
-        pages = result['data']['pages'];
-        this.page = page + 1;
-        result['data']['news'].forEach((item) {
-          var notice = new Notice(
-              item['url_img'] == null ? '' : item['url_img'],
-              item['tittle'] == null ? '' : item['tittle'],
-              item['date'] == null ? '' : item['date'],
-              item['description'] == null ? '' : item['description'],
-              item['category'] == null ? '' : item['category'],
-              item['link'] == null ? '' : item['link'],
-              item['origin'] == null ? '' : item['origin'],
-              new AnimationController(
-                duration: new Duration(milliseconds: 300),
-                vsync: widget.vsync,
-              )
-          );
-          _news.add(notice);
-          notice.animationController.forward();
-        });
+        widget.errorConection = false;
 
-        carregando = false;
+        setState(() {
+          pages = result['data']['pages'];
+          this.page = page + 1;
+          result['data']['news'].forEach((item) {
+            var notice = new Notice(
+                item['url_img'] == null ? '' : item['url_img'],
+                item['tittle'] == null ? '' : item['tittle'],
+                item['date'] == null ? '' : item['date'],
+                item['description'] == null ? '' : item['description'],
+                item['category'] == null ? '' : item['category'],
+                item['link'] == null ? '' : item['link'],
+                item['origin'] == null ? '' : item['origin'],
+                new AnimationController(
+                  duration: new Duration(milliseconds: 300),
+                  vsync: widget.vsync,
+                )
+            );
+            _news.add(notice);
+            notice.animationController.forward();
+          });
+
+          carregando = false;
+        }
+
+        );
+      }else{
+        widget.errorConection = true;
       }
-
-      );
 
     }
   }

@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../util/date_util.dart';
+import 'package:share/share.dart';
 
 class DetailPage extends StatelessWidget{
 
@@ -19,6 +22,15 @@ class DetailPage extends StatelessWidget{
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(_origin),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.share),
+            onPressed: () {
+              shareNotice();
+            },
+            color: Colors.white,
+          )
+        ],
       ),
       body: new Container(
         margin: new EdgeInsets.all(10.0),
@@ -154,8 +166,11 @@ class DetailPage extends StatelessWidget{
   }
 
   _launchURL(url) async {
-
       await launch(url);
+  }
+
+  Future shareNotice() async {
+    await Share.share("$_title:\n$_link");
   }
 
 }

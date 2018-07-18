@@ -5,13 +5,13 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Pods/.symlinks/flutter/ios`)
-  - url_launcher (from `Pods/.symlinks/plugins/url_launcher-3.0.0/ios`)
+  - url_launcher (from `Pods/.symlinks/plugins/url_launcher-3.0.2/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Pods/.symlinks/flutter/ios
   url_launcher:
-    :path: Pods/.symlinks/plugins/url_launcher-3.0.0/ios
+    :path: Pods/.symlinks/plugins/url_launcher-3.0.2/ios
 
 SPEC CHECKSUMS:
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a

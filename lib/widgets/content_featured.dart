@@ -7,6 +7,7 @@ import 'detail.dart';
 class ContentFeaturedPage extends StatefulWidget{
 
   final vsync;
+  var errorConection = false;
 
   ContentFeaturedPage(this.vsync);
 
@@ -48,37 +49,79 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
 
     _context = context;
 
-    return new GestureDetector(
-      child: new Stack(
-        children: <Widget>[
-          new FadeTransition(
-            opacity: animationController,
-            child: new Container(
-              child: new PageTransformer(
-                  pageViewBuilder: (context,visibilityResolver){
-                    return new PageView.builder(
-                      controller: new PageController(viewportFraction: 0.9),
-                      itemCount: _destaque.length,
-                      onPageChanged: (position){
-                        setState((){
-                          positionFeatured = position;
-                        });
-                      },
-                      itemBuilder:(context,index){
-                        final item = _destaque[index];
-                        final pageVisibility = visibilityResolver.resolvePageVisibility(index);
-                        return new IntroNewsItem(item: item,pageVisibility: pageVisibility);
-                      },
-                    );
-                  }
+    if(!widget.errorConection) {
+      return new GestureDetector(
+        child: new Stack(
+          children: <Widget>[
+            new FadeTransition(
+              opacity: animationController,
+              child: new Container(
+                child: new PageTransformer(
+                    pageViewBuilder: (context, visibilityResolver) {
+                      return new PageView.builder(
+                        controller: new PageController(viewportFraction: 0.9),
+                        itemCount: _destaque.length,
+                        onPageChanged: (position) {
+                          setState(() {
+                            positionFeatured = position;
+                          });
+                        },
+                        itemBuilder: (context, index) {
+                          final item = _destaque[index];
+                          final pageVisibility = visibilityResolver
+                              .resolvePageVisibility(index);
+                          return new IntroNewsItem(
+                              item: item, pageVisibility: pageVisibility);
+                        },
+                      );
+                    }
+                ),
               ),
             ),
+            _getProgress()
+          ],
+        ),
+        onTap: onTabFeatured,
+      );
+    }else{
+      return new Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 50.0,
+            horizontal: 8.0,
           ),
-          _getProgress()
-        ],
-      ),
-      onTap: onTabFeatured,
-    );
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new Icon(
+                  Icons.cloud_off,
+                  size: 100.0,
+                  color: Colors.blue,
+                ),
+                new Text(
+                    "Erro de conexão",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: new RaisedButton(
+                    onPressed: (){
+                      loadNewsRecent();
+                    },
+                    child: new Text("TENTAR NOVAMENTE"),
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+      );
+    }
 
   }
 
@@ -118,30 +161,36 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
 
     Map result = await repositoty.loadNewsRecent();
 
-    setState(() {
+    if (result != null) {
 
-      result['data'].forEach((item){
+      widget.errorConection = false;
 
-        var destaque = new IntroNews(
-            item['tittle'],
-            item['category'],
-            item['url_img'],
-            item['description'],
-            item['date'],
-            item['link'],
-            item['origin']
-        );
+      setState(() {
+        result['data'].forEach((item) {
+          var destaque = new IntroNews(
+              item['tittle'],
+              item['category'],
+              item['url_img'],
+              item['description'],
+              item['date'],
+              item['link'],
+              item['origin']
+          );
 
-        _destaque.add(destaque);
+          _destaque.add(destaque);
+        });
 
+        carregando = false;
+
+        animationController.forward();
       });
 
-      carregando = false;
-
-      animationController.forward();
-
-    });
-
+    }else{
+      widget.errorConection = true;
+      setState((){
+        carregando = false;
+      });
+    }
   }
 
   @override

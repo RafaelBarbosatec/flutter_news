@@ -121,7 +121,7 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
 
     return new Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: 50.0,
+        vertical: 20.0,
         horizontal: 8.0,
       ),
       child: Container(

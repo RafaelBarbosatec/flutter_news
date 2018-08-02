@@ -157,7 +157,7 @@ class _SearchResultState extends State<SearchResultPage> with TickerProviderStat
     return Center(
       child: new Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 50.0,
+          vertical: 20.0,
           horizontal: 8.0,
         ),
         child: Container(

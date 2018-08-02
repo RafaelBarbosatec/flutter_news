@@ -4,6 +4,7 @@ import 'notice.dart';
 
 class SearchResultPage extends StatefulWidget{
 
+  var errorConection = false;
   final String query;
 
   SearchResultPage(this.query);
@@ -36,7 +37,7 @@ class _SearchResultState extends State<SearchResultPage> with TickerProviderStat
       appBar: new AppBar(
         title: new Text(widget.query),
       ),
-      body: _getListViewWidget(),
+      body:  widget.errorConection ?_buildConnectionError() : _getListViewWidget(),
 
     );
     
@@ -88,39 +89,53 @@ class _SearchResultState extends State<SearchResultPage> with TickerProviderStat
 
       Map result = await repository.loadSearch(query);
 
-      setState(() {
+      if(result != null){
 
-        if(result['op']){
+        widget.errorConection = false;
 
-          result['data'].forEach((item) {
-            var notice = new Notice(
-                item['url_img'] == null ? '' : item['url_img'],
-                item['tittle'] == null ? '' : item['tittle'],
-                item['date'] == null ? '' : item['date'],
-                item['description'] == null ? '' : item['description'],
-                item['category'] == null ? '' : item['category'],
-                item['link'] == null ? '' : item['link'],
-                item['origin'] == null ? '' : item['origin'],
-                new AnimationController(
-                  duration: new Duration(milliseconds: 300),
-                  vsync: this,
-                )
-            );
-            _news.add(notice);
-            notice.animationController.forward();
-          });
+        setState(() {
 
-        }else{
+          if(result['op']){
 
-          empty = true;
+            result['data'].forEach((item) {
+              var notice = new Notice(
+                  item['url_img'] == null ? '' : item['url_img'],
+                  item['tittle'] == null ? '' : item['tittle'],
+                  item['date'] == null ? '' : item['date'],
+                  item['description'] == null ? '' : item['description'],
+                  item['category'] == null ? '' : item['category'],
+                  item['link'] == null ? '' : item['link'],
+                  item['origin'] == null ? '' : item['origin'],
+                  new AnimationController(
+                    duration: new Duration(milliseconds: 300),
+                    vsync: this,
+                  )
+              );
+              _news.add(notice);
+              notice.animationController.forward();
+            });
 
+          }else{
+
+            empty = true;
+
+          }
+
+
+          carregando = false;
         }
 
+        );
 
-        carregando = false;
+      }else{
+
+        widget.errorConection = true;
+
+        setState((){
+          carregando = false;
+        });
+
       }
-
-      );
 
   }
 
@@ -135,6 +150,50 @@ class _SearchResultState extends State<SearchResultPage> with TickerProviderStat
     }else{
       return new Container();
     }
+  }
+
+  Widget _buildConnectionError(){
+
+    return Center(
+      child: new Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 50.0,
+          horizontal: 8.0,
+        ),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Icon(
+                Icons.cloud_off,
+                size: 100.0,
+                color: Colors.blue,
+              ),
+              new Text(
+                "Erro de conexão",
+                style: TextStyle(
+                  fontSize: 20.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: new RaisedButton(
+                  onPressed: (){
+                    loadSearch(widget.query);
+                  },
+                  child: new Text("TENTAR NOVAMENTE"),
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
   }
 
 }

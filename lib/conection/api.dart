@@ -47,11 +47,15 @@ class NewsApi{
     String apiUrl = '$url/notice/search/$query';
     // Make a HTTP GET request to the CoinMarketCap API.
     // Await basically pauses execution until the get() function returns a Response
-    http.Response response = await http.get(apiUrl);
-    // Using the JSON class to decode the JSON String
-    const JsonDecoder decoder = const JsonDecoder();
+    try{
+      http.Response response = await http.get(apiUrl);
+      // Using the JSON class to decode the JSON String
+      const JsonDecoder decoder = const JsonDecoder();
+      return decoder.convert(response.body);
 
-    return decoder.convert(response.body);
+    } on Exception catch(_){
+      return null;
+    }
 
   }
 

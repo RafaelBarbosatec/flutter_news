@@ -73,7 +73,7 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
     return new Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: 50.0,
+        vertical: 20.0,
         horizontal: 8.0,
       ),
       child: Container(
@@ -277,7 +277,13 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
         );
       }else{
+
         widget.errorConection = true;
+
+        setState((){
+          carregando = false;
+        });
+
       }
 
     }

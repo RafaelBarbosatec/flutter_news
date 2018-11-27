@@ -27,7 +27,7 @@ Aplicação de noticias desenvolvido para prática, aprendizado e teste do poten
 ## Tutorial
 [(Medium) - Part 1](https://medium.com/@rafaelbarbosatec/flutter-construindo-uma-linda-aplica%C3%A7%C3%A3o-de-not%C3%ADcias-parte-1-f0cbeecb7ab).
 
-(Medium) - Part 2: Em breve.
+[(Medium) - Part 2](https://medium.com/@rafaelbarbosatec/flutter-construindo-uma-linda-aplica%C3%A7%C3%A3o-de-not%C3%ADcias-parte-2-86586a18dae).
 
 
 ## Download

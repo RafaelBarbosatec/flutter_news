@@ -5,6 +5,6 @@ class DateUtil{
   String buildDate(String date){
     var datatime = DateTime.parse(date);
 
-    return "${datatime.day} de ${mouths[datatime.month]} de ${datatime.year} às ${datatime.hour}:${datatime.minute}";
+    return "${datatime.day} de ${mouths[datatime.month-1]} de ${datatime.year} às ${datatime.hour}:${datatime.minute}";
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
 import 'notice.dart';
 import '../conection/api.dart';
 
@@ -59,10 +60,10 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
     //print(current_category);
 
     return new Container(
-      child: new Column(
+      child: new Stack(
         children: <Widget>[
+          widget.errorConection ? _buildConnectionError(): _getListViewWidget(),
           _getListCategory(),
-          widget.errorConection ? _buildConnectionError(): new Expanded(child: _getListViewWidget())
         ],
       )
     );
@@ -120,11 +121,17 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
           //final Map notice = _news[index];
           //print(index);
-
-          if(index >= _news.length -4 && !carregando){
+//
+          if(index >= _news.length -1 && !carregando){
             loadCategory(current_category, page);
           }
-
+        print(index);
+        if(index == 0){
+          return Container(
+            margin: EdgeInsets.only(top: 50.0),
+            child: _news[index],
+          );
+        }else
           return _news[index];
         }
     );
@@ -178,9 +185,10 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
   Widget _buildCategoryItem(index){
 
-    return new GestureDetector(
+    return new InkWell(
       onTap: (){
         onTabCategory(index);
+        print("click");
       },
       child: new Row(
         mainAxisSize: MainAxisSize.min,
@@ -190,10 +198,10 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
             margin: new EdgeInsets.only(left: 10.0),
             child: new Material(
               elevation: 2.0,
+              color: category_selected == index ? Colors.blue[800]:Colors.blue[500],
               borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
               child:  new Container(
                 padding: new EdgeInsets.only(left: 12.0,top: 7.0,bottom: 7.0,right: 12.0),
-                color: category_selected == index ? Colors.blue[800]:Colors.blue[500],
                 child: new Text(_categorys[index],
                   style: new TextStyle(
                       color: Colors.white),
@@ -233,17 +241,17 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
     if(page < pages-1 || page == 0) {
 
-      setState((){
-
-        current_category = category;
-
-        if(page == 0) {
-          _news.clear();
-        }
-
-        carregando = true;
-
-      });
+//      setState((){
+//
+//        current_category = category;
+//
+//        if(page == 0) {
+//          _news.clear();
+//        }
+//
+//        carregando = true;
+//
+//      });
 
       Map result = await repository.loadNews(category, page.toString());
 

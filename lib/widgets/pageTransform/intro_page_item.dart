@@ -152,7 +152,7 @@ class IntroNewsItem extends StatelessWidget {
         child: new Stack(
           fit: StackFit.expand,
           children: [
-            _getImageNetwork(_getImageUrl(item.imageUrl, 400, '')),
+            new Hero(tag: item.title,child: _getImageNetwork(_getImageUrl(item.imageUrl, 400, ''))),
             _getOverlayGradient(),
             _buildTextContainer(context),
           ],

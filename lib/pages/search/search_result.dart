@@ -1,5 +1,5 @@
+import 'package:FlutterNews/conection/api.dart';
 import 'package:flutter/material.dart';
-import '../conection/api.dart';
 import 'package:FlutterNews/domain/notice/notice.dart';
 
 class SearchResultPage extends StatefulWidget{

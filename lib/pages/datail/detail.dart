@@ -1,8 +1,9 @@
 import 'dart:async';
 
+import 'package:FlutterNews/util/date_util.dart';
+import 'package:FlutterNews/util/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../util/date_util.dart';
 import 'package:share/share.dart';
 
 class DetailPage extends StatelessWidget{
@@ -41,7 +42,7 @@ class DetailPage extends StatelessWidget{
             children: <Widget>[
              new Hero(
                  tag: _title,
-                 child: _getImageNetwork(_getImageUrl(_img,250,''))
+                 child: _getImageNetwork(Functions.getImgResizeUrl(_img,250,''))
              ),
               _getBody(_title,_date,_description,_origin),
             ],

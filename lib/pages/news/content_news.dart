@@ -1,9 +1,8 @@
 import 'dart:async';
 
+import 'package:FlutterNews/conection/api.dart';
 import 'package:flutter/material.dart';
-
 import 'package:FlutterNews/domain/notice/notice.dart';
-import '../conection/api.dart';
 
 class ContentNewsPage extends StatefulWidget{
 

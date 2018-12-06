@@ -1,8 +1,8 @@
+import 'package:FlutterNews/conection/api.dart';
+import 'package:FlutterNews/pages/datail/detail.dart';
+import 'package:FlutterNews/widgets/pageTransform/intro_page_item.dart';
+import 'package:FlutterNews/widgets/pageTransform/page_transformer.dart';
 import 'package:flutter/material.dart';
-import 'pageTransform/page_transformer.dart';
-import 'pageTransform/intro_page_item.dart';
-import '../conection/api.dart';
-import 'detail.dart';
 
 class ContentFeaturedPage extends StatefulWidget{
 

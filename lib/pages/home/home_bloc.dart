@@ -2,8 +2,8 @@
 import 'dart:async';
 
 import 'package:FlutterNews/util/bloc_provider.dart';
-import 'package:FlutterNews/widgets/content_featured.dart';
-import 'package:FlutterNews/widgets/content_news.dart';
+import 'package:FlutterNews/pages/featured/content_featured.dart';
+import 'package:FlutterNews/pages/news/content_news.dart';
 import 'package:flutter/material.dart';
 
 class HomeBloc implements BlocBase{

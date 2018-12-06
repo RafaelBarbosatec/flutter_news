@@ -1,8 +1,8 @@
 import 'package:FlutterNews/pages/home/home_bloc.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
+import 'package:FlutterNews/widgets/bottom_navigation.dart';
+import 'package:FlutterNews/widgets/search.dart';
 import 'package:flutter/material.dart';
-import 'bottom_navigation.dart';
-import 'search.dart';
 
 class HomePage extends StatelessWidget {
 

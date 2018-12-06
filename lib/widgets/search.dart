@@ -1,6 +1,6 @@
 import 'package:FlutterNews/localization/MyLocalizations.dart';
 import 'package:flutter/material.dart';
-import 'search_result.dart';
+import 'package:FlutterNews/pages/search/search_result.dart';
 
 class SearchWidget extends StatelessWidget{
 

@@ -2,7 +2,7 @@ import 'package:FlutterNews/injection/injector.dart';
 import 'package:FlutterNews/localization/MyLocalizationsDelegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
-import 'widgets/home.dart';
+import 'package:FlutterNews/pages/home/home.dart';
 
 void main() => runApp(new NewsApp());
 

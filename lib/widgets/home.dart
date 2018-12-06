@@ -1,24 +1,22 @@
+import 'package:FlutterNews/pages/home/home_bloc.dart';
+import 'package:FlutterNews/util/bloc_provider.dart';
 import 'package:flutter/material.dart';
 import 'bottom_navigation.dart';
-import 'content_news.dart';
-import 'content_featured.dart';
 import 'search.dart';
-import 'info.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
 
-  @override
-  _HomePageState createState() => new _HomePageState();
-
-}
-
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-
-  var _current_tab = 0;
+  static Widget create(){
+    return BlocProvider<HomeBloc>(
+      bloc: HomeBloc(),
+      child: HomePage(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
 
+    HomeBloc bloc = BlocProvider.of<HomeBloc>(context);
 
     return new Scaffold(
       body: new Container(
@@ -31,47 +29,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: new SearchWidget(),
             ) ,
             new Expanded(
-                child: _getContent(_current_tab)
+                child: _getContent(bloc)
             )
           ],
         ),
       ),
-      bottomNavigationBar: new BottomNavigation(onTabNavigationBottom), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: new BottomNavigation((index){
+        bloc.selectTab(index);
+      }), // This trailing comma makes auto-formatting nicer for build methods.
     );
 
 
   }
 
-  Widget _getContent(index){
+  Widget _getContent(HomeBloc bloc){
 
-    Widget content;
-    switch(index){
-      case 0: content = new ContentFeaturedPage(this);break;
-      case 1: content = new ContentNewsPage(this);break;
-      default:
-        {
-          content = new Info(new AnimationController(
-              vsync: this,
-              duration: new Duration(milliseconds: 500)
-          ));
-          (content as Info).animationController.forward();
+    return StreamBuilder(
+        stream: bloc.widgetSelected,
+        initialData: Container(),
+        builder:  (BuildContext context, AsyncSnapshot snapshot){
+          return snapshot.data;
         }
-    }
-
-    return content;
+    );
   }
 
-  onTabNavigationBottom(index){
-
-
-    if(index != _current_tab) {
-
-        setState((){
-          _current_tab = index;
-          }
-        );
-
-    }
-
-  }
 }

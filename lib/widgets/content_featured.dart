@@ -6,10 +6,9 @@ import 'detail.dart';
 
 class ContentFeaturedPage extends StatefulWidget{
 
-  final vsync;
   var errorConection = false;
 
-  ContentFeaturedPage(this.vsync);
+  ContentFeaturedPage();
 
   final state = new _ContentFeaturedState();
 
@@ -20,7 +19,7 @@ class ContentFeaturedPage extends StatefulWidget{
 
 }
 
-class _ContentFeaturedState extends State<ContentFeaturedPage>{
+class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProviderStateMixin{
 
   List _destaque = new List();
   AnimationController animationController;
@@ -37,7 +36,7 @@ class _ContentFeaturedState extends State<ContentFeaturedPage>{
     super.initState();
 
     animationController = new AnimationController(
-        vsync: widget.vsync,
+        vsync: this,
         duration: new Duration(milliseconds: 300)
     );
 

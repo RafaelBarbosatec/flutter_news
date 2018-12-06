@@ -1,6 +1,7 @@
+import 'package:FlutterNews/util/date_util.dart';
+import 'package:FlutterNews/util/functions.dart';
+import 'package:FlutterNews/widgets/detail.dart';
 import 'package:flutter/material.dart';
-import 'detail.dart';
-import '../util/date_util.dart';
 
 class Notice extends StatelessWidget{
 
@@ -12,27 +13,33 @@ class Notice extends StatelessWidget{
   var _link;
   var _origin;
 
-  final AnimationController animationController;
+  AnimationController animationController;
 
-  Notice(this._img,this._title,this._date,this._description,this._category,this._link,this._origin, this.animationController);
+  Notice(this._img,this._title,this._date,this._description,this._category,this._link,this._origin);
+
+  Notice.fromMap(Map<String, dynamic>  map) :
+        _img = map['url_img'],
+        _title = map['tittle'],
+        _date = map['date'],
+        _description = map['description'],
+        _category = map['category'],
+        _link = map['link'],
+        _origin = map['origin'];
+
 
   BuildContext _context;
-
 
   @override
   Widget build(BuildContext context) {
     this._context = context;
-    return new FadeTransition(
-      opacity: animationController,
-      child: new GestureDetector(
-        onTap: _handleTapUp,
-        child: new Container(
-          margin: const EdgeInsets.only(left: 10.0, right: 10.0,bottom: 10.0,top: 0.0),
-          child: new Material(
-            borderRadius: new BorderRadius.circular(6.0),
-            elevation: 2.0,
-            child: _getListTile(),
-          ),
+    return new GestureDetector(
+      onTap: _handleTapUp,
+      child: new Container(
+        margin: const EdgeInsets.only(left: 10.0, right: 10.0,bottom: 10.0,top: 0.0),
+        child: new Material(
+          borderRadius: new BorderRadius.circular(6.0),
+          elevation: 2.0,
+          child: _getListTile(),
         ),
       ),
     );
@@ -45,18 +52,12 @@ class Notice extends StatelessWidget{
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Hero(tag: _title, child: _getImgWidget(_getImageUrl(_img, 200, 200)),),
+          new Hero(tag: _title, child: _getImgWidget(Functions.getImgResizeUrl(_img, 200, 200)),),
           _getColumText(_title,_date,_description)
         ],
 
       ),
     );
-
-  }
-
-  String _getImageUrl(url,height,width){
-
-    return 'http://104.131.18.84/notice/tim.php?src=$url&h=$height&w=$width';
 
   }
 
@@ -93,22 +94,23 @@ class Notice extends StatelessWidget{
     return new Container(
       width: 95.0,
       height: 95.0,
-      child: new Material(
+      child: new ClipRRect(
         borderRadius: new BorderRadius.only(topLeft: const Radius.circular(6.0),bottomLeft: const Radius.circular(6.0)),
         child: _getImageNetwork(url),
       ),
     );
   }
 
-  Widget _getImageNetwork(url){
+  Widget _getImageNetwork(String url){
 
     try{
-      if(url != '') {
+      if(url.isNotEmpty) {
 
         return new FadeInImage.assetNetwork(
           placeholder: 'assets/place_holder.jpg',
           image: url,
           fit: BoxFit.cover,);
+
       }else{
         return new Image.asset('assets/place_holder.jpg');
       }

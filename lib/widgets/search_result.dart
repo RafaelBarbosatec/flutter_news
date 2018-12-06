@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../conection/api.dart';
-import 'notice.dart';
+import 'package:FlutterNews/domain/notice/notice.dart';
 
 class SearchResultPage extends StatefulWidget{
 
@@ -106,13 +106,8 @@ class _SearchResultState extends State<SearchResultPage> with TickerProviderStat
                   item['category'] == null ? '' : item['category'],
                   item['link'] == null ? '' : item['link'],
                   item['origin'] == null ? '' : item['origin'],
-                  new AnimationController(
-                    duration: new Duration(milliseconds: 300),
-                    vsync: this,
-                  )
               );
               _news.add(notice);
-              notice.animationController.forward();
             });
 
           }else{

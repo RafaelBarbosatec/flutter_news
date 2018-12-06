@@ -2,16 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'notice.dart';
+import 'package:FlutterNews/domain/notice/notice.dart';
 import '../conection/api.dart';
 
 class ContentNewsPage extends StatefulWidget{
 
-  final vsync;
-
   var errorConection = false;
-
-  ContentNewsPage(this.vsync);
 
   final state = new _ContentNewsPageState();
 
@@ -20,7 +16,7 @@ class ContentNewsPage extends StatefulWidget{
 
 }
 
-class _ContentNewsPageState extends State<ContentNewsPage>{
+class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderStateMixin{
 
   var current_category = 'geral';
   List _news = new List();
@@ -57,9 +53,8 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
   @override
   Widget build(BuildContext context) {
 
-    //print(current_category);
-
     return new Container(
+      padding: EdgeInsets.only(top: 2.0),
       child: new Stack(
         children: <Widget>[
           widget.errorConection ? _buildConnectionError(): _getListViewWidget(),
@@ -179,6 +174,7 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
     return new Container(
       height: 50.0,
       child: listCategory,
+      color: Colors.grey[200].withAlpha(200),
     );
 
   }
@@ -271,13 +267,9 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
                 item['category'] == null ? '' : item['category'],
                 item['link'] == null ? '' : item['link'],
                 item['origin'] == null ? '' : item['origin'],
-                new AnimationController(
-                  duration: new Duration(milliseconds: 300),
-                  vsync: widget.vsync,
-                )
             );
             _news.add(notice);
-            notice.animationController.forward();
+
           });
 
           carregando = false;
@@ -299,8 +291,6 @@ class _ContentNewsPageState extends State<ContentNewsPage>{
 
   @override
   void dispose() {
-    for (Notice n in _news)
-      n.animationController.dispose();
     super.dispose();
   }
 

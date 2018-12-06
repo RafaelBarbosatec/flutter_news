@@ -56,12 +56,15 @@ class DetailPage extends StatelessWidget{
     try{
       if(url != '') {
 
-        return new Container(
-          height: 200.0,
-          child: new FadeInImage.assetNetwork(
-            placeholder: 'assets/place_holder.jpg',
-            image: url,
-            fit: BoxFit.cover,),
+        return ClipRRect(
+          borderRadius: new BorderRadius.only(topLeft: Radius.circular(6.0),topRight: Radius.circular(6.0)),
+          child: new Container(
+            height: 200.0,
+            child: new FadeInImage.assetNetwork(
+              placeholder: 'assets/place_holder.jpg',
+              image: url,
+              fit: BoxFit.cover,),
+          ),
         );
       }else{
         return new Container(

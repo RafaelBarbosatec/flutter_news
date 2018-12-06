@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 
 class HomeBloc implements BlocBase{
 
-  StreamController<int> tabPositionController = StreamController<int>();
-  StreamController<Widget> screenController = StreamController<Widget>();
+  StreamController<int> _tabPositionController = StreamController<int>();
+  StreamController<Widget> _screenController = StreamController<Widget>();
 
-  Function(int) get selectTab => tabPositionController.sink.add;
-  Stream<int> get tabPosition => tabPositionController.stream;
+  Function(int) get selectTab => _tabPositionController.sink.add;
+  Stream<int> get tabPosition => _tabPositionController.stream;
 
-  Function(Widget) get addWidget => screenController.sink.add;
-  Stream<Widget> get widgetSelected => screenController.stream;
+  Function(Widget) get addWidget => _screenController.sink.add;
+  Stream<Widget> get widgetSelected => _screenController.stream;
 
   HomeBloc(){
     selectTab(0);
@@ -24,7 +24,7 @@ class HomeBloc implements BlocBase{
     tabPosition.listen((position){
 
       switch(position){
-        case 0: addWidget(ContentFeaturedPage());break;
+        case 0: addWidget(ContentFeaturedPage.create());break;
         case 1: addWidget(ContentNewsPage());break;
         default:
           {
@@ -42,8 +42,8 @@ class HomeBloc implements BlocBase{
 
   @override
   void dispose() {
-    tabPositionController.close();
-    screenController.close();
+    _tabPositionController.close();
+    _screenController.close();
   }
 
 }

@@ -5,26 +5,26 @@ import 'package:flutter/material.dart';
 
 class Notice extends StatelessWidget{
 
-  var _img;
-  var _title;
-  var _date;
-  var _description;
-  var _category;
-  var _link;
-  var _origin;
+  var img;
+  var title;
+  var date;
+  var description;
+  var category;
+  var link;
+  var origin;
 
   AnimationController animationController;
 
-  Notice(this._img,this._title,this._date,this._description,this._category,this._link,this._origin);
+  Notice(this.img,this.title,this.date,this.description,this.category,this.link,this.origin);
 
   Notice.fromMap(Map<String, dynamic>  map) :
-        _img = map['url_img'],
-        _title = map['tittle'],
-        _date = map['date'],
-        _description = map['description'],
-        _category = map['category'],
-        _link = map['link'],
-        _origin = map['origin'];
+        img = map['url_img'],
+        title = map['tittle'],
+        date = map['date'],
+        description = map['description'],
+        category = map['category'],
+        link = map['link'],
+        origin = map['origin'];
 
 
   BuildContext _context;
@@ -52,8 +52,8 @@ class Notice extends StatelessWidget{
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Hero(tag: _title, child: _getImgWidget(Functions.getImgResizeUrl(_img, 200, 200)),),
-          _getColumText(_title,_date,_description)
+          new Hero(tag: title, child: _getImgWidget(Functions.getImgResizeUrl(img, 200, 200)),),
+          _getColumText(title,date,description)
         ],
 
       ),
@@ -65,7 +65,7 @@ class Notice extends StatelessWidget{
 
     Navigator.of(_context).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-        return new DetailPage(_img,_title,_date,_description,_category,_link,_origin);
+        return new DetailPage(img,title,date,description,category,link,origin);
       }
       )
     );
@@ -80,9 +80,9 @@ class Notice extends StatelessWidget{
           child: new Column(
             crossAxisAlignment:CrossAxisAlignment.start,
             children: <Widget>[
-              _getTitleWidget(_title),
-              _getDateWidget(_date),
-              _getDescriptionWidget(_description)],
+              _getTitleWidget(title),
+              _getDateWidget(date),
+              _getDescriptionWidget(description)],
           ),
         )
     );

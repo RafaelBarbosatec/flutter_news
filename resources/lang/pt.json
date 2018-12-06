@@ -2,5 +2,7 @@
   "tab_recentes":"Recentes",
   "tab_noticias":"Notícias",
   "tab_sobre":"Sobre",
-  "hint_busca":"Busque sua noticia aqui"
+  "hint_busca":"Busque sua noticia aqui",
+  "text_error":"Erro de conexão",
+  "text_tentar_novamente":"TENTAR NOVAMENTE"
 }

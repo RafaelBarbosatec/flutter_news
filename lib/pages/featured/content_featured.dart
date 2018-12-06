@@ -2,6 +2,7 @@ import 'package:FlutterNews/domain/notice/notice.dart';
 import 'package:FlutterNews/pages/datail/detail.dart';
 import 'package:FlutterNews/pages/featured/featured_bloc.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
+import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:FlutterNews/widgets/pageTransform/intro_page_item.dart';
 import 'package:FlutterNews/widgets/pageTransform/page_transformer.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,9 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
           builder: (BuildContext context, AsyncSnapshot snapshot){
 
             if(snapshot.data) {
-              return _buildConnectionError(bloc);
+              return ErroConection(tryAgain:(){
+                bloc.load();
+              });
             }else{
               return Container();
             }
@@ -105,50 +108,6 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
           return new Container();
         }
       }
-    );
-
-  }
-
-  Widget _buildConnectionError(FeaturedBloc bloc){
-
-    return Center(
-      child: new Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 20.0,
-          horizontal: 8.0,
-        ),
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Icon(
-                Icons.cloud_off,
-                size: 100.0,
-                color: Colors.blue,
-              ),
-              new Text(
-                "Erro de conexão",
-                style: TextStyle(
-                  fontSize: 20.0,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: new RaisedButton(
-                  onPressed: (){
-                    bloc.load();
-                  },
-                  child: new Text("TENTAR NOVAMENTE"),
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
 
   }

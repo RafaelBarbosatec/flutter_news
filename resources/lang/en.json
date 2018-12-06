@@ -2,5 +2,7 @@
   "tab_recentes":"Highlights",
   "tab_noticias":"News",
   "tab_sobre":"About",
-  "hint_busca":"Search for your news here"
+  "hint_busca":"Search for your news here",
+  "text_error":"Connection error",
+  "text_tentar_novamente":"TRY AGAIN"
 }

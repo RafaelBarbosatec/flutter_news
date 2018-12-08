@@ -25,7 +25,7 @@ class HomeBloc implements BlocBase{
 
       switch(position){
         case 0: addWidget(ContentFeaturedPage.create());break;
-        case 1: addWidget(ContentNewsPage());break;
+        case 1: addWidget(ContentNewsPage.create());break;
         default:
           {
             addWidget(Container());

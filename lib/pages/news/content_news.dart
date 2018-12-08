@@ -1,10 +1,21 @@
 import 'dart:async';
 
 import 'package:FlutterNews/conection/api.dart';
+import 'package:FlutterNews/pages/news/news_bloc.dart';
+import 'package:FlutterNews/util/bloc_provider.dart';
+import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterNews/domain/notice/notice.dart';
 
 class ContentNewsPage extends StatefulWidget{
+
+
+  static Widget create(){
+    return BlocProvider<NewsBloc>(
+      bloc: NewsBloc(),
+      child: ContentNewsPage(),
+    );
+  }
 
   var errorConection = false;
 
@@ -27,6 +38,8 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
   var pages = 1;
   var category_selected = 0;
 
+  NewsBloc bloc;
+
   @override
   void initState() {
 
@@ -44,7 +57,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
     _category_english.add("health");
     _category_english.add("business");
 
-    loadCategory(current_category,page);
+    //loadCategory(current_category,page);
 
     super.initState();
   }
@@ -52,11 +65,20 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
   @override
   Widget build(BuildContext context) {
 
+    if(bloc == null) {
+
+      bloc = BlocProvider.of<NewsBloc>(context);
+      confBlocView(bloc);
+
+    }
+
     return new Container(
       padding: EdgeInsets.only(top: 2.0),
       child: new Stack(
         children: <Widget>[
-          widget.errorConection ? _buildConnectionError(): _getListViewWidget(),
+          _getListViewWidget(),
+          _buildConnectionError(),
+          _getProgress(),
           _getListCategory(),
         ],
       )
@@ -66,95 +88,82 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
 
   Widget _buildConnectionError(){
 
-    return new Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 20.0,
-        horizontal: 8.0,
-      ),
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Icon(
-              Icons.cloud_off,
-              size: 100.0,
-              color: Colors.blue,
-            ),
-            new Text(
-              "Erro de conexão",
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: new RaisedButton(
-                onPressed: (){
-                  loadCategory(current_category,page);
-                },
-                child: new Text("TENTAR NOVAMENTE"),
-                color: Colors.blue,
-                textColor: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return StreamBuilder(
+        stream: bloc.error,
+        initialData: false,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+
+          if(snapshot.data) {
+            return ErroConection(tryAgain:(){
+              bloc.load(false);
+            });
+          }else{
+            return Container();
+          }
+
+        }
     );
 
   }
 
   Widget _getListViewWidget(){
 
-    ListView listView = new ListView.builder(
-        itemCount: _news.length,
-        padding: new EdgeInsets.only(top: 5.0),
-        itemBuilder: (context, index){
+    return Container(
+      child: StreamBuilder(
+        stream: bloc.noticies,
+        initialData: List<Notice>(),
+        builder: (BuildContext context, AsyncSnapshot snapshot){
 
-          //final Map notice = _news[index];
-          //print(index);
-//
-          if(index >= _news.length -1 && !carregando){
-            loadCategory(current_category, page);
-          }
-        print(index);
-        if(index == 0){
-          return Container(
-            margin: EdgeInsets.only(top: 50.0),
-            child: _news[index],
+          var news = snapshot.data;
+
+          ListView listView = new ListView.builder(
+              itemCount: news.length,
+              padding: new EdgeInsets.only(top: 5.0),
+              itemBuilder: (context, index){
+
+                if(index + 3 >= news.length){
+                  bloc.load(true);
+                }
+
+                if(index == 0){
+                  return Container(
+                    margin: EdgeInsets.only(top: 50.0),
+                    child: news[index],
+                  );
+                }else{
+                  return news[index];
+                }
+              }
           );
-        }else
-          return _news[index];
+
+          return RefreshIndicator(
+              onRefresh: myRefresh,
+              child: listView
+          );
+
         }
-    );
-
-    RefreshIndicator refreshIndicator = new RefreshIndicator(
-        onRefresh: myRefresh,
-        child: listView
-    );
-
-    return new Stack(
-      children: <Widget>[
-        refreshIndicator,
-        _getProgress()
-      ],
+      ),
     );
 
   }
 
   Widget _getProgress(){
 
-    if(carregando){
-      return new Container(
-        child: new Center(
-          child: new CircularProgressIndicator(),
-        ),
-      );
-    }else{
-      return new Container();
-    }
+    return Center(
+      child: StreamBuilder(
+          stream: bloc.progress,
+          initialData: false,
+          builder: (BuildContext context, AsyncSnapshot snapshot){
+
+            if(snapshot.data){
+              return new CircularProgressIndicator();
+            }else{
+              return new Container();
+            }
+
+          }
+      ),
+    );
 
   }
 
@@ -164,8 +173,6 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
         itemCount: _categorys.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index){
-
-
           return _buildCategoryItem(index);
         }
     );
@@ -227,7 +234,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
 
   Future<Null> myRefresh() async{
 
-    await loadCategory(current_category,page);
+    bloc.load(false);
 
     return null;
   }
@@ -291,6 +298,18 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void confBlocView(NewsBloc bloc) {
+    bloc.anim.listen((show){
+
+      if(show){
+        //animationController.forward();
+      }
+
+    });
+
+    bloc.load(false);
   }
 
 }

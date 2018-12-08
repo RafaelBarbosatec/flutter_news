@@ -11,8 +11,6 @@ class ContentFeaturedPage extends StatefulWidget{
 
   var errorConection = false;
 
-  ContentFeaturedPage();
-
   static Widget create(){
     return BlocProvider<FeaturedBloc>(
       bloc: FeaturedBloc(),

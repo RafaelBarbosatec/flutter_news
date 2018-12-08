@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+import 'package:FlutterNews/conectionv2/api.dart';
 import 'package:FlutterNews/domain/notice/notice.dart';
 import 'package:FlutterNews/domain/notice/notice_repository.dart';
 import 'package:FlutterNews/injection/injector.dart';
@@ -31,6 +32,8 @@ class NewsBloc implements BlocBase{
   int _page = 0;
   int _currentCategory = 0;
   List<String> _categories = List();
+  List<Notice> _newsInner = List();
+  bool _carregando = false;
 
   NewsBloc(){
 
@@ -52,17 +55,28 @@ class NewsBloc implements BlocBase{
 
   load(bool isMore){
 
-    if(isMore){
-      _page++;
-    }else{
-      _page = 0;
+    if(!_carregando){
+
+      if(isMore){
+        _page++;
+      }else{
+        _page = 0;
+      }
+
+      if(isMore || _newsInner.length == 0){
+        visibleProgress(true);
+      }
+
+      String category = _categories[_currentCategory];
+
+      _carregando = true;
+
+      repository.loadNews(category, _page)
+          .then((news) => showNews(news,isMore))
+          .catchError((onError) => showImplError(onError));
+
     }
 
-    String category = _categories[_currentCategory];
-
-    repository.loadNews(category, _page)
-        .then((news) => showNews(news))
-        .catchError((onError) => showImplError(onError));
   }
 
   @override
@@ -74,8 +88,31 @@ class NewsBloc implements BlocBase{
     _categoryController.close();
   }
 
-  showNews(List<Notice> news) {}
+  showNews(List<Notice> news,bool isMore) {
 
-  showImplError(onError) {}
+    visibleProgress(false);
+    if(isMore){
+      _newsInner.addAll(news);
+      addnoticies(_newsInner);
+    }else{
+      _newsInner = news;
+      addnoticies(news);
+      changeAnim(true);
+    }
+
+    _carregando = false;
+
+  }
+
+  showImplError(onError) {
+    print(onError);
+    if(onError is FetchDataException){
+      print("codigo: ${onError.code()}");
+    }
+    visibleError(true);
+    visibleProgress(false);
+
+    _carregando = false;
+  }
 
 }

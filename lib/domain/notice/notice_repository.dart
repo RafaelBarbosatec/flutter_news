@@ -25,8 +25,7 @@ class NoticeRepository{
   Future<List<Notice>> _serverNews(String category, int page) async{
 
     final Map result = await _api.get("/notice/news/$category/$page");
-
-    return result['data'].map<Notice>( (notice) => new Notice.fromMap(notice)).toList();
+    return result['data']['news'].map<Notice>( (notice) => new Notice.fromMap(notice)).toList();
 
   }
 

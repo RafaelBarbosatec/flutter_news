@@ -1,7 +1,7 @@
 
 import 'dart:async';
 
-import 'package:FlutterNews/conectionv2/api.dart';
+import 'package:FlutterNews/conection/api.dart';
 import 'package:FlutterNews/domain/notice/notice.dart';
 import 'package:FlutterNews/domain/notice/notice_repository.dart';
 import 'package:FlutterNews/injection/injector.dart';

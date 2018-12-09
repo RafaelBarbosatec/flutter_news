@@ -1,6 +1,5 @@
 
-
-import 'package:FlutterNews/conectionv2/api.dart';
+import 'package:FlutterNews/conection/api.dart';
 import 'package:FlutterNews/domain/notice/notice.dart';
 
 class NoticeRepository{
@@ -22,6 +21,12 @@ class NoticeRepository{
 
   }
 
+  Future<List<Notice>> loadSearch(String query) async {
+
+    return _prod ? _serverSearch(query) : _localSearch();
+
+  }
+
   Future<List<Notice>> _serverNews(String category, int page) async{
 
     final Map result = await _api.get("/notice/news/$category/$page");
@@ -37,11 +42,27 @@ class NoticeRepository{
 
   }
 
-  List<Notice> _localNews() {
+  Future<List<Notice>> _serverSearch(String query) async{
+
+    final Map result = await _api.get("/notice/search/$query");
+
+    if(result['op']){
+      return result['data'].map<Notice>( (notice) => new Notice.fromMap(notice)).toList();
+    }else{
+      return List();
+    }
+
+  }
+
+  _localNews() {
     return new List();
   }
 
   _localNewsRecent() {
+    return new List();
+  }
+
+  _localSearch() {
     return new List();
   }
 

@@ -1,13 +1,22 @@
-import 'package:FlutterNews/conection/api.dart';
+import 'package:FlutterNews/localization/MyLocalizations.dart';
+import 'package:FlutterNews/pages/search/search_result_bloc.dart';
+import 'package:FlutterNews/util/bloc_provider.dart';
+import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterNews/domain/notice/notice.dart';
 
 class SearchResultPage extends StatefulWidget{
 
-  var errorConection = false;
   final String query;
 
   SearchResultPage(this.query);
+
+  static Widget create(String query){
+    return BlocProvider<SearchResultBloc>(
+      bloc: SearchResultBloc(),
+      child: SearchResultPage(query),
+    );
+  }
 
   @override
   State<StatefulWidget> createState() {
@@ -18,26 +27,44 @@ class SearchResultPage extends StatefulWidget{
 
 class _SearchResultState extends State<SearchResultPage> with TickerProviderStateMixin{
 
-  List _news = new List();
-  var carregando = false;
-  var empty = false;
-
-  var repository = new NewsApi();
+  SearchResultBloc bloc;
+  MyLocalizations strl;
+  AnimationController animationController;
 
   @override
   void initState() {
+
+    animationController = new AnimationController(
+        vsync: this,
+        duration: new Duration(milliseconds: 350));
+
     super.initState();
-    loadSearch(widget.query);
   }
 
   @override
   Widget build(BuildContext context) {
 
+    strl = MyLocalizations.of(context);
+    
+    if(bloc == null) {
+
+      bloc = BlocProvider.of<SearchResultBloc>(context);
+      confBlocView(bloc);
+
+    }
+
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.query),
       ),
-      body:  widget.errorConection ?_buildConnectionError() : _getListViewWidget(),
+      body:  Stack(
+        children: <Widget>[
+          _getListViewWidget(),
+          _getProgress(),
+          _getEmpty(),
+          _buildConnectionError()
+        ],
+      ),
 
     );
     
@@ -45,150 +72,99 @@ class _SearchResultState extends State<SearchResultPage> with TickerProviderStat
 
   Widget _getListViewWidget(){
 
-    ListView listView = new ListView.builder(
-        itemCount: _news.length,
-        padding: new EdgeInsets.only(top: 5.0),
-        itemBuilder: (context, index){
+    return FadeTransition(
+      opacity: animationController,
+      child: StreamBuilder(
+        initialData: List<Notice>(),
+        stream: bloc.noticies,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
 
-          return _news[index];
+          var news = snapshot.data;
+
+          return new ListView.builder(
+              itemCount: news.length,
+              padding: new EdgeInsets.only(top: 5.0),
+              itemBuilder: (context, index){
+                return news[index];
+              }
+          );
+
         }
-    );
-
-    return new Stack(
-      children: <Widget>[
-        listView,
-        _getProgress(),
-        _getEmpty()
-      ],
+      ),
     );
 
   }
 
   Widget _getProgress(){
 
-    if(carregando){
-      return new Container(
-        child: new Center(
-          child: new CircularProgressIndicator(),
-        ),
-      );
-    }else{
-      return new Container();
-    }
-
-  }
-
-  loadSearch(query) async{
-
-      setState((){
-
-        carregando = true;
-        empty = false;
-
-      });
-
-      Map result = await repository.loadSearch(query);
-
-      if(result != null){
-
-        widget.errorConection = false;
-
-        setState(() {
-
-          if(result['op']){
-
-            result['data'].forEach((item) {
-              var notice = new Notice(
-                  item['url_img'] == null ? '' : item['url_img'],
-                  item['tittle'] == null ? '' : item['tittle'],
-                  item['date'] == null ? '' : item['date'],
-                  item['description'] == null ? '' : item['description'],
-                  item['category'] == null ? '' : item['category'],
-                  item['link'] == null ? '' : item['link'],
-                  item['origin'] == null ? '' : item['origin'],
-              );
-              _news.add(notice);
-            });
-
+    return StreamBuilder(
+      stream: bloc.progress,
+      initialData: false,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          if(snapshot.data){
+            return new Container(
+              child: new Center(
+                child: new CircularProgressIndicator(),
+              ),
+            );
           }else{
-
-            empty = true;
-
+            return new Container();
           }
-
-
-          carregando = false;
         }
-
-        );
-
-      }else{
-
-        widget.errorConection = true;
-
-        setState((){
-          carregando = false;
-        });
-
-      }
+    );
 
   }
 
   Widget _getEmpty() {
 
-    if(empty){
-      return new Container(
-        child: new Center(
-          child: new Text("Nenhuma noticia encontrada :-("),
-        ),
-      );
-    }else{
-      return new Container();
-    }
+    return StreamBuilder(
+        stream: bloc.empty,
+        initialData: false,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+
+          if(snapshot.data) {
+            return Container(
+              child: new Center(
+                child: new Text(strl.trans("erro_busca")),
+              ),
+            );
+          }else{
+            return Container();
+          }
+        }
+
+    );
   }
 
   Widget _buildConnectionError(){
 
-    return Center(
-      child: new Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 20.0,
-          horizontal: 8.0,
-        ),
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Icon(
-                Icons.cloud_off,
-                size: 100.0,
-                color: Colors.blue,
-              ),
-              new Text(
-                "Erro de conexão",
-                style: TextStyle(
-                  fontSize: 20.0,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: new RaisedButton(
-                  onPressed: (){
-                    loadSearch(widget.query);
-                  },
-                  child: new Text("TENTAR NOVAMENTE"),
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return StreamBuilder(
+        stream: bloc.error,
+        initialData: false,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+
+          if(snapshot.data) {
+            return ErroConection(tryAgain:(){
+              bloc.load(widget.query);
+            });
+          }else{
+            return Container();
+          }
+
+        }
+
     );
 
+  }
+
+  void confBlocView(SearchResultBloc bloc) {
+    bloc.anim.listen((show){
+      if(show){
+        animationController.forward(from: 0.0);
+      }
+    });
+
+    bloc.load(widget.query);
   }
 
 }

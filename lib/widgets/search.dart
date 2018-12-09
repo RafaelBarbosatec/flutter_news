@@ -50,7 +50,7 @@ class SearchWidget extends StatelessWidget{
 
     Navigator.of(_context).push(
           new MaterialPageRoute(builder: (BuildContext context) {
-            return new SearchResultPage(query);
+            return SearchResultPage.create(query);
           }
         )
     );

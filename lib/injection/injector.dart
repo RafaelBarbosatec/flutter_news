@@ -1,4 +1,4 @@
-import 'package:FlutterNews/conectionv2/repository.dart';
+import 'package:FlutterNews/conection/repository.dart';
 
 enum Flavor {
   MOCK,

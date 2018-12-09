@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:FlutterNews/conection/api.dart';
 import 'package:FlutterNews/localization/MyLocalizations.dart';
 import 'package:FlutterNews/pages/news/news_bloc.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';

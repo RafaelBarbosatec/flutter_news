@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:FlutterNews/conection/api.dart';
+import 'package:FlutterNews/localization/MyLocalizations.dart';
 import 'package:FlutterNews/pages/news/news_bloc.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
 import 'package:FlutterNews/widgets/custom_tab.dart';
@@ -18,8 +19,6 @@ class ContentNewsPage extends StatefulWidget{
     );
   }
 
-  var errorConection = false;
-
   final state = new _ContentNewsPageState();
 
   @override
@@ -29,24 +28,33 @@ class ContentNewsPage extends StatefulWidget{
 
 class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderStateMixin{
 
+  AnimationController animationController;
   List _categorys = new List<String>();
+  MyLocalizations strl;
   NewsBloc bloc;
 
   @override
   void initState() {
 
-    _categorys.add("Geral");
-    _categorys.add("Esporte");
-    _categorys.add("Tecnologia");
-    _categorys.add("Entretenimento");
-    _categorys.add("Saúde");
-    _categorys.add("Negócios");
+    animationController = new AnimationController(
+        vsync: this,
+        duration: new Duration(milliseconds: 350)
+    );
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    strl = MyLocalizations.of(context);
+
+    _categorys.add(strl.trans("cat_geral"));
+    _categorys.add(strl.trans("cat_esporte"));
+    _categorys.add(strl.trans("cat_tecnologia"));
+    _categorys.add(strl.trans("cat_entretenimento"));
+    _categorys.add(strl.trans("cat_saude"));
+    _categorys.add(strl.trans("cat_negocios"));
 
     if(bloc == null) {
 
@@ -119,9 +127,12 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
               }
           );
 
-          return RefreshIndicator(
-              onRefresh: myRefresh,
-              child: listView
+          return FadeTransition(
+            opacity: animationController,
+            child: RefreshIndicator(
+                onRefresh: myRefresh,
+                child: listView
+            ),
           );
 
         }
@@ -169,6 +180,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
 
   @override
   void dispose() {
+    animationController.dispose();
     super.dispose();
   }
 
@@ -176,7 +188,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
     bloc.anim.listen((show){
 
       if(show){
-        //animationController.forward();
+        animationController.forward(from: 0.0);
       }
 
     });

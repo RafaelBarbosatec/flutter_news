@@ -4,5 +4,11 @@
   "tab_sobre":"Sobre",
   "hint_busca":"Busque sua noticia aqui",
   "text_error":"Erro de conexão",
-  "text_tentar_novamente":"TENTAR NOVAMENTE"
+  "text_tentar_novamente":"TENTAR NOVAMENTE",
+  "cat_geral":"Geral",
+  "cat_esporte":"Esporte",
+  "cat_tecnologia":"Tecnologia",
+  "cat_entretenimento":"Entretenimento",
+  "cat_saude":"Saúde",
+  "cat_negocios":"Negócios"
 }

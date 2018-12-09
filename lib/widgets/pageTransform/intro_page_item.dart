@@ -1,3 +1,4 @@
+import 'package:FlutterNews/domain/notice/notice.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'page_transformer.dart';
@@ -18,6 +19,15 @@ class IntroNews {
   final String description;
   final String link;
   final String origin;
+
+  IntroNews.fromNotice(Notice notice) :
+        title = notice.title,
+        category = notice.category,
+        imageUrl = notice.img,
+        description = notice.description,
+        date = notice.date,
+        link = notice.link,
+        origin = notice.origin;
 }
 
 class IntroNewsItem extends StatelessWidget {
@@ -97,13 +107,16 @@ class IntroNewsItem extends StatelessWidget {
     try{
       if(url != '') {
 
-        return new FadeInImage.assetNetwork(
-          placeholder: 'assets/place_holder.jpg',
-          image: url,
-          fit: BoxFit.cover,
-          alignment: new FractionalOffset(
-            0.5 + (pageVisibility.pagePosition / 3),
-            0.5,
+        return ClipRRect(
+          borderRadius: new BorderRadius.circular(8.0),
+          child: new FadeInImage.assetNetwork(
+            placeholder: 'assets/place_holder.jpg',
+            image: url,
+            fit: BoxFit.cover,
+            alignment: new FractionalOffset(
+              0.5 + (pageVisibility.pagePosition / 3),
+              0.5,
+            ),
           ),
         );
       }else{
@@ -149,10 +162,29 @@ class IntroNewsItem extends StatelessWidget {
         child: new Stack(
           fit: StackFit.expand,
           children: [
-            _getImageNetwork(_getImageUrl(item.imageUrl, 400, '')),
-            imageOverlayGradient,
+            new Hero(tag: item.title,child: _getImageNetwork(_getImageUrl(item.imageUrl, 400, ''))),
+            _getOverlayGradient(),
             _buildTextContainer(context),
           ],
+        ),
+      ),
+    );
+  }
+
+  _getOverlayGradient() {
+
+    return ClipRRect(
+      borderRadius: new BorderRadius.only(bottomLeft: Radius.circular(8.0),bottomRight: Radius.circular(8.0)),
+      child: new DecoratedBox(
+        decoration: new BoxDecoration(
+          gradient: new LinearGradient(
+            begin: FractionalOffset.bottomCenter,
+            end: FractionalOffset.topCenter,
+            colors: [
+              const Color(0xFF000000),
+              const Color(0x00000000),
+            ],
+          ),
         ),
       ),
     );

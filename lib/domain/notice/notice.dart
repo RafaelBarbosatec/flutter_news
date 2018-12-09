@@ -1,38 +1,45 @@
+import 'package:FlutterNews/util/date_util.dart';
+import 'package:FlutterNews/util/functions.dart';
+import 'package:FlutterNews/pages/datail/detail.dart';
 import 'package:flutter/material.dart';
-import 'detail.dart';
-import '../util/date_util.dart';
 
 class Notice extends StatelessWidget{
 
-  var _img;
-  var _title;
-  var _date;
-  var _description;
-  var _category;
-  var _link;
-  var _origin;
+  var img;
+  var title;
+  var date;
+  var description;
+  var category;
+  var link;
+  var origin;
 
-  final AnimationController animationController;
+  AnimationController animationController;
 
-  Notice(this._img,this._title,this._date,this._description,this._category,this._link,this._origin, this.animationController);
+  Notice(this.img,this.title,this.date,this.description,this.category,this.link,this.origin);
+
+  Notice.fromMap(Map<String, dynamic>  map) :
+        img = map['url_img'],
+        title = map['tittle'],
+        date = map['date'],
+        description = map['description'],
+        category = map['category'],
+        link = map['link'],
+        origin = map['origin'];
+
 
   BuildContext _context;
-
 
   @override
   Widget build(BuildContext context) {
     this._context = context;
-    return new FadeTransition(
-      opacity: animationController,
-      child: new GestureDetector(
-        onTap: _handleTapUp,
-        child: new Container(
-          margin: const EdgeInsets.only(left: 10.0, right: 10.0,bottom: 10.0,top: 0.0),
-          child: new Material(
-            borderRadius: new BorderRadius.circular(6.0),
-            elevation: 2.0,
-            child: _getListTile(),
-          ),
+    return new GestureDetector(
+      onTap: _handleTapUp,
+      child: new Container(
+        margin: const EdgeInsets.only(left: 10.0, right: 10.0,bottom: 10.0,top: 0.0),
+        child: new Material(
+          borderRadius: new BorderRadius.circular(6.0),
+          elevation: 2.0,
+          child: _getListTile(),
         ),
       ),
     );
@@ -45,8 +52,8 @@ class Notice extends StatelessWidget{
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Hero(tag: _title, child: _getImgWidget(_getImageUrl(_img, 200, 200)),),
-          _getColumText(_title,_date,_description)
+          new Hero(tag: title, child: _getImgWidget(Functions.getImgResizeUrl(img, 200, 200)),),
+          _getColumText(title,date,description)
         ],
 
       ),
@@ -54,17 +61,11 @@ class Notice extends StatelessWidget{
 
   }
 
-  String _getImageUrl(url,height,width){
-
-    return 'http://104.131.18.84/notice/tim.php?src=$url&h=$height&w=$width';
-
-  }
-
   _handleTapUp(){
 
     Navigator.of(_context).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-        return new DetailPage(_img,_title,_date,_description,_category,_link,_origin);
+        return new DetailPage(img,title,date,description,category,link,origin);
       }
       )
     );
@@ -79,9 +80,9 @@ class Notice extends StatelessWidget{
           child: new Column(
             crossAxisAlignment:CrossAxisAlignment.start,
             children: <Widget>[
-              _getTitleWidget(_title),
-              _getDateWidget(_date),
-              _getDescriptionWidget(_description)],
+              _getTitleWidget(title),
+              _getDateWidget(date),
+              _getDescriptionWidget(description)],
           ),
         )
     );
@@ -93,22 +94,23 @@ class Notice extends StatelessWidget{
     return new Container(
       width: 95.0,
       height: 95.0,
-      child: new Material(
+      child: new ClipRRect(
         borderRadius: new BorderRadius.only(topLeft: const Radius.circular(6.0),bottomLeft: const Radius.circular(6.0)),
         child: _getImageNetwork(url),
       ),
     );
   }
 
-  Widget _getImageNetwork(url){
+  Widget _getImageNetwork(String url){
 
     try{
-      if(url != '') {
+      if(url.isNotEmpty) {
 
         return new FadeInImage.assetNetwork(
           placeholder: 'assets/place_holder.jpg',
           image: url,
           fit: BoxFit.cover,);
+
       }else{
         return new Image.asset('assets/place_holder.jpg');
       }

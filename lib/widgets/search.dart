@@ -1,15 +1,18 @@
+import 'package:FlutterNews/localization/MyLocalizations.dart';
 import 'package:flutter/material.dart';
-import 'search_result.dart';
+import 'package:FlutterNews/pages/search/search_result.dart';
 
 class SearchWidget extends StatelessWidget{
 
   final TextEditingController editingController = new TextEditingController();
 
+  MyLocalizations strl;
   BuildContext _context;
 
   @override
   Widget build(BuildContext context) {
 
+    strl = MyLocalizations.of(context);
     _context = context;
 
     return new Container(
@@ -28,8 +31,8 @@ class SearchWidget extends StatelessWidget{
                   child: new TextField(
                     maxLines: 1,
                     decoration: new InputDecoration(
-                      icon: const Icon(Icons.search,color: Colors.blue,),
-                      hintText: "Busque sua noticia aqui",
+                      icon: Icon(Icons.search, color: Theme.of(context).accentColor,),
+                      hintText: strl.trans("hint_busca"),
                       border: InputBorder.none
                     ),
                     onSubmitted: onSubmitted,
@@ -47,7 +50,7 @@ class SearchWidget extends StatelessWidget{
 
     Navigator.of(_context).push(
           new MaterialPageRoute(builder: (BuildContext context) {
-            return new SearchResultPage(query);
+            return SearchResultPage.create(query);
           }
         )
     );

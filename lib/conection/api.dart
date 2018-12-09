@@ -2,61 +2,125 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class NewsApi{
+//Classe responsavel por realizar conexões com API
+class Api{
 
-  final String url = 'http://104.131.18.84';
+  final String urlBase;
 
-  Future <Map> loadNews(String category, String page) async{
+  Api(this.urlBase);
 
-    String apiUrl = '$url/notice/news/$category/$page';
-    // Make a HTTP GET request to the CoinMarketCap API.
-    // Await basically pauses execution until the get() function returns a Response
+  /// Método que executa chamada de conexão do tipo GET
+  /// @params uri
+  /// @params headers (opcional)
+  Future <dynamic> get(String uri, {Map<String,String> headers}) async{
+
     try{
-      http.Response response = await http.get(apiUrl);
-      // Using the JSON class to decode the JSON String
+
+      http.Response response = await http.get(urlBase+uri, headers: headers);
+
+      final statusCode = response.statusCode;
+      final String jsonBody = response.body;
+
+      if(statusCode < 200 || statusCode >= 300 || jsonBody == null) {
+        throw new FetchDataException("Error request:",statusCode);
+      }
+
       const JsonDecoder decoder = const JsonDecoder();
       return decoder.convert(response.body);
 
-    } on Exception catch(_){
-      return null;
+    } on Exception catch(e){
+      throw new FetchDataException(e.toString(),0);
     }
 
   }
 
-  Future <Map> loadNewsRecent() async{
-
-    String apiUrl = '$url/notice/news/recent';
-    // Make a HTTP GET request to the CoinMarketCap API.
-    // Await basically pauses execution until the get() function returns a Response
+  /// Método que executa chamada de conexão do tipo POST
+  /// @params uri
+  /// @params body
+  /// @params headers (opcional)
+  Future <dynamic> post(String uri,dynamic body, {Map<String,String> headers}) async{
 
     try{
-      http.Response response = await http.get(apiUrl);
-      // Using the JSON class to decode the JSON String
+
+      http.Response response = await http.post(urlBase+uri, body: body, headers:headers);
+
+      final statusCode = response.statusCode;
+
+      if(statusCode < 200 || statusCode >= 300) {
+        throw new FetchDataException("Error request:",statusCode);
+      }
+
       const JsonDecoder decoder = const JsonDecoder();
       return decoder.convert(response.body);
 
-    } on Exception catch(_){
-      return null;
-    }
-
-
-  }
-
-  Future <Map> loadSearch(query) async{
-
-    String apiUrl = '$url/notice/search/$query';
-    // Make a HTTP GET request to the CoinMarketCap API.
-    // Await basically pauses execution until the get() function returns a Response
-    try{
-      http.Response response = await http.get(apiUrl);
-      // Using the JSON class to decode the JSON String
-      const JsonDecoder decoder = const JsonDecoder();
-      return decoder.convert(response.body);
-
-    } on Exception catch(_){
-      return null;
+    } on Exception catch(e){
+      throw new FetchDataException(e.toString(),0);
     }
 
   }
 
+  /// Método que executa chamada de conexão do tipo PUT
+  /// @params uri
+  /// @params body
+  /// @params headers (opcional)
+  Future <dynamic> put(String uri,dynamic body, {Map<String,String> headers}) async{
+
+    try{
+
+      http.Response response = await http.put(urlBase+uri, body: body, headers:headers);
+
+      final statusCode = response.statusCode;
+
+      if(statusCode < 200 || statusCode >= 300) {
+        throw new FetchDataException("Error request:",statusCode);
+      }
+
+      const JsonDecoder decoder = const JsonDecoder();
+      return decoder.convert(response.body);
+
+    } on Exception catch(e){
+      throw new FetchDataException(e.toString(),0);
+    }
+
+  }
+
+  /// Método que executa chamada de conexão do tipo DELETE
+  /// @params uri
+  /// @params headers (opcional)
+  Future <dynamic> delete(String uri, {Map<String,String> headers}) async{
+
+    try{
+
+      http.Response response = await http.delete(urlBase+uri, headers:headers);
+
+      final statusCode = response.statusCode;
+
+      if(statusCode < 200 || statusCode >= 300) {
+        throw new FetchDataException("Error request:",statusCode);
+      }
+
+      const JsonDecoder decoder = const JsonDecoder();
+      return decoder.convert(response.body);
+
+    } on Exception catch(e){
+      throw new FetchDataException(e.toString(),0);
+    }
+
+  }
+
+}
+
+class FetchDataException implements Exception {
+  String _message;
+  int _code;
+
+  FetchDataException(this._message,this._code);
+
+  String toString() {
+    return "Exception: $_message/$_code";
+  }
+
+  int code(){
+    return _code;
+  }
 }

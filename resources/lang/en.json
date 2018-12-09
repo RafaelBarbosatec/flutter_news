@@ -1,0 +1,16 @@
+{
+  "tab_recentes":"Highlights",
+  "tab_noticias":"News",
+  "tab_sobre":"About",
+  "hint_busca":"Search for your news here",
+  "text_error":"Connection error",
+  "text_tentar_novamente":"TRY AGAIN",
+  "cat_geral":"General",
+  "cat_esporte":"Sport",
+  "cat_tecnologia":"Technology",
+  "cat_entretenimento":"Entertainment",
+  "cat_saude":"Health",
+  "cat_negocios":"Business",
+  "erro_busca":"No news found :-(",
+  "text_info":"Application developed non-profit with the purpose of exploring the potential of the framework Flutter."
+}

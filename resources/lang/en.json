@@ -10,5 +10,6 @@
   "cat_tecnologia":"Technology",
   "cat_entretenimento":"Entertainment",
   "cat_saude":"Health",
-  "cat_negocios":"Business"
+  "cat_negocios":"Business",
+  "text_info":"Application developed non-profit with the purpose of exploring the potential of the framework Flutter."
 }

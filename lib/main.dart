@@ -21,6 +21,9 @@ class NewsApp extends StatelessWidget {
       title: 'Flutter News',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
+        accentColor: Colors.blue,
+        brightness: Brightness.light
       ),
       supportedLocales: MyLocalizationsDelegate.supportedLocales(),
       localizationsDelegates: [

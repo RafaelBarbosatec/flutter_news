@@ -163,12 +163,6 @@ class DetailPage extends StatelessWidget{
     );
   }
 
-  String _getImageUrl(url,height,width){
-
-    return 'http://104.131.18.84/notice/tim.php?src=$url&h=$height&w=$width';
-
-  }
-
   _launchURL(url) async {
       await launch(url);
   }

@@ -53,7 +53,7 @@ class _CustomTabState extends State<CustomTab> {
             margin: new EdgeInsets.only(left: 10.0),
             child: new Material(
               elevation: 2.0,
-              color: category_selected == index ? Colors.blue[800]:Colors.blue[500],
+              color: category_selected == index ? Theme.of(context).primaryColorDark : Theme.of(context).accentColor,
               borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
               child:  new Container(
                 padding: new EdgeInsets.only(left: 12.0,top: 7.0,bottom: 7.0,right: 12.0),

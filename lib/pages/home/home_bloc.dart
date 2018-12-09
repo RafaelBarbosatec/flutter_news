@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+import 'package:FlutterNews/pages/info/info.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
 import 'package:FlutterNews/pages/featured/content_featured.dart';
 import 'package:FlutterNews/pages/news/content_news.dart';
@@ -26,15 +27,8 @@ class HomeBloc implements BlocBase{
       switch(position){
         case 0: addWidget(ContentFeaturedPage.create());break;
         case 1: addWidget(ContentNewsPage.create());break;
-        default:
-          {
-            addWidget(Container());
-//            content = new Info(new AnimationController(
-//                vsync: this,
-//                duration: new Duration(milliseconds: 500)
-//            ));
-//            (content as Info).animationController.forward();
-          }
+        default: addWidget(Info());
+
       }
 
     });

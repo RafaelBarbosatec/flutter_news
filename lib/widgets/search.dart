@@ -31,7 +31,7 @@ class SearchWidget extends StatelessWidget{
                   child: new TextField(
                     maxLines: 1,
                     decoration: new InputDecoration(
-                      icon: const Icon(Icons.search,color: Colors.blue,),
+                      icon: Icon(Icons.search, color: Theme.of(context).accentColor,),
                       hintText: strl.trans("hint_busca"),
                       border: InputBorder.none
                     ),

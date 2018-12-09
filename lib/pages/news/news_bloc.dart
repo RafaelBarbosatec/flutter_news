@@ -48,6 +48,7 @@ class NewsBloc implements BlocBase{
 
     categoryPosition.listen((category){
       _currentCategory = category;
+      cleanList();
       load(false);
     });
 
@@ -113,6 +114,11 @@ class NewsBloc implements BlocBase{
     visibleProgress(false);
 
     _carregando = false;
+  }
+
+  void cleanList() {
+    _newsInner = List();
+    addnoticies(_newsInner);
   }
 
 }

@@ -2,7 +2,7 @@
 
 <img src="https://github.com/RafaelBarbosatec/flutter_news/blob/master/imgs/flutter.png" width="200"/>
 
-Aplicação de noticias desenvolvido para prática, aprendizado e teste do potencial desse poderoso Framework.
+News application developed for practice, learning and testing the potential of this powerful Framework.
 
 <p align="center">
   <img src="https://github.com/RafaelBarbosatec/flutter_news/blob/master/imgs/img1.png" width="200"/>
@@ -15,11 +15,13 @@ Aplicação de noticias desenvolvido para prática, aprendizado e teste do poten
   <img src="https://github.com/RafaelBarbosatec/flutter_news/blob/master/imgs/print_ios.png" width="200"/>
 </p>
 
-## Recursos
+## Resources
 
--FrameWork: Flutter
+-FrameWork: [Flutter](https://flutter.io/)
 
--Linguagem: Dart
+-Language: [Dart](https://www.dartlang.org/)
+
+-Architecture: [Bloc](https://www.didierboelens.com/2018/12/reactive-programming---streams---bloc---practical-use-cases/)
 
 -Libs: [Url_laucher](https://pub.dartlang.org/packages/url_launcher), [PageTransformer](https://github.com/FlutterRocks/page-transformer)
 

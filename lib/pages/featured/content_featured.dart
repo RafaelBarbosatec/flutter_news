@@ -153,7 +153,6 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
 
     bloc.anim.listen((show){
 
-      print(show);
       if(show){
         animationController.forward();
       }

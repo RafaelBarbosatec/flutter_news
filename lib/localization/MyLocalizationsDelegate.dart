@@ -25,8 +25,11 @@ class MyLocalizationsDelegate extends LocalizationsDelegate<MyLocalizations> {
 
   Locale resolution(Locale locale, Iterable<Locale> supportedLocales){
     for (Locale supportedLocale in supportedLocales) {
-      if (supportedLocale.languageCode == locale.languageCode || supportedLocale.countryCode == locale.countryCode) {
-        return supportedLocale;
+      if(locale != null) {
+        if (supportedLocale.languageCode == locale.languageCode ||
+            supportedLocale.countryCode == locale.countryCode) {
+          return supportedLocale;
+        }
       }
     }
     return supportedLocales.first;

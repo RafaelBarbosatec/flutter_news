@@ -64,6 +64,8 @@ class NewsBloc implements BlocBase{
         _page = 0;
       }
 
+      visibleError(false);
+      
       if(isMore || _newsInner.length == 0){
         visibleProgress(true);
       }

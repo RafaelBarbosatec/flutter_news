@@ -164,7 +164,11 @@ class DetailPage extends StatelessWidget{
   }
 
   _launchURL(url) async {
+    if (await canLaunch(url)) {
       await launch(url);
+    } else {
+      print('Could not launch $url');
+    }
   }
 
   Future shareNotice() async {

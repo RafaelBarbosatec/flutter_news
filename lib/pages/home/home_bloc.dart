@@ -18,22 +18,6 @@ class HomeBloc implements BlocBase{
   Function(Widget) get addWidget => _screenController.sink.add;
   Stream<Widget> get widgetSelected => _screenController.stream;
 
-  HomeBloc(){
-    selectTab(0);
-    addWidget(ContentFeaturedPage());
-
-    tabPosition.listen((position){
-
-      switch(position){
-        case 0: addWidget(ContentFeaturedPage.create());break;
-        case 1: addWidget(ContentNewsPage.create());break;
-        default: addWidget(Info());
-
-      }
-
-    });
-  }
-
   @override
   void dispose() {
     _tabPositionController.close();

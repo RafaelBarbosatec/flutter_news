@@ -34,13 +34,14 @@ class ErroConection extends StatelessWidget {
                 new Text(
                   strl.trans("text_error"),
                   style: TextStyle(
-                    fontSize: 20.0,
+                    fontSize: 18.0,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: new RaisedButton(
+                  padding: const EdgeInsets.all(10.0),
+                  child: new FlatButton(
+                    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                     onPressed: tryAgain,
                     child: new Text(strl.trans("text_tentar_novamente")),
                     color: Colors.blue,

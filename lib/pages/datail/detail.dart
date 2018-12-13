@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:FlutterNews/localization/MyLocalizations.dart';
 import 'package:FlutterNews/util/date_util.dart';
 import 'package:FlutterNews/util/functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
 
@@ -18,8 +21,13 @@ class DetailPage extends StatelessWidget{
 
   DetailPage(this._img,this._title,this._date,this._description,this._category,this._link,this._origin);
 
+  MyLocalizations strl;
+
   @override
   Widget build(BuildContext context) {
+
+    strl = MyLocalizations.of(context);
+
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(_origin),
@@ -44,7 +52,7 @@ class DetailPage extends StatelessWidget{
                  tag: _title,
                  child: _getImageNetwork(Functions.getImgResizeUrl(_img,250,''))
              ),
-              _getBody(_title,_date,_description,_origin),
+              _getBody(_title,_date,_description,_origin,context),
             ],
           ),
         ),
@@ -83,7 +91,7 @@ class DetailPage extends StatelessWidget{
 
   }
 
-  Widget _getBody(tittle,date,description,origin){
+  Widget _getBody(tittle,date,description,origin,context){
 
     return new Container(
       margin: new EdgeInsets.all(15.0),
@@ -94,7 +102,7 @@ class DetailPage extends StatelessWidget{
           _getDate(date,origin),
           _getDescription(description),
           _getAntLink(),
-          _getLink(_link)
+          _getLink(_link,context)
         ],
       ),
     );
@@ -110,7 +118,7 @@ class DetailPage extends StatelessWidget{
       ),
     );
   }
-  Widget _getLink(link){
+  Widget _getLink(link,context){
 
     return new GestureDetector(
       child: new Text(
@@ -118,7 +126,7 @@ class DetailPage extends StatelessWidget{
         style: new TextStyle(color: Colors.blue),
       ),
       onTap: (){
-        _launchURL(link);
+        _launchURL(link,context);
       },
     );
 
@@ -163,16 +171,43 @@ class DetailPage extends StatelessWidget{
     );
   }
 
-  _launchURL(url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      print('Could not launch $url');
+  _launchURL(url,context) async {
+    if(Platform.isAndroid) {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        print('Could not launch $url');
+      }
+    }else{
+      Clipboard.setData(new ClipboardData(text: url));
+      _showDialog(context);
     }
   }
 
   Future shareNotice() async {
     await Share.share("$_title:\n$_link");
+  }
+
+  void _showDialog(context) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          content: new Text(strl.trans("text_copy")),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text(strl.trans("text_fechar")),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
 }

@@ -6,13 +6,13 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - Flutter (from `Pods/.symlinks/flutter/ios`)
+  - Flutter (from `Pods/.symlinks/flutter/ios-release`)
   - share (from `Pods/.symlinks/plugins/share-0.5.3/ios`)
   - url_launcher (from `Pods/.symlinks/plugins/url_launcher-4.0.2/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: Pods/.symlinks/flutter/ios
+    :path: Pods/.symlinks/flutter/ios-release
   share:
     :path: Pods/.symlinks/plugins/share-0.5.3/ios
   url_launcher:

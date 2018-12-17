@@ -1,5 +1,6 @@
 import 'package:FlutterNews/injection/injector.dart';
 import 'package:FlutterNews/localization/MyLocalizationsDelegate.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterNews/pages/home/home.dart';
@@ -29,6 +30,7 @@ class NewsApp extends StatelessWidget {
       supportedLocales: MyLocalizationsDelegate.supportedLocales(),
       localizationsDelegates: [
         myLocation,
+        DefaultCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],

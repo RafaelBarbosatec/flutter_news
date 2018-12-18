@@ -48,6 +48,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
 
     strl = MyLocalizations.of(context);
 
+    _categorys.clear();
     _categorys.add(strl.trans("cat_geral"));
     _categorys.add(strl.trans("cat_esporte"));
     _categorys.add(strl.trans("cat_tecnologia"));

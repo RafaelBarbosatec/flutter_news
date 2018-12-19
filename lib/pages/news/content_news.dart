@@ -28,6 +28,8 @@ class ContentNewsPage extends StatefulWidget{
 class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderStateMixin{
 
   AnimationController animationController;
+  AnimationController animationTraslateController;
+  Animation<Offset> animationSlideUp;
   List _categorys = new List<String>();
   MyLocalizations strl;
   NewsBloc bloc;
@@ -37,7 +39,21 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
 
     animationController = new AnimationController(
         vsync: this,
-        duration: new Duration(milliseconds: 350)
+        duration: new Duration(milliseconds: 600)
+    );
+    animationTraslateController = new AnimationController(
+        vsync: this,
+        duration: new Duration(milliseconds: 600)
+    );
+
+    animationSlideUp = new Tween(
+        begin: Offset(0.0,5.0)
+        , end: Offset(0.0,0.0)
+    ).animate(
+        CurvedAnimation(
+            parent: animationTraslateController,
+            curve: Curves.decelerate
+        )
     );
 
     super.initState();
@@ -127,11 +143,14 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
               }
           );
 
-          return FadeTransition(
-            opacity: animationController,
-            child: RefreshIndicator(
-                onRefresh: myRefresh,
-                child: listView
+          return SlideTransition(
+            position: animationSlideUp,
+            child: FadeTransition(
+              opacity: animationController,
+              child: RefreshIndicator(
+                  onRefresh: myRefresh,
+                  child: listView
+              ),
             ),
           );
 
@@ -189,6 +208,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
 
       if(show){
         animationController.forward(from: 0.0);
+        animationTraslateController.forward(from: 0.0);
       }
 
     });

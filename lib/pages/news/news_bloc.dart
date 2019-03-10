@@ -1,33 +1,13 @@
 
-import 'dart:async';
-
 import 'package:FlutterNews/conection/api.dart';
 import 'package:FlutterNews/domain/notice/notice.dart';
 import 'package:FlutterNews/domain/notice/notice_repository.dart';
-import 'package:FlutterNews/injection/injector.dart';
+import 'package:FlutterNews/pages/news/news_streams.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
 
-class NewsBloc implements BlocBase{
+class NewsBloc extends BlocBase<NewsStreams>{
 
-  NoticeRepository repository;
-
-  StreamController<bool> _progressController = StreamController<bool>();
-  StreamController<bool> _errorController = StreamController<bool>();
-  StreamController<bool> _animController = StreamController<bool>();
-  StreamController<List<Notice>> _noticeController = StreamController<List<Notice>>();
-  StreamController<int> _categoryController = StreamController<int>();
-
-  Function(List<Notice>) get addnoticies => _noticeController.sink.add;
-  Function(bool) get visibleError => _errorController.sink.add;
-  Function(bool) get changeAnim => _animController.sink.add;
-  Function(bool) get visibleProgress => _progressController.sink.add;
-  Function(int) get setCategoryPosition => _categoryController.sink.add;
-
-  Stream<bool> get error => _errorController.stream;
-  Stream<bool> get progress => _progressController.stream;
-  Stream<bool> get anim => _animController.stream;
-  Stream<List<Notice>> get noticies => _noticeController.stream;
-  Stream<int> get categoryPosition => _categoryController.stream;
+  final NoticeRepository repository;
 
   int _page = 0;
   int _currentCategory = 0;
@@ -35,9 +15,9 @@ class NewsBloc implements BlocBase{
   List<Notice> _newsInner = List();
   bool _carregando = false;
 
-  NewsBloc(){
+  NewsBloc(this.repository){
 
-    repository = new Injector().repository.getNoticeRepository();
+    streams = NewsStreams();
 
     _categories.add("geral");
     _categories.add("sports");
@@ -46,7 +26,7 @@ class NewsBloc implements BlocBase{
     _categories.add("health");
     _categories.add("business");
 
-    categoryPosition.listen((category){
+    streams.categoryPosition.listen((category){
       _currentCategory = category;
       cleanList();
       load(false);
@@ -64,10 +44,10 @@ class NewsBloc implements BlocBase{
         _page = 0;
       }
 
-      visibleError(false);
+      streams.visibleError(false);
       
       if(isMore || _newsInner.length == 0){
-        visibleProgress(true);
+        streams.visibleProgress(true);
       }
 
       String category = _categories[_currentCategory];
@@ -82,25 +62,16 @@ class NewsBloc implements BlocBase{
 
   }
 
-  @override
-  void dispose() {
-    _progressController.close();
-    _errorController.close();
-    _animController.close();
-    _noticeController.close();
-    _categoryController.close();
-  }
-
   showNews(List<Notice> news,bool isMore) {
 
-    visibleProgress(false);
+    streams.visibleProgress(false);
     if(isMore){
       _newsInner.addAll(news);
-      addnoticies(_newsInner);
+      streams.addnoticies(_newsInner);
     }else{
       _newsInner = news;
-      addnoticies(news);
-      changeAnim(true);
+      streams.addnoticies(news);
+      streams.changeAnim(true);
     }
 
     _carregando = false;
@@ -112,15 +83,15 @@ class NewsBloc implements BlocBase{
     if(onError is FetchDataException){
       print("codigo: ${onError.code()}");
     }
-    visibleError(true);
-    visibleProgress(false);
+    streams.visibleError(true);
+    streams.visibleProgress(false);
 
     _carregando = false;
   }
 
   void cleanList() {
     _newsInner = List();
-    addnoticies(_newsInner);
+    streams.addnoticies(_newsInner);
   }
 
 }

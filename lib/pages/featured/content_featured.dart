@@ -1,6 +1,8 @@
 import 'package:FlutterNews/domain/notice/notice.dart';
+import 'package:FlutterNews/injection/injector.dart';
 import 'package:FlutterNews/pages/datail/detail.dart';
 import 'package:FlutterNews/pages/featured/featured_bloc.dart';
+import 'package:FlutterNews/util/FadeInRoute.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
 import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:FlutterNews/widgets/pageTransform/intro_page_item.dart';
@@ -9,11 +11,9 @@ import 'package:flutter/material.dart';
 
 class ContentFeaturedPage extends StatefulWidget{
 
-  var errorConection = false;
-
   static Widget create(){
     return BlocProvider<FeaturedBloc>(
-      bloc: FeaturedBloc(),
+      bloc: FeaturedBloc(Injector().repository.getNoticeRepository()),
       child: ContentFeaturedPage(),
     );
   }
@@ -72,7 +72,7 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
           },
         ),
         StreamBuilder(
-          stream: bloc.error,
+          stream: bloc.streams.error,
           initialData: false,
           builder: (BuildContext context, AsyncSnapshot snapshot){
 
@@ -94,7 +94,7 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
 
     return StreamBuilder(
       initialData: false,
-      stream: bloc.progress,
+      stream: bloc.streams.progress,
       builder: (BuildContext context, AsyncSnapshot snapshot){
         if(snapshot.data){
           return new Container(
@@ -120,7 +120,7 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
 
     return StreamBuilder(
       initialData: List<Notice>(),
-      stream: bloc.noticies,
+      stream: bloc.streams.noticies,
       builder: (BuildContext context, AsyncSnapshot snapshot){
 
         var _destaque = snapshot.data;
@@ -131,7 +131,7 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
                 controller: new PageController(viewportFraction: 0.9),
                 itemCount: _destaque.length,
                 onPageChanged: (position) {
-                  bloc.noticeSelected(_destaque[position]);
+                  bloc.streams.noticeSelected(_destaque[position]);
                 },
                 itemBuilder: (context, index) {
                   final item = IntroNews.fromNotice(_destaque[index]);
@@ -151,7 +151,7 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
 
   void confBlocView(FeaturedBloc bloc) {
 
-    bloc.anim.listen((show){
+    bloc.streams.anim.listen((show){
 
       if(show){
         animationController.forward();
@@ -159,12 +159,19 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
 
     });
 
-    bloc.detail.listen((notice){
+    bloc.streams.detail.listen((notice){
 
       Navigator.of(context).push(
-          new MaterialPageRoute(builder: (BuildContext context) {
-            return new DetailPage(notice.img,notice.title,notice.date,notice.description,notice.category,notice.link,notice.origin);
-          }
+          FadeInRoute(
+              widget:DetailPage(
+                  notice.img,
+                  notice.title,
+                  notice.date,
+                  notice.description,
+                  notice.category,
+                  notice.link,
+                  notice.origin
+              )
           )
       );
 

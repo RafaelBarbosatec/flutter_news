@@ -22,9 +22,9 @@ class Injector {
 
   Repository get repository {
     switch(_flavor) {
-      case Flavor.MOCK: return new Repository(false);
+      case Flavor.MOCK: return RepositoryImpl(false);
       default: // Flavor.PRO:
-        return new Repository(true);
+        return RepositoryImpl(true);
     }
   }
 }

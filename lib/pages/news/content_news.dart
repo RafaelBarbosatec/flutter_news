@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:FlutterNews/localization/MyLocalizations.dart';
+import 'package:FlutterNews/injection/injector.dart';
 import 'package:FlutterNews/pages/news/news_bloc.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
 import 'package:FlutterNews/widgets/custom_tab.dart';
@@ -10,10 +9,9 @@ import 'package:FlutterNews/domain/notice/notice.dart';
 
 class ContentNewsPage extends StatefulWidget{
 
-
   static Widget create(){
     return BlocProvider<NewsBloc>(
-      bloc: NewsBloc(),
+      bloc: NewsBloc(Injector().repository.getNoticeRepository()),
       child: ContentNewsPage(),
     );
   }
@@ -31,7 +29,6 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
   AnimationController animationTraslateController;
   Animation<Offset> animationSlideUp;
   List _categorys = new List<String>();
-  MyLocalizations strl;
   NewsBloc bloc;
 
   @override
@@ -62,20 +59,18 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
   @override
   Widget build(BuildContext context) {
 
-    strl = MyLocalizations.of(context);
-
-    _categorys.clear();
-    _categorys.add(strl.trans("cat_geral"));
-    _categorys.add(strl.trans("cat_esporte"));
-    _categorys.add(strl.trans("cat_tecnologia"));
-    _categorys.add(strl.trans("cat_entretenimento"));
-    _categorys.add(strl.trans("cat_saude"));
-    _categorys.add(strl.trans("cat_negocios"));
-
     if(bloc == null) {
 
       bloc = BlocProvider.of<NewsBloc>(context);
       confBlocView(bloc);
+
+      _categorys.clear();
+      _categorys.add(bloc.getString("cat_geral"));
+      _categorys.add(bloc.getString("cat_esporte"));
+      _categorys.add(bloc.getString("cat_tecnologia"));
+      _categorys.add(bloc.getString("cat_entretenimento"));
+      _categorys.add(bloc.getString("cat_saude"));
+      _categorys.add(bloc.getString("cat_negocios"));
 
     }
 
@@ -96,7 +91,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
   Widget _buildConnectionError(){
 
     return StreamBuilder(
-        stream: bloc.error,
+        stream: bloc.streams.error,
         initialData: false,
         builder: (BuildContext context, AsyncSnapshot snapshot){
 
@@ -117,7 +112,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
 
     return Container(
       child: StreamBuilder(
-        stream: bloc.noticies,
+        stream: bloc.streams.noticies,
         initialData: List<Notice>(),
         builder: (BuildContext context, AsyncSnapshot snapshot){
 
@@ -164,7 +159,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
 
     return Center(
       child: StreamBuilder(
-          stream: bloc.progress,
+          stream: bloc.streams.progress,
           initialData: false,
           builder: (BuildContext context, AsyncSnapshot snapshot){
 
@@ -185,7 +180,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
     return CustomTab(
       itens: _categorys,
       tabSelected: (index){
-        bloc.setCategoryPosition(index);
+        bloc.streams.setCategoryPosition(index);
       },
     );
 
@@ -204,7 +199,7 @@ class _ContentNewsPageState extends State<ContentNewsPage> with TickerProviderSt
   }
 
   void confBlocView(NewsBloc bloc) {
-    bloc.anim.listen((show){
+    bloc.streams.anim.listen((show){
 
       if(show){
         animationController.forward(from: 0.0);

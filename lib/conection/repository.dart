@@ -1,14 +1,17 @@
 //Classe que controla os repositorios disponíveis no projeto
 import 'package:FlutterNews/domain/notice/notice_repository.dart';
 
-class Repository {
+abstract class Repository{
+  NoticeRepository getNoticeRepository();
+}
+class RepositoryImpl implements Repository {
 
   final bool _prod;
 
-  Repository(this._prod);
+  RepositoryImpl(this._prod);
 
   NoticeRepository getNoticeRepository(){
-    return new NoticeRepository(_prod);
+    return NoticeRepositoryImpl(_prod);
   }
 
 }

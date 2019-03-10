@@ -1,43 +1,23 @@
 
-
-import 'dart:async';
-
 import 'package:FlutterNews/conection/api.dart';
 import 'package:FlutterNews/domain/notice/notice.dart';
 import 'package:FlutterNews/domain/notice/notice_repository.dart';
 import 'package:FlutterNews/injection/injector.dart';
+import 'package:FlutterNews/pages/search/search_result_streams.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
 
-class SearchResultBloc implements BlocBase{
+class SearchResultBloc extends BlocBase<SearchResultStreams>{
 
-  NoticeRepository repository;
+  final NoticeRepository repository;
 
-  StreamController<bool> _progressController = StreamController<bool>();
-  StreamController<bool> _errorController = StreamController<bool>();
-  StreamController<bool> _emptyController = StreamController<bool>();
-  StreamController<bool> _animController = StreamController<bool>();
-  StreamController<List<Notice>> _noticeController = StreamController<List<Notice>>();
-
-  Function(List<Notice>) get addnoticies => _noticeController.sink.add;
-  Function(bool) get visibleError => _errorController.sink.add;
-  Function(bool) get changeAnim => _animController.sink.add;
-  Function(bool) get visibleProgress => _progressController.sink.add;
-  Function(bool) get visibleEmpty => _emptyController.sink.add;
-
-  Stream<bool> get error => _errorController.stream;
-  Stream<bool> get progress => _progressController.stream;
-  Stream<bool> get anim => _animController.stream;
-  Stream<List<Notice>> get noticies => _noticeController.stream;
-  Stream<bool> get empty => _emptyController.stream;
-
-  SearchResultBloc(){
-    repository = new Injector().repository.getNoticeRepository();
+  SearchResultBloc(this.repository){
+    streams = SearchResultStreams();
   }
 
   load(String query){
 
-    visibleProgress(true);
-    visibleError(false);
+    streams.visibleProgress(true);
+    streams.visibleError(false);
 
     repository.loadSearch(query)
         .then((news) => showNews(news))
@@ -47,14 +27,14 @@ class SearchResultBloc implements BlocBase{
 
   showNews(List<Notice> news) {
 
-    visibleProgress(false);
+    streams.visibleProgress(false);
 
     if(news.length > 0) {
-      addnoticies(news);
-      changeAnim(true);
-      visibleEmpty(false);
+      streams.addnoticies(news);
+      streams.changeAnim(true);
+      streams.visibleEmpty(false);
     }else{
-      visibleEmpty(true);
+      streams.visibleEmpty(true);
     }
   }
 
@@ -64,18 +44,9 @@ class SearchResultBloc implements BlocBase{
     if(onError is FetchDataException){
       print("codigo: ${onError.code()}");
     }
-    visibleError(true);
-    visibleProgress(false);
+    streams.visibleError(true);
+    streams.visibleProgress(false);
 
-  }
-
-  @override
-  void dispose() {
-    _progressController.close();
-    _errorController.close();
-    _animController.close();
-    _noticeController.close();
-    _emptyController.close();
   }
 
 }

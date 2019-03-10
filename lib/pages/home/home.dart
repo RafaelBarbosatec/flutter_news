@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: new BottomNavigation((index){
-        bloc.selectTab(index);
+        bloc.streams.selectTab(index);
       }), // This trailing comma makes auto-formatting nicer for build methods.
     );
 
@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
   Widget _getContent(HomeBloc bloc){
 
     return StreamBuilder(
-        stream: bloc.tabPosition,
+        stream: bloc.streams.tabPosition,
         initialData: 0,
         builder:  (BuildContext context, AsyncSnapshot snapshot){
 

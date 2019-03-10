@@ -1,3 +1,4 @@
+import 'package:FlutterNews/injection/injector.dart';
 import 'package:FlutterNews/localization/MyLocalizations.dart';
 import 'package:FlutterNews/pages/search/search_result_bloc.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
@@ -13,7 +14,7 @@ class SearchResultPage extends StatefulWidget{
 
   static Widget create(String query){
     return BlocProvider<SearchResultBloc>(
-      bloc: SearchResultBloc(),
+      bloc: SearchResultBloc(Injector().repository.getNoticeRepository()),
       child: SearchResultPage(query),
     );
   }
@@ -76,7 +77,7 @@ class _SearchResultState extends State<SearchResultPage> with TickerProviderStat
       opacity: animationController,
       child: StreamBuilder(
         initialData: List<Notice>(),
-        stream: bloc.noticies,
+        stream: bloc.streams.noticies,
         builder: (BuildContext context, AsyncSnapshot snapshot){
 
           var news = snapshot.data;
@@ -98,7 +99,7 @@ class _SearchResultState extends State<SearchResultPage> with TickerProviderStat
   Widget _getProgress(){
 
     return StreamBuilder(
-      stream: bloc.progress,
+      stream: bloc.streams.progress,
       initialData: false,
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if(snapshot.data){
@@ -118,7 +119,7 @@ class _SearchResultState extends State<SearchResultPage> with TickerProviderStat
   Widget _getEmpty() {
 
     return StreamBuilder(
-        stream: bloc.empty,
+        stream: bloc.streams.empty,
         initialData: false,
         builder: (BuildContext context, AsyncSnapshot snapshot){
 
@@ -139,7 +140,7 @@ class _SearchResultState extends State<SearchResultPage> with TickerProviderStat
   Widget _buildConnectionError(){
 
     return StreamBuilder(
-        stream: bloc.error,
+        stream: bloc.streams.error,
         initialData: false,
         builder: (BuildContext context, AsyncSnapshot snapshot){
 
@@ -158,7 +159,7 @@ class _SearchResultState extends State<SearchResultPage> with TickerProviderStat
   }
 
   void confBlocView(SearchResultBloc bloc) {
-    bloc.anim.listen((show){
+    bloc.streams.anim.listen((show){
       if(show){
         animationController.forward(from: 0.0);
       }

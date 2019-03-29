@@ -1,6 +1,7 @@
 import 'package:FlutterNews/domain/notice/notice.dart';
 import 'package:FlutterNews/injection/injector.dart';
 import 'package:FlutterNews/pages/datail/detail.dart';
+import 'package:FlutterNews/pages/featured/FeaturedEvents.dart';
 import 'package:FlutterNews/pages/featured/featured_bloc.dart';
 import 'package:FlutterNews/util/FadeInRoute.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
@@ -9,9 +10,8 @@ import 'package:FlutterNews/widgets/pageTransform/intro_page_item.dart';
 import 'package:FlutterNews/widgets/pageTransform/page_transformer.dart';
 import 'package:flutter/material.dart';
 
-class ContentFeaturedPage extends StatefulWidget{
-
-  static Widget create(){
+class ContentFeaturedPage extends StatefulWidget {
+  static Widget create() {
     return BlocProvider<FeaturedBloc>(
       bloc: FeaturedBloc(Injector().repository.getNoticeRepository()),
       child: ContentFeaturedPage(),
@@ -24,11 +24,11 @@ class ContentFeaturedPage extends StatefulWidget{
   State<StatefulWidget> createState() {
     return state;
   }
-
 }
 
-class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProviderStateMixin{
-
+class _ContentFeaturedState extends State<ContentFeaturedPage>
+    with TickerProviderStateMixin
+    implements BlocView<FeaturedEvents> {
   AnimationController animationController;
 
   FeaturedBloc bloc;
@@ -38,19 +38,15 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
     super.initState();
 
     animationController = new AnimationController(
-        vsync: this,
-        duration: new Duration(milliseconds: 350)
-    );
-
+        vsync: this, duration: new Duration(milliseconds: 350));
   }
+
   @override
   Widget build(BuildContext context) {
-
-    if(bloc == null) {
-
+    if (bloc == null) {
       bloc = BlocProvider.of<FeaturedBloc>(context);
-      confBlocView(bloc);
-
+      bloc.registerView(this);
+      bloc.dispatch(LoadFeatured());
     }
 
     return Stack(
@@ -67,47 +63,41 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
               _getProgress(bloc)
             ],
           ),
-          onTap: (){
+          onTap: () {
             bloc.clickShowDetail();
           },
         ),
         StreamBuilder(
-          stream: bloc.streams.error,
-          initialData: false,
-          builder: (BuildContext context, AsyncSnapshot snapshot){
-
-            if(snapshot.data) {
-              return ErroConection(tryAgain:(){
-                bloc.load();
-              });
-            }else{
-              return Container();
-            }
-
-          }
-        )
+            stream: bloc.streams.error,
+            initialData: false,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.data) {
+                return ErroConection(tryAgain: () {
+                  bloc.dispatch(LoadFeatured());
+                });
+              } else {
+                return Container();
+              }
+            })
       ],
     );
   }
 
-  Widget _getProgress(FeaturedBloc bloc){
-
+  Widget _getProgress(FeaturedBloc bloc) {
     return StreamBuilder(
-      initialData: false,
-      stream: bloc.streams.progress,
-      builder: (BuildContext context, AsyncSnapshot snapshot){
-        if(snapshot.data){
-          return new Container(
-            child: new Center(
-              child: new CircularProgressIndicator(),
-            ),
-          );
-        }else{
-          return new Container();
-        }
-      }
-    );
-
+        initialData: false,
+        stream: bloc.streams.progress,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data) {
+            return new Container(
+              child: new Center(
+                child: new CircularProgressIndicator(),
+              ),
+            );
+          } else {
+            return new Container();
+          }
+        });
   }
 
   @override
@@ -117,69 +107,49 @@ class _ContentFeaturedState extends State<ContentFeaturedPage> with TickerProvid
   }
 
   _buildFeatureds(FeaturedBloc bloc) {
-
     return StreamBuilder(
-      initialData: List<Notice>(),
-      stream: bloc.streams.noticies,
-      builder: (BuildContext context, AsyncSnapshot snapshot){
+        initialData: List<Notice>(),
+        stream: bloc.streams.noticies,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          var _destaque = snapshot.data;
 
-        var _destaque = snapshot.data;
-
-        return new PageTransformer(
-            pageViewBuilder: (context, visibilityResolver) {
-              return new PageView.builder(
-                controller: new PageController(viewportFraction: 0.9),
-                itemCount: _destaque.length,
-                onPageChanged: (position) {
-                  bloc.streams.noticeSelected(_destaque[position]);
-                },
-                itemBuilder: (context, index) {
-                  final item = IntroNews.fromNotice(_destaque[index]);
-                  final pageVisibility = visibilityResolver
-                      .resolvePageVisibility(index);
-                  return new IntroNewsItem(
-                      item: item, pageVisibility: pageVisibility);
-                },
-              );
-            }
-        );
-
-      }
-    );
-
+          return new PageTransformer(
+              pageViewBuilder: (context, visibilityResolver) {
+            return new PageView.builder(
+              controller: new PageController(viewportFraction: 0.9),
+              itemCount: _destaque.length,
+              onPageChanged: (position) {
+                bloc.streams.noticeSelected(_destaque[position]);
+              },
+              itemBuilder: (context, index) {
+                final item = IntroNews.fromNotice(_destaque[index]);
+                final pageVisibility =
+                    visibilityResolver.resolvePageVisibility(index);
+                return new IntroNewsItem(
+                    item: item, pageVisibility: pageVisibility);
+              },
+            );
+          });
+        });
   }
 
-  void confBlocView(FeaturedBloc bloc) {
+  @override
+  void eventViewReceiver(FeaturedEvents event) {
+    if (event is InitAnimation) {
+      animationController.forward();
+    }
 
-    bloc.streams.anim.listen((show){
-
-      if(show){
-        animationController.forward();
-      }
-
-    });
-
-    bloc.streams.detail.listen((notice){
-
-      Navigator.of(context).push(
-          FadeInRoute(
-              widget:DetailPage(
-                  notice.img,
-                  notice.title,
-                  notice.date,
-                  notice.description,
-                  notice.category,
-                  notice.link,
-                  notice.origin
-              )
-          )
-      );
-
-    });
-
-    bloc.load();
-
+    if (event is OpenDetail) {
+      Notice notice = event.data;
+      Navigator.of(context).push(FadeInRoute(
+          widget: DetailPage(
+              notice.img,
+              notice.title,
+              notice.date,
+              notice.description,
+              notice.category,
+              notice.link,
+              notice.origin)));
+    }
   }
-
 }
-

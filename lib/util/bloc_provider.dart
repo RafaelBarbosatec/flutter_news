@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:FlutterNews/localization/MyLocalizations.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +9,27 @@ abstract class StreamsBase {
   void dispose();
 }
 
-abstract class BlocBase<T extends StreamsBase> {
+abstract class EventsBase {
+  dynamic data;
+}
+
+abstract class BlocView<E extends EventsBase> {
+  @protected
+  void eventViewReceiver(E event);
+}
+
+abstract class BlocBase<T extends StreamsBase, E extends EventsBase> {
+
   T streams;
   MyLocalizations _myLocalizations;
+
+  StreamController<E> _eventController = StreamController<E>();
+  Stream<E> get getEvent => _eventController.stream;
+  Function(E) get setEvent => _eventController.sink.add;
+
+  StreamController<E> _eventViewController = StreamController<E>.broadcast();
+  Stream<E> get getViewEvent => _eventViewController.stream;
+  Function(E) get setViewEvent => _eventViewController.sink.add;
 
   void confMyLocalizations(BuildContext context){
     _myLocalizations = MyLocalizations.of(context);
@@ -21,6 +41,32 @@ abstract class BlocBase<T extends StreamsBase> {
     }catch(e){
       return "";
     }
+  }
+
+  BlocBase() {
+    getEvent.listen(eventReceiver);
+  }
+
+  void registerView(BlocView view) {
+    getViewEvent.listen(view.eventViewReceiver);
+  }
+
+  @protected
+  void dispathToView(E event) {
+    setViewEvent(event);
+  }
+
+  void dispatch(E event) {
+    setEvent(event);
+  }
+
+  @protected
+  void eventReceiver(E event);
+
+  dispose(){
+    _eventController.close();
+    _eventViewController.close();
+    streams.dispose();
   }
 }
 
@@ -47,7 +93,7 @@ class BlocProvider<T extends BlocBase> extends StatefulWidget {
 class _BlocProviderState<T extends BlocBase> extends State<BlocProvider<T>>{
   @override
   void dispose(){
-    widget.bloc?.streams?.dispose();
+    widget.bloc?.dispose();
     super.dispose();
   }
 

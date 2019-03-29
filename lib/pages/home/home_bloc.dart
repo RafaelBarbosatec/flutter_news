@@ -8,10 +8,15 @@ import 'package:FlutterNews/pages/featured/content_featured.dart';
 import 'package:FlutterNews/pages/news/content_news.dart';
 import 'package:flutter/material.dart';
 
-class HomeBloc extends BlocBase<HomeStreams>{
+class HomeBloc extends BlocBase<HomeStreams,EventsBase>{
 
   HomeBloc(){
     streams = HomeStreams();
+  }
+
+  @override
+  void eventReceiver(EventsBase event) {
+    // TODO: implement eventReceiver
   }
 
 }

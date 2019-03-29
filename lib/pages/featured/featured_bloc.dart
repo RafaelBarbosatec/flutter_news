@@ -2,10 +2,11 @@
 import 'package:FlutterNews/conection/api.dart';
 import 'package:FlutterNews/domain/notice/notice.dart';
 import 'package:FlutterNews/domain/notice/notice_repository.dart';
+import 'package:FlutterNews/pages/featured/FeaturedEvents.dart';
 import 'package:FlutterNews/pages/featured/featured_streams.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
 
-class FeaturedBloc extends BlocBase<FeaturedStreams>{
+class FeaturedBloc extends BlocBase<FeaturedStreams,FeaturedEvents>{
 
   final NoticeRepository repository;
 
@@ -21,7 +22,14 @@ class FeaturedBloc extends BlocBase<FeaturedStreams>{
     });
   }
 
-  load(){
+  @override
+  void eventReceiver(FeaturedEvents event) {
+    if(event is LoadFeatured){
+      _load();
+    }
+  }
+
+  _load(){
 
     streams.visibleProgress(true);
     streams.visibleError(false);
@@ -34,7 +42,7 @@ class FeaturedBloc extends BlocBase<FeaturedStreams>{
 
   clickShowDetail(){
     if(nSelected != null){
-      streams.showDetail(nSelected);
+      dispathToView(OpenDetail()..data = nSelected);
     }
   }
 
@@ -42,7 +50,7 @@ class FeaturedBloc extends BlocBase<FeaturedStreams>{
     nSelected = news[0];
     streams.visibleProgress(false);
     streams.addnoticies(news);
-    streams.changeAnim(true);
+    dispathToView(InitAnimation());
   }
 
   _showImplError(onError) {

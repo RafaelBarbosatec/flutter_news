@@ -8,14 +8,12 @@ abstract class Repository{
 
 class RepositoryImpl implements Repository {
 
-  final bool _prod;
+  final Api _api;
 
-  Api _api = Api("http://104.131.18.84");
-
-  RepositoryImpl(this._prod);
+  RepositoryImpl(this._api);
 
   NoticeRepository getNoticeRepository(){
-    return NoticeRepositoryImpl(_prod,_api);
+    return NoticeRepositoryImpl(_api);
   }
 
 }

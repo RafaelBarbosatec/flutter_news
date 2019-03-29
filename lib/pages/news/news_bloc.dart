@@ -2,10 +2,11 @@
 import 'package:FlutterNews/conection/api.dart';
 import 'package:FlutterNews/domain/notice/notice.dart';
 import 'package:FlutterNews/domain/notice/notice_repository.dart';
+import 'package:FlutterNews/pages/news/news_events.dart';
 import 'package:FlutterNews/pages/news/news_streams.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
 
-class NewsBloc extends BlocBase<NewsStreams>{
+class NewsBloc extends BlocBase<NewsStreams,NewsEvents>{
 
   final NoticeRepository repository;
 
@@ -29,12 +30,19 @@ class NewsBloc extends BlocBase<NewsStreams>{
     streams.categoryPosition.listen((category){
       _currentCategory = category;
       cleanList();
-      load(false);
+      _load(false);
     });
 
   }
 
-  load(bool isMore){
+  @override
+  void eventReceiver(event) {
+    if(event is LoadNews){
+      _load(event.data);
+    }
+  }
+
+  _load(bool isMore){
 
     if(!_carregando){
 
@@ -71,9 +79,8 @@ class NewsBloc extends BlocBase<NewsStreams>{
     }else{
       _newsInner = news;
       streams.addnoticies(news);
-      streams.changeAnim(true);
+      dispathToView(InitAnimation());
     }
-
     _carregando = false;
 
   }
@@ -85,7 +92,6 @@ class NewsBloc extends BlocBase<NewsStreams>{
     }
     streams.visibleError(true);
     streams.visibleProgress(false);
-
     _carregando = false;
   }
 

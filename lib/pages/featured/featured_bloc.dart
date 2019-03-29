@@ -28,7 +28,7 @@ class FeaturedBloc extends BlocBase<FeaturedStreams>{
 
     repository.loadNewsRecent()
         .then((news) => showNews(news))
-        .catchError((onError) => showImplError(onError));
+        .catchError(showImplError);
 
   }
 

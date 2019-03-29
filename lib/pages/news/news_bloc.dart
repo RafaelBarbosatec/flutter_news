@@ -56,7 +56,7 @@ class NewsBloc extends BlocBase<NewsStreams>{
 
       repository.loadNews(category, _page)
           .then((news) => showNews(news,isMore))
-          .catchError((onError) => showImplError(onError));
+          .catchError(showImplError);
 
     }
 

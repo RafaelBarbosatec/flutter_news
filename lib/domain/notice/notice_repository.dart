@@ -9,10 +9,10 @@ abstract class NoticeRepository{
 }
 class NoticeRepositoryImpl implements NoticeRepository{
 
-  final _api = Api("http://104.131.18.84");
+  final Api _api;
   final bool _prod;
 
-  NoticeRepositoryImpl(this._prod);
+  NoticeRepositoryImpl(this._prod, this._api);
 
   Future<List<Notice>> loadNews(String category, int page) async {
     return _prod ? _serverNews(category,page) : _localNews();

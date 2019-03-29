@@ -21,7 +21,7 @@ class SearchResultBloc extends BlocBase<SearchResultStreams>{
 
     repository.loadSearch(query)
         .then((news) => showNews(news))
-        .catchError((onError) => showImplError(onError));
+        .catchError(showImplError);
 
   }
 

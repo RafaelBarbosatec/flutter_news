@@ -27,8 +27,8 @@ class FeaturedBloc extends BlocBase<FeaturedStreams>{
     streams.visibleError(false);
 
     repository.loadNewsRecent()
-        .then((news) => showNews(news))
-        .catchError(showImplError);
+        .then((news) => _showNews(news))
+        .catchError(_showImplError);
 
   }
 
@@ -38,14 +38,14 @@ class FeaturedBloc extends BlocBase<FeaturedStreams>{
     }
   }
 
-  showNews(List<Notice> news) {
+  _showNews(List<Notice> news) {
     nSelected = news[0];
     streams.visibleProgress(false);
     streams.addnoticies(news);
     streams.changeAnim(true);
   }
 
-  showImplError(onError) {
+  _showImplError(onError) {
 
     print(onError);
     if(onError is FetchDataException){

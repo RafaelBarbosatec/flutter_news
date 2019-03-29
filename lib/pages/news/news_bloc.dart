@@ -55,14 +55,14 @@ class NewsBloc extends BlocBase<NewsStreams>{
       _carregando = true;
 
       repository.loadNews(category, _page)
-          .then((news) => showNews(news,isMore))
-          .catchError(showImplError);
+          .then((news) => _showNews(news,isMore))
+          .catchError(_showImplError);
 
     }
 
   }
 
-  showNews(List<Notice> news,bool isMore) {
+  _showNews(List<Notice> news,bool isMore) {
 
     streams.visibleProgress(false);
     if(isMore){
@@ -78,7 +78,7 @@ class NewsBloc extends BlocBase<NewsStreams>{
 
   }
 
-  showImplError(onError) {
+  _showImplError(onError) {
     print(onError);
     if(onError is FetchDataException){
       print("codigo: ${onError.code()}");

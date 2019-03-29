@@ -20,12 +20,12 @@ class SearchResultBloc extends BlocBase<SearchResultStreams>{
     streams.visibleError(false);
 
     repository.loadSearch(query)
-        .then((news) => showNews(news))
-        .catchError(showImplError);
+        .then((news) => _showNews(news))
+        .catchError(_showImplError);
 
   }
 
-  showNews(List<Notice> news) {
+  _showNews(List<Notice> news) {
 
     streams.visibleProgress(false);
 
@@ -38,7 +38,7 @@ class SearchResultBloc extends BlocBase<SearchResultStreams>{
     }
   }
 
-  showImplError(onError) {
+  _showImplError(onError) {
 
     print(onError);
     if(onError is FetchDataException){

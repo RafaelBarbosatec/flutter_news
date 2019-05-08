@@ -1,5 +1,4 @@
 import 'package:FlutterNews/injection/injector.dart';
-import 'package:FlutterNews/localization/MyLocalizations.dart';
 import 'package:FlutterNews/pages/search/search_events.dart';
 import 'package:FlutterNews/pages/search/search_result_bloc.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';

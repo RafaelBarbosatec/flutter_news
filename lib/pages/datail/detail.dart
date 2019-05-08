@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:FlutterNews/localization/MyLocalizations.dart';
+import 'package:FlutterNews/util/StringsLocation.dart';
 import 'package:FlutterNews/util/date_util.dart';
 import 'package:FlutterNews/util/functions.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +20,8 @@ class DetailPage extends StatelessWidget{
 
   DetailPage(this._img,this._title,this._date,this._description,this._category,this._link,this._origin);
 
-  MyLocalizations strl;
-
   @override
   Widget build(BuildContext context) {
-
-    strl = MyLocalizations.of(context);
 
     return new Scaffold(
       appBar: new AppBar(
@@ -195,11 +190,11 @@ class DetailPage extends StatelessWidget{
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          content: new Text(strl.trans("text_copy")),
+          content: new Text(getString("text_copy")),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text(strl.trans("text_fechar")),
+              child: new Text(getString("text_fechar")),
               onPressed: () {
                 Navigator.of(context).pop();
               },

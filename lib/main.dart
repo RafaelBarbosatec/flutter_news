@@ -1,9 +1,11 @@
-import 'package:FlutterNews/injection/injector.dart';
-import 'package:FlutterNews/localization/MyLocalizationsDelegate.dart';
+import 'package:FlutterNews/support/di/BlocModule.dart';
+import 'package:FlutterNews/support/di/RepositoryModule.dart';
+import 'package:FlutterNews/support/localization/MyLocalizationsDelegate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterNews/pages/home/home.dart';
+import 'package:simple_injector/simple_injector.dart';
 
 void main() => runApp(new NewsApp());
 
@@ -12,7 +14,10 @@ class NewsApp extends StatelessWidget {
   MyLocalizationsDelegate myLocation = const MyLocalizationsDelegate();
 
   NewsApp(){
-    Injector.configure(Flavor.PRO);
+    //Injector.configure(Flavor.PRO);
+    SimpleInjector.configure(Flavor.PROD);
+    SimpleInjector().registerModule(RepositoryModule());
+    SimpleInjector().registerModule(BlocModule());
   }
 
   // This widget is the root of your application.

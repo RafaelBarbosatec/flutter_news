@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:FlutterNews/domain/notice/notice.dart';
-import 'package:FlutterNews/util/bloc_provider.dart';
+import 'package:bsev/bsev.dart';
 
 class NewsStreams implements StreamsBase{
 
@@ -17,21 +17,25 @@ class NewsStreams implements StreamsBase{
   Function(bool) get changeAnim => _animController.sink.add;
   Stream<bool> get anim => _animController.stream;
 
-  StreamController<List<Notice>> _noticeController = StreamController<List<Notice>>();
-  Function(List<Notice>) get addnoticies => _noticeController.sink.add;
-  Stream<List<Notice>> get noticies => _noticeController.stream;
+  BehaviorSubjectCreate<List<Notice>> noticies = BehaviorSubjectCreate();
+//  StreamController<List<Notice>> _noticeController = StreamController<List<Notice>>();
+//  Function(List<Notice>) get addnoticies => _noticeController.sink.add;
+//  Stream<List<Notice>> get noticies => _noticeController.stream;
 
   StreamController<int> _categoryController = StreamController<int>();
   Function(int) get setCategoryPosition => _categoryController.sink.add;
   Stream<int> get categoryPosition => _categoryController.stream;
+
+  BehaviorSubjectCreate<List<String>> categoriesName = BehaviorSubjectCreate();
 
   @override
   void dispose() {
     _progressController.close();
     _errorController.close();
     _animController.close();
-    _noticeController.close();
+    noticies.close();
     _categoryController.close();
+    categoriesName.close();
   }
 
 }

@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:FlutterNews/util/StringsLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 //Classe responsavel por carregar as strings do json de acordo com a localidade do dispositivo
 class MyLocalizations {
-  MyLocalizations(this.locale);
+  MyLocalizations(this.locale){
+    StringsLocation.configure(this);
+  }
 
   final Locale locale;
 

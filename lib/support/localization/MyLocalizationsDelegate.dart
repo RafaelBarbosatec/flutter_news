@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:FlutterNews/localization/MyLocalizations.dart';
+import 'package:FlutterNews/support/localization/MyLocalizations.dart';
 import 'package:flutter/material.dart';
 
 class MyLocalizationsDelegate extends LocalizationsDelegate<MyLocalizations> {

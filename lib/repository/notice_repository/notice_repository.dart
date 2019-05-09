@@ -1,6 +1,6 @@
 
 import 'package:FlutterNews/conection/api.dart';
-import 'package:FlutterNews/domain/notice/notice.dart';
+import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 
 abstract class NoticeRepository{
   Future<List<Notice>> loadNews(String category, int page);

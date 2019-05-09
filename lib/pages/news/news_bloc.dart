@@ -1,9 +1,9 @@
 
 import 'package:FlutterNews/conection/api.dart';
-import 'package:FlutterNews/domain/notice/notice.dart';
-import 'package:FlutterNews/domain/notice/notice_repository.dart';
 import 'package:FlutterNews/pages/news/news_events.dart';
 import 'package:FlutterNews/pages/news/news_streams.dart';
+import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
+import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
 import 'package:FlutterNews/util/StringsLocation.dart';
 import 'package:bsev/bsev.dart';
 

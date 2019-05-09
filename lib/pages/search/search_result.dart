@@ -1,10 +1,10 @@
 import 'package:FlutterNews/injection/injector.dart';
 import 'package:FlutterNews/pages/search/search_events.dart';
 import 'package:FlutterNews/pages/search/search_result_bloc.dart';
+import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
 import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:flutter/material.dart';
-import 'package:FlutterNews/domain/notice/notice.dart';
 
 class SearchResultPage extends StatefulWidget {
   final String query;

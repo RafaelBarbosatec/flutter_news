@@ -1,9 +1,9 @@
 
 import 'package:FlutterNews/conection/api.dart';
-import 'package:FlutterNews/domain/notice/notice.dart';
-import 'package:FlutterNews/domain/notice/notice_repository.dart';
 import 'package:FlutterNews/pages/featured/featured_events.dart';
 import 'package:FlutterNews/pages/featured/featured_streams.dart';
+import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
+import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
 import 'package:bsev/bsev.dart';
 
 class FeaturedBloc extends BlocBase<FeaturedStreams,FeaturedEvents>{

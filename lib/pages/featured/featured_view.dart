@@ -1,7 +1,7 @@
-import 'package:FlutterNews/domain/notice/notice.dart';
 import 'package:FlutterNews/pages/featured/featured_events.dart';
 import 'package:FlutterNews/pages/featured/featured_bloc.dart';
 import 'package:FlutterNews/pages/featured/featured_streams.dart';
+import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:FlutterNews/widgets/pageTransform/intro_page_item.dart';
 import 'package:FlutterNews/widgets/pageTransform/page_transformer.dart';

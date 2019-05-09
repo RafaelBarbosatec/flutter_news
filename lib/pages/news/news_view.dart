@@ -2,11 +2,11 @@ import 'dart:async';
 import 'package:FlutterNews/pages/news/news_bloc.dart';
 import 'package:FlutterNews/pages/news/news_events.dart';
 import 'package:FlutterNews/pages/news/news_streams.dart';
+import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/widgets/AnimatedContent.dart';
 import 'package:FlutterNews/widgets/custom_tab.dart';
 import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:flutter/material.dart';
-import 'package:FlutterNews/domain/notice/notice.dart';
 import 'package:bsev/bsev.dart';
 
 class NewsView extends BlocStatelessView<NewsBloc,NewsStreams,NewsEvents> {

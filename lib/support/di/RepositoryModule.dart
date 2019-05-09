@@ -1,5 +1,5 @@
 import 'package:FlutterNews/conection/api.dart';
-import 'package:FlutterNews/domain/notice/notice_repository.dart';
+import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
 import 'package:simple_injector/module_injector.dart';
 import 'package:simple_injector/simple_injector.dart';
 

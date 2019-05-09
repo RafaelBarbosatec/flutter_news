@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:FlutterNews/domain/notice/notice.dart';
+import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/util/bloc_provider.dart';
 
 class SearchResultStreams implements StreamsBase{

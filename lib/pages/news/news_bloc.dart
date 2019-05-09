@@ -64,9 +64,9 @@ class NewsBloc extends BlocBase<NewsStreams,NewsEvents>{
         _page = 0;
       }
 
-      streams.visibleError(false);
+      streams.errorConection.set(false);
 
-      streams.visibleProgress(true);
+      streams.progress.set(true);
 
       String category = _categories[_currentCategory];
 
@@ -80,7 +80,7 @@ class NewsBloc extends BlocBase<NewsStreams,NewsEvents>{
 
   _showNews(List<Notice> news, bool isMore) {
 
-    streams.visibleProgress(false);
+    streams.progress.set(false);
 
     if(isMore){
       _newsInner.addAll(news);
@@ -99,8 +99,8 @@ class NewsBloc extends BlocBase<NewsStreams,NewsEvents>{
     if(onError is FetchDataException){
       print("codigo: ${onError.code()}");
     }
-    streams.visibleError(true);
-    streams.visibleProgress(false);
+    streams.errorConection.set(true);
+    streams.progress.set(false);
     _carregando = false;
   }
 

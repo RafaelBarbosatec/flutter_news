@@ -28,10 +28,10 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams,NewsEvents> {
 
   Widget _buildConnectionError() {
     return StreamBuilder(
-        stream: streams.error,
+        stream: streams.errorConection.get,
         initialData: false,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data) {
+          if (snapshot.hasData && snapshot.data) {
             return ErroConection(tryAgain: () {
               dispatch(LoadNews()..data = false);
             });
@@ -93,10 +93,10 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams,NewsEvents> {
   Widget _getProgress() {
     return Center(
       child: StreamBuilder(
-          stream: streams.progress,
+          stream: streams.progress.get,
           initialData: false,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data) {
+            if (snapshot.hasData && snapshot.data) {
               return new CircularProgressIndicator();
             } else {
               return new Container();

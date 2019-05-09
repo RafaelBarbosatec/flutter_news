@@ -1,4 +1,4 @@
-import 'package:FlutterNews/pages/featured/content_featured.dart';
+import 'package:FlutterNews/pages/featured/featured_view.dart';
 import 'package:FlutterNews/pages/home/home_bloc.dart';
 import 'package:FlutterNews/pages/info/info.dart';
 import 'package:FlutterNews/pages/news/news_view.dart';
@@ -53,7 +53,7 @@ class HomePage extends StatelessWidget {
 
           var position = snapshot.data;
           switch(position){
-            case 0:return ContentFeaturedPage.create();break;
+            case 0:return FeaturedView().create();break;
             case 1: return NewsView().create();break;
             default: return Info();
           }

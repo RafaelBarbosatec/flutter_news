@@ -1,4 +1,6 @@
 import 'package:FlutterNews/domain/notice/notice.dart';
+import 'package:FlutterNews/pages/datail/detail.dart';
+import 'package:FlutterNews/util/FadeInRoute.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'page_transformer.dart';
@@ -159,13 +161,18 @@ class IntroNewsItem extends StatelessWidget {
       child: new Material(
         elevation: 4.0,
         borderRadius: new BorderRadius.circular(8.0),
-        child: new Stack(
-          fit: StackFit.expand,
-          children: [
-            new Hero(tag: item.title,child: _getImageNetwork(_getImageUrl(item.imageUrl, 400, ''))),
-            _getOverlayGradient(),
-            _buildTextContainer(context),
-          ],
+        child: InkWell(
+          onTap: (){
+            openDetail(context);
+          },
+          child: new Stack(
+            fit: StackFit.expand,
+            children: [
+              new Hero(tag: item.title,child: _getImageNetwork(_getImageUrl(item.imageUrl, 400, ''))),
+              _getOverlayGradient(),
+              _buildTextContainer(context),
+            ],
+          ),
         ),
       ),
     );
@@ -190,4 +197,16 @@ class IntroNewsItem extends StatelessWidget {
     );
   }
 
+
+  void openDetail(BuildContext context) {
+    Navigator.of(context).push(FadeInRoute(
+        widget: DetailPage(
+            item.imageUrl,
+            item.title,
+            item.date,
+            item.description,
+            item.category,
+            item.link,
+            item.origin)));
+  }
 }

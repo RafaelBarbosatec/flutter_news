@@ -14,7 +14,6 @@ class NewsApp extends StatelessWidget {
   MyLocalizationsDelegate myLocation = const MyLocalizationsDelegate();
 
   NewsApp(){
-    //Injector.configure(Flavor.PRO);
     SimpleInjector.configure(Flavor.PROD);
     SimpleInjector().registerModule(RepositoryModule());
     SimpleInjector().registerModule(BlocModule());

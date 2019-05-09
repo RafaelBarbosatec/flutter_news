@@ -1,22 +1,13 @@
-import 'dart:async';
 
-import 'package:FlutterNews/util/bloc_provider.dart';
-import 'package:flutter/widgets.dart';
+import 'package:bsev/bsev.dart';
 
 class HomeStreams implements StreamsBase{
 
-  StreamController<int> _tabPositionController = StreamController<int>();
-  Function(int) get selectTab => _tabPositionController.sink.add;
-  Stream<int> get tabPosition => _tabPositionController.stream;
-
-  StreamController<Widget> _screenController = StreamController<Widget>();
-  Function(Widget) get addWidget => _screenController.sink.add;
-  Stream<Widget> get widgetSelected => _screenController.stream;
+  BehaviorSubjectCreate<int> tabPosition = BehaviorSubjectCreate();
 
   @override
   void dispose() {
-    _tabPositionController.close();
-    _screenController.close();
+    tabPosition.close();
   }
 
 

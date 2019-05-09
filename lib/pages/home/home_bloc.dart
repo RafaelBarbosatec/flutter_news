@@ -1,12 +1,6 @@
 
-import 'dart:async';
-
 import 'package:FlutterNews/pages/home/home_streams.dart';
-import 'package:FlutterNews/pages/info/info.dart';
-import 'package:FlutterNews/util/bloc_provider.dart';
-import 'package:FlutterNews/pages/featured/featured_view.dart';
-import 'package:FlutterNews/pages/news/news_view.dart';
-import 'package:flutter/material.dart';
+import 'package:bsev/bsev.dart';
 
 class HomeBloc extends BlocBase<HomeStreams,EventsBase>{
 
@@ -17,6 +11,16 @@ class HomeBloc extends BlocBase<HomeStreams,EventsBase>{
   @override
   void eventReceiver(EventsBase event) {
     // TODO: implement eventReceiver
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+  }
+
+  @override
+  void initView() {
+    // TODO: implement initView
   }
 
 }

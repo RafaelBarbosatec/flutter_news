@@ -2,9 +2,9 @@ import 'package:FlutterNews/pages/featured/featured_view.dart';
 import 'package:FlutterNews/pages/home/home_bloc.dart';
 import 'package:FlutterNews/pages/info/info.dart';
 import 'package:FlutterNews/pages/news/news_view.dart';
-import 'package:FlutterNews/util/bloc_provider.dart';
 import 'package:FlutterNews/widgets/bottom_navigation.dart';
 import 'package:FlutterNews/widgets/search.dart';
+import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: new BottomNavigation((index){
-        bloc.streams.selectTab(index);
+        bloc.streams.tabPosition.set(index);
       }), // This trailing comma makes auto-formatting nicer for build methods.
     );
 
@@ -47,15 +47,16 @@ class HomePage extends StatelessWidget {
 
   Widget _getContent(HomeBloc bloc){
     return StreamBuilder(
-        stream: bloc.streams.tabPosition,
+        stream: bloc.streams.tabPosition.get,
         initialData: 0,
         builder:  (BuildContext context, AsyncSnapshot snapshot){
 
-          var position = snapshot.data;
+          var position = snapshot.hasData ? snapshot.data:0;
+
           switch(position){
             case 0:return FeaturedView().create();break;
             case 1: return NewsView().create();break;
-            default: return Info();
+            case 2: return Info();
           }
 
         }

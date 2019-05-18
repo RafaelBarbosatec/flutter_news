@@ -5,12 +5,12 @@ import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:FlutterNews/widgets/pageTransform/intro_page_item.dart';
 import 'package:FlutterNews/widgets/pageTransform/page_transformer.dart';
-import 'package:bsev/bloc_view.dart';
+import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
 
 
 // ignore: must_be_immutable
-class FeaturedView extends BlocStatelessView<FeaturedBloc,FeaturedStreams,FeaturedEvents> {
+class FeaturedView extends BlocStatelessView<FeaturedBloc,FeaturedStreams> {
 
   @override
   Widget buildView(BuildContext context) {
@@ -99,7 +99,7 @@ class FeaturedView extends BlocStatelessView<FeaturedBloc,FeaturedStreams,Featur
   }
 
   @override
-  void eventReceiver(FeaturedEvents event) {
+  void eventReceiver(EventsBase event) {
 
   }
 

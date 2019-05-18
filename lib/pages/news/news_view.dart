@@ -9,7 +9,7 @@ import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:flutter/material.dart';
 import 'package:bsev/bsev.dart';
 
-class NewsView extends BlocStatelessView<NewsBloc,NewsStreams,NewsEvents> {
+class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
 
   @override
   Widget buildView(BuildContext context) {

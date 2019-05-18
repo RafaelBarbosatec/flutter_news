@@ -1,10 +1,10 @@
 
-import 'package:FlutterNews/conection/api.dart';
 import 'package:FlutterNews/pages/news/news_events.dart';
 import 'package:FlutterNews/pages/news/news_streams.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
-import 'package:FlutterNews/util/StringsLocation.dart';
+import 'package:FlutterNews/support/conection/api.dart';
+import 'package:FlutterNews/support/util/StringsLocation.dart';
 import 'package:bsev/bsev.dart';
 
 class NewsBloc extends BlocBase<NewsStreams,NewsEvents>{
@@ -107,11 +107,6 @@ class NewsBloc extends BlocBase<NewsStreams,NewsEvents>{
   void cleanList() {
     _newsInner = List();
     streams.noticies.set(_newsInner);
-  }
-
-  @override
-  void initState() {
-    streams = NewsStreams();
   }
 
 }

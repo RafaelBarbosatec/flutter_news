@@ -1,9 +1,9 @@
 
-import 'package:FlutterNews/conection/api.dart';
 import 'package:FlutterNews/pages/featured/featured_events.dart';
 import 'package:FlutterNews/pages/featured/featured_streams.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
+import 'package:FlutterNews/support/conection/api.dart';
 import 'package:bsev/bsev.dart';
 
 class FeaturedBloc extends BlocBase<FeaturedStreams,FeaturedEvents>{
@@ -11,11 +11,6 @@ class FeaturedBloc extends BlocBase<FeaturedStreams,FeaturedEvents>{
   final NoticeRepository repository;
 
   FeaturedBloc(this.repository);
-
-  @override
-  void initState() {
-    streams = FeaturedStreams();
-  }
 
   @override
   void initView() {

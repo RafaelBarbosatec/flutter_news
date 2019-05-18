@@ -1,5 +1,5 @@
-import 'package:FlutterNews/conection/api.dart';
 import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
+import 'package:FlutterNews/support/conection/api.dart';
 import 'package:bsev/bsev.dart';
 import 'package:bsev/flavors.dart';
 

@@ -1,6 +1,6 @@
 import 'package:FlutterNews/pages/datail/detail.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
-import 'package:FlutterNews/util/FadeInRoute.dart';
+import 'package:FlutterNews/support/util/FadeInRoute.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'page_transformer.dart';

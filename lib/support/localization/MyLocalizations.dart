@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:FlutterNews/util/StringsLocation.dart';
+import 'package:FlutterNews/support/util/StringsLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

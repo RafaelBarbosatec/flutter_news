@@ -1,4 +1,4 @@
-import 'package:FlutterNews/util/StringsLocation.dart';
+import 'package:FlutterNews/support/util/StringsLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterNews/pages/search/search_result.dart';
 
@@ -47,7 +47,7 @@ class SearchWidget extends StatelessWidget{
 
     Navigator.of(_context).push(
           new MaterialPageRoute(builder: (BuildContext context) {
-            return SearchResultPage.create(query);
+            return SearchView(query).create();
           }
         )
     );

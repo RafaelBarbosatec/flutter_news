@@ -1,4 +1,4 @@
-import 'package:FlutterNews/util/StringsLocation.dart';
+import 'package:FlutterNews/support/util/StringsLocation.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatefulWidget {

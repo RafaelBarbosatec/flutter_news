@@ -5,6 +5,8 @@ import 'package:FlutterNews/pages/home/home_bloc.dart';
 import 'package:FlutterNews/pages/home/home_streams.dart';
 import 'package:FlutterNews/pages/news/news_bloc.dart';
 import 'package:FlutterNews/pages/news/news_streams.dart';
+import 'package:FlutterNews/pages/search/search_result_bloc.dart';
+import 'package:FlutterNews/pages/search/search_streams.dart';
 import 'package:bsev/bsev.dart';
 
 injectBloc(Injector injector){
@@ -17,5 +19,8 @@ injectBloc(Injector injector){
 
   injector.registerDependency((i)=>HomeBloc());
   injector.registerDependency((i)=>HomeStreams());
+
+  injector.registerDependency((i)=>SearchBloc(i.getDependency()));
+  injector.registerDependency((i)=>SearchStreams());
 
 }

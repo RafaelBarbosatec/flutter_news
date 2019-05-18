@@ -14,11 +14,6 @@ class HomeBloc extends BlocBase<HomeStreams,EventsBase>{
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-  }
-
-  @override
   void initView() {
     // TODO: implement initView
   }

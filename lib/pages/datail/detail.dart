@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:FlutterNews/util/StringsLocation.dart';
-import 'package:FlutterNews/util/date_util.dart';
-import 'package:FlutterNews/util/functions.dart';
+import 'package:FlutterNews/support/util/StringsLocation.dart';
+import 'package:FlutterNews/support/util/date_util.dart';
+import 'package:FlutterNews/support/util/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,13 +10,13 @@ import 'package:share/share.dart';
 
 class DetailPage extends StatelessWidget{
 
-  var _img;
-  var _title;
-  var _date;
-  var _description;
-  var _link;
-  var _category;
-  var _origin;
+  final _img;
+  final _title;
+  final _date;
+  final _description;
+  final _link;
+  final _category;
+  final _origin;
 
   DetailPage(this._img,this._title,this._date,this._description,this._category,this._link,this._origin);
 

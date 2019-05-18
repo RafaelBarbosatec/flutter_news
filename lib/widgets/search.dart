@@ -1,18 +1,15 @@
-import 'package:FlutterNews/localization/MyLocalizations.dart';
+import 'package:FlutterNews/support/util/StringsLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterNews/pages/search/search_result.dart';
 
 class SearchWidget extends StatelessWidget{
 
   final TextEditingController editingController = new TextEditingController();
-
-  MyLocalizations strl;
   BuildContext _context;
 
   @override
   Widget build(BuildContext context) {
 
-    strl = MyLocalizations.of(context);
     _context = context;
 
     return new Container(
@@ -32,7 +29,7 @@ class SearchWidget extends StatelessWidget{
                     maxLines: 1,
                     decoration: new InputDecoration(
                       icon: Icon(Icons.search, color: Theme.of(context).accentColor,),
-                      hintText: strl.trans("hint_busca"),
+                      hintText: getString("hint_busca"),
                       border: InputBorder.none
                     ),
                     onSubmitted: onSubmitted,
@@ -50,7 +47,7 @@ class SearchWidget extends StatelessWidget{
 
     Navigator.of(_context).push(
           new MaterialPageRoute(builder: (BuildContext context) {
-            return SearchResultPage.create(query);
+            return SearchView(query).create();
           }
         )
     );

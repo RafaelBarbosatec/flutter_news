@@ -1,4 +1,4 @@
-import 'package:FlutterNews/localization/MyLocalizations.dart';
+import 'package:FlutterNews/support/util/StringsLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,7 +12,6 @@ class _InfoState extends State<Info> with TickerProviderStateMixin {
 
   AnimationController animationController;
   Animation<double> animation;
-  MyLocalizations strl;
 
   @override
   void initState() {
@@ -31,8 +30,6 @@ class _InfoState extends State<Info> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
-    strl = MyLocalizations.of(context);
     
     return new ScaleTransition(
       scale: animation,
@@ -43,7 +40,7 @@ class _InfoState extends State<Info> with TickerProviderStateMixin {
             shrinkWrap: true ,
             children: <Widget>[
               _getTittle(),
-              _getContent(strl.trans("text_info")),
+              _getContent(getString("text_info")),
               _getContentSecond("Framework","flutter.io","https://flutter.io/"),
               _getContentSecond("Repository","flutter_news","https://github.com/RafaelBarbosatec/flutter_news"),
               _getContentSecond("Developer","RafaelBarbosaTec","http://rafaelbarbosatec.github.io/"),

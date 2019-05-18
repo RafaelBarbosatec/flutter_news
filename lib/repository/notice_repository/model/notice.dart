@@ -1,5 +1,5 @@
-import 'package:FlutterNews/util/date_util.dart';
-import 'package:FlutterNews/util/functions.dart';
+import 'package:FlutterNews/support/util/date_util.dart';
+import 'package:FlutterNews/support/util/functions.dart';
 import 'package:FlutterNews/pages/datail/detail.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +52,9 @@ class Notice extends StatelessWidget{
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Hero(tag: title, child: _getImgWidget(Functions.getImgResizeUrl(img, 200, 200)),),
+          new Hero(
+            tag: title, child: _getImgWidget(Functions.getImgResizeUrl(img, 200, 200)),
+          ),
           _getColumText(title,date,description)
         ],
 

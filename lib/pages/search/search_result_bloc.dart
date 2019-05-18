@@ -1,18 +1,19 @@
 
-import 'package:FlutterNews/conection/api.dart';
-import 'package:FlutterNews/domain/notice/notice.dart';
-import 'package:FlutterNews/domain/notice/notice_repository.dart';
-import 'package:FlutterNews/injection/injector.dart';
 import 'package:FlutterNews/pages/search/search_events.dart';
-import 'package:FlutterNews/pages/search/search_result_streams.dart';
-import 'package:FlutterNews/util/bloc_provider.dart';
+import 'package:FlutterNews/pages/search/search_streams.dart';
+import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
+import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
+import 'package:FlutterNews/support/conection/api.dart';
+import 'package:bsev/bsev.dart';
 
-class SearchResultBloc extends BlocBase<SearchResultStreams,SearchEvents>{
+class SearchBloc extends BlocBase<SearchStreams,SearchEvents>{
 
   final NoticeRepository repository;
 
-  SearchResultBloc(this.repository){
-    streams = SearchResultStreams();
+  SearchBloc(this.repository);
+
+  @override
+  void initView() {
   }
 
   @override
@@ -24,8 +25,12 @@ class SearchResultBloc extends BlocBase<SearchResultStreams,SearchEvents>{
 
   _load(String query){
 
-    streams.visibleProgress(true);
-    streams.visibleError(false);
+    if(streams.noticies.value != null){
+      return;
+    }
+
+    streams.progress.set(true);
+    streams.error.set(false);
 
     repository.loadSearch(query)
         .then((news) => _showNews(news))
@@ -35,13 +40,13 @@ class SearchResultBloc extends BlocBase<SearchResultStreams,SearchEvents>{
 
   _showNews(List<Notice> news) {
 
-    streams.visibleProgress(false);
+    streams..progress.set(false);
     if(news.length > 0) {
-      streams.addnoticies(news);
-      dispathToView(InitAnimation());
-      streams.visibleEmpty(false);
+      streams.noticies.set(news);
+      dispatchView(InitAnimation());
+      streams.empty.set(false);
     }else{
-      streams.visibleEmpty(true);
+      streams.empty.set(true);
     }
   }
 
@@ -51,8 +56,8 @@ class SearchResultBloc extends BlocBase<SearchResultStreams,SearchEvents>{
     if(onError is FetchDataException){
       print("codigo: ${onError.code()}");
     }
-    streams.visibleError(true);
-    streams.visibleProgress(false);
+    streams.error.set(true);
+    streams.progress.set(false);
 
   }
 

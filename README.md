@@ -23,7 +23,7 @@ News application developed for practice, learning and testing the potential of t
 
 -Architecture: [Bloc](https://www.didierboelens.com/2018/12/reactive-programming---streams---bloc---practical-use-cases/)
 
--Libs: [Url_laucher](https://pub.dartlang.org/packages/url_launcher), [PageTransformer](https://github.com/FlutterRocks/page-transformer)
+-Libs: [Url_laucher](https://pub.dartlang.org/packages/url_launcher), [PageTransformer](https://github.com/FlutterRocks/page-transformer), [BSEV](https://pub.dev/packages/bsev)
 
 
 ## Tutorial

@@ -1,29 +1,25 @@
 
-import 'package:FlutterNews/conection/api.dart';
-import 'package:FlutterNews/domain/notice/notice.dart';
-import 'package:FlutterNews/domain/notice/notice_repository.dart';
-import 'package:FlutterNews/pages/featured/FeaturedEvents.dart';
+import 'package:FlutterNews/pages/featured/featured_events.dart';
 import 'package:FlutterNews/pages/featured/featured_streams.dart';
-import 'package:FlutterNews/util/bloc_provider.dart';
+import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
+import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
+import 'package:FlutterNews/support/conection/api.dart';
+import 'package:bsev/bsev.dart';
 
 class FeaturedBloc extends BlocBase<FeaturedStreams,FeaturedEvents>{
 
   final NoticeRepository repository;
 
-  Notice nSelected;
+  FeaturedBloc(this.repository);
 
-  FeaturedBloc(this.repository){
-
-    streams = FeaturedStreams();
-
-    streams.getNoticeSelected.listen((notice){
-      nSelected = notice;
-      print(notice.title);
-    });
+  @override
+  void initView() {
+    _load();
   }
 
   @override
   void eventReceiver(FeaturedEvents event) {
+
     if(event is LoadFeatured){
       _load();
     }
@@ -31,8 +27,8 @@ class FeaturedBloc extends BlocBase<FeaturedStreams,FeaturedEvents>{
 
   _load(){
 
-    streams.visibleProgress(true);
-    streams.visibleError(false);
+    streams.progress.set(true);
+    streams.errorConnection.set(false);
 
     repository.loadNewsRecent()
         .then((news) => _showNews(news))
@@ -40,17 +36,9 @@ class FeaturedBloc extends BlocBase<FeaturedStreams,FeaturedEvents>{
 
   }
 
-  clickShowDetail(){
-    if(nSelected != null){
-      dispathToView(OpenDetail()..data = nSelected);
-    }
-  }
-
   _showNews(List<Notice> news) {
-    nSelected = news[0];
-    streams.visibleProgress(false);
-    streams.addnoticies(news);
-    dispathToView(InitAnimation());
+    streams.progress.set(false);
+    streams.noticies.set(news);
   }
 
   _showImplError(onError) {
@@ -59,8 +47,8 @@ class FeaturedBloc extends BlocBase<FeaturedStreams,FeaturedEvents>{
     if(onError is FetchDataException){
       print("codigo: ${onError.code()}");
     }
-    streams.visibleError(true);
-    streams.visibleProgress(false);
+    streams.errorConnection.set(true);
+    streams.progress.set(false);
 
   }
 

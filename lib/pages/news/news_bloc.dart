@@ -1,10 +1,11 @@
 
-import 'package:FlutterNews/conection/api.dart';
-import 'package:FlutterNews/domain/notice/notice.dart';
-import 'package:FlutterNews/domain/notice/notice_repository.dart';
 import 'package:FlutterNews/pages/news/news_events.dart';
 import 'package:FlutterNews/pages/news/news_streams.dart';
-import 'package:FlutterNews/util/bloc_provider.dart';
+import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
+import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
+import 'package:FlutterNews/support/conection/api.dart';
+import 'package:FlutterNews/support/util/StringsLocation.dart';
+import 'package:bsev/bsev.dart';
 
 class NewsBloc extends BlocBase<NewsStreams,NewsEvents>{
 
@@ -12,39 +13,50 @@ class NewsBloc extends BlocBase<NewsStreams,NewsEvents>{
 
   int _page = 0;
   int _currentCategory = 0;
-  List<String> _categories = List();
+  List<String> _categories = ['geral','sports','technology','entertainment','health','business'];
+  List<String> _categoriesNames = List();
   List<Notice> _newsInner = List();
   bool _carregando = false;
 
   NewsBloc(this.repository){
+    _categoriesNames.add(getString("cat_geral"));
+    _categoriesNames.add(getString("cat_esporte"));
+    _categoriesNames.add(getString("cat_tecnologia"));
+    _categoriesNames.add(getString("cat_entretenimento"));
+    _categoriesNames.add(getString("cat_saude"));
+    _categoriesNames.add(getString("cat_negocios"));
+  }
 
-    streams = NewsStreams();
-
-    _categories.add("geral");
-    _categories.add("sports");
-    _categories.add("technology");
-    _categories.add("entertainment");
-    _categories.add("health");
-    _categories.add("business");
-
-    streams.categoryPosition.listen((category){
-      _currentCategory = category;
-      cleanList();
-      _load(false);
-    });
-
+  @override
+  void initView() {
+    streams.categoriesName.set(_categoriesNames);
+    _load(false);
   }
 
   @override
   void eventReceiver(event) {
+
     if(event is LoadNews){
-      _load(event.data);
+      _load(false);
     }
+
+    if(event is LoadMoreNews){
+      _load(true);
+    }
+
+    if(event is ClickCategory){
+      _currentCategory = event.data;
+      cleanList();
+      _load(false);
+    }
+
   }
 
   _load(bool isMore){
 
     if(!_carregando){
+
+      _carregando = true;
 
       if(isMore){
         _page++;
@@ -52,15 +64,11 @@ class NewsBloc extends BlocBase<NewsStreams,NewsEvents>{
         _page = 0;
       }
 
-      streams.visibleError(false);
-      
-      if(isMore || _newsInner.length == 0){
-        streams.visibleProgress(true);
-      }
+      streams.errorConection.set(false);
+
+      streams.progress.set(true);
 
       String category = _categories[_currentCategory];
-
-      _carregando = true;
 
       repository.loadNews(category, _page)
           .then((news) => _showNews(news,isMore))
@@ -70,17 +78,18 @@ class NewsBloc extends BlocBase<NewsStreams,NewsEvents>{
 
   }
 
-  _showNews(List<Notice> news,bool isMore) {
+  _showNews(List<Notice> news, bool isMore) {
 
-    streams.visibleProgress(false);
+    streams.progress.set(false);
+
     if(isMore){
       _newsInner.addAll(news);
-      streams.addnoticies(_newsInner);
     }else{
       _newsInner = news;
-      streams.addnoticies(news);
-      dispathToView(InitAnimation());
     }
+
+    streams.noticies.set(_newsInner);
+
     _carregando = false;
 
   }
@@ -90,14 +99,14 @@ class NewsBloc extends BlocBase<NewsStreams,NewsEvents>{
     if(onError is FetchDataException){
       print("codigo: ${onError.code()}");
     }
-    streams.visibleError(true);
-    streams.visibleProgress(false);
+    streams.errorConection.set(true);
+    streams.progress.set(false);
     _carregando = false;
   }
 
   void cleanList() {
     _newsInner = List();
-    streams.addnoticies(_newsInner);
+    streams.noticies.set(_newsInner);
   }
 
 }

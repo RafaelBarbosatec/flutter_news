@@ -1,6 +1,6 @@
 
 
-import 'package:FlutterNews/util/bloc_provider.dart';
+import 'package:bsev/bsev.dart';
 
 class SearchEvents extends EventsBase{}
 

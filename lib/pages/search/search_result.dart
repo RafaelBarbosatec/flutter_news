@@ -1,56 +1,27 @@
-import 'package:FlutterNews/injection/injector.dart';
-import 'package:FlutterNews/localization/MyLocalizations.dart';
 import 'package:FlutterNews/pages/search/search_events.dart';
 import 'package:FlutterNews/pages/search/search_result_bloc.dart';
-import 'package:FlutterNews/util/bloc_provider.dart';
+import 'package:FlutterNews/pages/search/search_streams.dart';
+import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
+import 'package:FlutterNews/support/util/StringsLocation.dart';
+import 'package:FlutterNews/widgets/AnimatedContent.dart';
 import 'package:FlutterNews/widgets/erro_conection.dart';
+import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
-import 'package:FlutterNews/domain/notice/notice.dart';
 
-class SearchResultPage extends StatefulWidget {
+class SearchView extends BlocStatelessView<SearchBloc,SearchStreams> {
+
   final String query;
 
-  SearchResultPage(this.query);
-
-  static Widget create(String query) {
-    return BlocProvider<SearchResultBloc>(
-      bloc: SearchResultBloc(Injector().repository.getNoticeRepository()),
-      child: SearchResultPage(query),
-    );
-  }
+  SearchView(this.query);
 
   @override
-  State<StatefulWidget> createState() {
-    return new _SearchResultState();
-  }
-}
+  Widget buildView(BuildContext context) {
 
-class _SearchResultState extends State<SearchResultPage>
-    with TickerProviderStateMixin
-    implements BlocView<SearchEvents> {
-
-  SearchResultBloc bloc;
-  AnimationController animationController;
-
-  @override
-  void initState() {
-    animationController = new AnimationController(
-        vsync: this, duration: new Duration(milliseconds: 350));
-
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (bloc == null) {
-      bloc = BlocProvider.of<SearchResultBloc>(context);
-      bloc.registerView(this);
-      bloc.dispatch(LoadSearch()..data = widget.query);
-    }
+    dispatch(LoadSearch()..data = query);
 
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.query),
+        title: new Text(query),
       ),
       body: Stack(
         children: <Widget>[
@@ -64,30 +35,40 @@ class _SearchResultState extends State<SearchResultPage>
   }
 
   Widget _getListViewWidget() {
-    return FadeTransition(
-      opacity: animationController,
-      child: StreamBuilder(
-          initialData: List<Notice>(),
-          stream: bloc.streams.noticies,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            var news = snapshot.data;
+    return StreamBuilder(
+        initialData: List<Notice>(),
+        stream: streams.noticies.get,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
 
-            return new ListView.builder(
-                itemCount: news.length,
-                padding: new EdgeInsets.only(top: 5.0),
-                itemBuilder: (context, index) {
-                  return news[index];
-                });
-          }),
-    );
+          if(snapshot.hasData){
+            List news = snapshot.data;
+
+            var listView = ListView.builder(
+                  itemCount: news.length,
+                  padding: new EdgeInsets.only(top: 5.0),
+                  itemBuilder: (context, index) {
+                    return news[index];
+                  }
+                );
+
+            return AnimatedContent(
+              show: news.length > 0,
+              child: listView,
+            );
+
+          }else{
+            return Container();
+          }
+
+        });
   }
 
   Widget _getProgress() {
     return StreamBuilder(
-        stream: bloc.streams.progress,
+        stream: streams.progress.get,
         initialData: false,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data) {
+          if (snapshot.hasData && snapshot.data) {
             return new Container(
               child: new Center(
                 child: new CircularProgressIndicator(),
@@ -101,13 +82,13 @@ class _SearchResultState extends State<SearchResultPage>
 
   Widget _getEmpty() {
     return StreamBuilder(
-        stream: bloc.streams.empty,
+        stream: streams.empty.get,
         initialData: false,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data) {
+          if (snapshot.hasData && snapshot.data) {
             return Container(
               child: new Center(
-                child: new Text(bloc.getString("erro_busca")),
+                child: new Text(getString("erro_busca")),
               ),
             );
           } else {
@@ -118,12 +99,12 @@ class _SearchResultState extends State<SearchResultPage>
 
   Widget _buildConnectionError() {
     return StreamBuilder(
-        stream: bloc.streams.error,
+        stream: streams.error.get,
         initialData: false,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data) {
+          if (snapshot.hasData && snapshot.data) {
             return ErroConection(tryAgain: () {
-              bloc.dispatch(LoadSearch()..data = widget.query);
+              dispatch(LoadSearch()..data = query);
             });
           } else {
             return Container();
@@ -132,9 +113,6 @@ class _SearchResultState extends State<SearchResultPage>
   }
 
   @override
-  void eventViewReceiver(SearchEvents event) {
-    if (event is InitAnimation) {
-      animationController.forward(from: 0.0);
-    }
+  void eventReceiver(EventsBase event) {
   }
 }

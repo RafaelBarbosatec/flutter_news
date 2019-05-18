@@ -1,4 +1,4 @@
-import 'package:FlutterNews/localization/MyLocalizations.dart';
+import 'package:FlutterNews/support/util/StringsLocation.dart';
 import 'package:flutter/material.dart';
 
 class ErroConection extends StatelessWidget {
@@ -7,12 +7,8 @@ class ErroConection extends StatelessWidget {
 
   ErroConection({Key key, this.tryAgain}) : super(key: key);
 
-  MyLocalizations strl;
-
   @override
   Widget build(BuildContext context) {
-
-    strl = MyLocalizations.of(context);
 
     return Container(
       child: Center(
@@ -32,7 +28,7 @@ class ErroConection extends StatelessWidget {
                   color: Colors.blue,
                 ),
                 new Text(
-                  strl.trans("text_error"),
+                  getString("text_error"),
                   style: TextStyle(
                     fontSize: 18.0,
                   ),
@@ -43,7 +39,7 @@ class ErroConection extends StatelessWidget {
                   child: new FlatButton(
                     shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                     onPressed: tryAgain,
-                    child: new Text(strl.trans("text_tentar_novamente")),
+                    child: new Text(getString("text_tentar_novamente")),
                     color: Colors.blue,
                     textColor: Colors.white,
                   ),

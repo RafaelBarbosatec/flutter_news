@@ -8,29 +8,27 @@ import 'package:FlutterNews/widgets/pageTransform/page_transformer.dart';
 import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
 
-
-// ignore: must_be_immutable
 class FeaturedView extends BlocStatelessView<FeaturedBloc,FeaturedStreams> {
 
   @override
-  Widget buildView(BuildContext context) {
+  Widget buildView(BuildContext context, FeaturedStreams streams) {
 
     return Stack(
       children: <Widget>[
         new Stack(
           children: <Widget>[
             new Container(
-              child: _buildFeatureds(),
+              child: _buildFeatureds(streams),
             ),
-            _getProgress()
+            _getProgress(streams)
           ],
         ),
-        _buildErrorConnection()
+        _buildErrorConnection(streams)
       ],
     );
   }
 
-  Widget _getProgress() {
+  Widget _getProgress(FeaturedStreams streams) {
 
     return StreamBuilder(
         initialData: false,
@@ -49,7 +47,7 @@ class FeaturedView extends BlocStatelessView<FeaturedBloc,FeaturedStreams> {
         );
   }
 
-  _buildFeatureds() {
+  _buildFeatureds(FeaturedStreams streams) {
 
     return StreamBuilder(
         initialData: List<Notice>(),
@@ -83,7 +81,7 @@ class FeaturedView extends BlocStatelessView<FeaturedBloc,FeaturedStreams> {
         });
   }
 
-  Widget _buildErrorConnection() {
+  Widget _buildErrorConnection(FeaturedStreams streams) {
     return StreamBuilder(
         stream: streams.errorConnection.get,
         initialData: false,
@@ -100,7 +98,6 @@ class FeaturedView extends BlocStatelessView<FeaturedBloc,FeaturedStreams> {
 
   @override
   void eventReceiver(EventsBase event) {
-
   }
 
 }

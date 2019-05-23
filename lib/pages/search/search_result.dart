@@ -15,7 +15,7 @@ class SearchView extends BlocStatelessView<SearchBloc,SearchStreams> {
   SearchView(this.query);
 
   @override
-  Widget buildView(BuildContext context) {
+  Widget buildView(BuildContext context, SearchStreams streams) {
 
     dispatch(LoadSearch()..data = query);
 
@@ -25,16 +25,16 @@ class SearchView extends BlocStatelessView<SearchBloc,SearchStreams> {
       ),
       body: Stack(
         children: <Widget>[
-          _getListViewWidget(),
-          _getProgress(),
-          _getEmpty(),
-          _buildConnectionError()
+          _getListViewWidget(streams),
+          _getProgress(streams),
+          _getEmpty(streams),
+          _buildConnectionError(streams)
         ],
       ),
     );
   }
 
-  Widget _getListViewWidget() {
+  Widget _getListViewWidget(SearchStreams streams) {
     return StreamBuilder(
         initialData: List<Notice>(),
         stream: streams.noticies.get,
@@ -63,7 +63,7 @@ class SearchView extends BlocStatelessView<SearchBloc,SearchStreams> {
         });
   }
 
-  Widget _getProgress() {
+  Widget _getProgress(SearchStreams streams) {
     return StreamBuilder(
         stream: streams.progress.get,
         initialData: false,
@@ -80,7 +80,7 @@ class SearchView extends BlocStatelessView<SearchBloc,SearchStreams> {
         });
   }
 
-  Widget _getEmpty() {
+  Widget _getEmpty(SearchStreams streams) {
     return StreamBuilder(
         stream: streams.empty.get,
         initialData: false,
@@ -97,7 +97,7 @@ class SearchView extends BlocStatelessView<SearchBloc,SearchStreams> {
         });
   }
 
-  Widget _buildConnectionError() {
+  Widget _buildConnectionError(SearchStreams streams) {
     return StreamBuilder(
         stream: streams.error.get,
         initialData: false,

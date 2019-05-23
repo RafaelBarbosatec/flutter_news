@@ -10,7 +10,7 @@ dependencies:
   url_launcher: ^4.0.2
   share: ^0.6.0+1
   http: ^0.12.0
-  bsev: ^0.5.0
+  bsev: ^0.5.5
 
 dev_dependencies:
   flutter_test:

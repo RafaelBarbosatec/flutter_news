@@ -15,7 +15,7 @@ class HomeView extends BlocStatelessView<HomeBloc,HomeStreams> {
   }
 
   @override
-  Widget buildView(BuildContext context) {
+  Widget buildView(BuildContext context, HomeStreams streams) {
     return new Scaffold(
       body: new Container(
         color: Colors.grey[200],
@@ -27,7 +27,7 @@ class HomeView extends BlocStatelessView<HomeBloc,HomeStreams> {
               child: new SearchWidget(),
             ) ,
             new Expanded(
-                child: _getContent()
+                child: _getContent(streams)
             )
           ],
         ),
@@ -38,7 +38,7 @@ class HomeView extends BlocStatelessView<HomeBloc,HomeStreams> {
     );
   }
 
-  Widget _getContent(){
+  Widget _getContent(HomeStreams streams){
     return StreamBuilder(
         stream: streams.tabPosition.get,
         initialData: 0,

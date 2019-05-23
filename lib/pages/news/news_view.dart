@@ -12,21 +12,21 @@ import 'package:bsev/bsev.dart';
 class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
 
   @override
-  Widget buildView(BuildContext context) {
+  Widget buildView(BuildContext context, NewsStreams streams) {
 
     return new Container(
         padding: EdgeInsets.only(top: 2.0),
         child: new Stack(
           children: <Widget>[
-            _getListViewWidget(),
-            _buildConnectionError(),
-            _getProgress(),
-            _getListCategory(),
+            _getListViewWidget(streams),
+            _buildConnectionError(streams),
+            _getProgress(streams),
+            _getListCategory(streams),
           ],
         ));
   }
 
-  Widget _buildConnectionError() {
+  Widget _buildConnectionError(NewsStreams streams) {
     return StreamBuilder(
         stream: streams.errorConection.get,
         initialData: false,
@@ -41,7 +41,7 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
         });
   }
 
-  Widget _getListViewWidget() {
+  Widget _getListViewWidget(NewsStreams streams) {
     return Container(
       child: StreamBuilder(
           stream: streams.noticies.get,
@@ -90,7 +90,7 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
     );
   }
 
-  Widget _getProgress() {
+  Widget _getProgress(NewsStreams streams) {
     return Center(
       child: StreamBuilder(
           stream: streams.progress.get,
@@ -105,7 +105,7 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
     );
   }
 
-  Widget _getListCategory() {
+  Widget _getListCategory(NewsStreams streams) {
     return StreamBuilder(
       stream: streams.categoriesName.get,
       builder: (_,snapshot){

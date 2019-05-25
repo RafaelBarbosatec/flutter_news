@@ -17,14 +17,18 @@ News application developed for practice, learning and testing the potential of t
 
 ## Resources
 
--FrameWork: [Flutter](https://flutter.io/)
+Packages | pub
+--------- | ------
+url_launcher     | [![Pub](https://img.shields.io/pub/v/url_launcher.svg)](https://pub.dartlang.org/packages/url_launcher)
+share    | [![Pub](https://img.shields.io/pub/v/share.svg)](https://pub.dartlang.org/packages/share)
+http    | [![Pub](https://img.shields.io/pub/v/http.svg)](https://pub.dartlang.org/packages/http)
+bsev  | [![Pub](https://img.shields.io/pub/v/bsev.svg)](https://pub.dartlang.org/packages/bsev)
 
--Language: [Dart](https://www.dartlang.org/)
+Framework: [Flutter](https://flutter.io/)
 
--Architecture: [Bloc](https://www.didierboelens.com/2018/12/reactive-programming---streams---bloc---practical-use-cases/)
+Language: [Dart](https://www.dartlang.org/)
 
--Libs: [Url_laucher](https://pub.dartlang.org/packages/url_launcher), [PageTransformer](https://github.com/FlutterRocks/page-transformer), [BSEV](https://pub.dev/packages/bsev)
-
+Architecture: [Bloc](https://www.didierboelens.com/2018/12/reactive-programming---streams---bloc---practical-use-cases/)
 
 ## Tutorial
 [(Medium) - Part 1](https://medium.com/@rafaelbarbosatec/flutter-construindo-uma-linda-aplica%C3%A7%C3%A3o-de-not%C3%ADcias-parte-1-f0cbeecb7ab).

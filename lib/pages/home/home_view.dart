@@ -8,33 +8,33 @@ import 'package:FlutterNews/widgets/search.dart';
 import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
 
-class HomeView extends BlocStatelessView<HomeBloc,HomeStreams> {
-
+class HomeView extends StatelessWidget {
   @override
-  void eventReceiver(EventsBase event) {
-  }
+  Widget build(BuildContext context) {
+    return Bsev<HomeBloc,HomeStreams>(
+      builder: (context,dispatcher,streams){
 
-  @override
-  Widget buildView(BuildContext context, HomeStreams streams) {
-    return new Scaffold(
-      body: new Container(
-        color: Colors.grey[200],
-        child:  new Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            new Container(
-              child: new SearchWidget(),
-            ) ,
-            new Expanded(
-                child: _getContent(streams)
-            )
-          ],
-        ),
-      ),
-      bottomNavigationBar: new BottomNavigation((index){
-        streams.tabPosition.set(index);
-      }), // This trailing comma makes auto-formatting nicer for build methods.
+        return Scaffold(
+          body: Container(
+            color: Colors.grey[200],
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Container(
+                  child: SearchWidget(),
+                ) ,
+                Expanded(
+                    child: _getContent(streams)
+                )
+              ],
+            ),
+          ),
+          bottomNavigationBar: BottomNavigation((index){
+            streams.tabPosition.set(index);
+          }), // This trailing comma makes auto-formatting nicer for build methods.
+        );
+      },
     );
   }
 
@@ -47,13 +47,13 @@ class HomeView extends BlocStatelessView<HomeBloc,HomeStreams> {
           var position = snapshot.hasData ? snapshot.data:0;
 
           switch(position){
-            case 0:return FeaturedView().create();break;
-            case 1: return NewsView().create();break;
+            case 0:return FeaturedView();break;
+            case 1: return NewsView();break;
             case 2: return Info();
           }
 
         }
     );
   }
-
+  
 }

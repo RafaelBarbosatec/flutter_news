@@ -14,6 +14,7 @@ class SearchBloc extends BlocBase<SearchStreams,SearchEvents>{
 
   @override
   void initView() {
+    _load(data);
   }
 
   @override
@@ -43,7 +44,6 @@ class SearchBloc extends BlocBase<SearchStreams,SearchEvents>{
     streams..progress.set(false);
     if(news.length > 0) {
       streams.noticies.set(news);
-      dispatchView(InitAnimation());
       streams.empty.set(false);
     }else{
       streams.empty.set(true);

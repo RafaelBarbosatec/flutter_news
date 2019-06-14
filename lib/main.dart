@@ -40,7 +40,7 @@ class NewsApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       localeResolutionCallback: myLocation.resolution,
-      home: HomeView().create(),
+      home: HomeView(),
     );
   }
 

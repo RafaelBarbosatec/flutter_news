@@ -9,31 +9,36 @@ import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:flutter/material.dart';
 import 'package:bsev/bsev.dart';
 
-class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
-
+class NewsView extends StatelessWidget {
   @override
-  Widget buildView(BuildContext context, NewsStreams streams) {
+  Widget build(BuildContext context) {
+    return Bsev<NewsBloc,NewsStreams>(
+      builder: (context,dispatcher,streams){
 
-    return new Container(
-        padding: EdgeInsets.only(top: 2.0),
-        child: new Stack(
-          children: <Widget>[
-            _getListViewWidget(streams),
-            _buildConnectionError(streams),
-            _getProgress(streams),
-            _getListCategory(streams),
-          ],
-        ));
+        return new Container(
+            padding: EdgeInsets.only(top: 2.0),
+            child: new Stack(
+              children: <Widget>[
+                _getListViewWidget(streams,dispatcher),
+                _buildConnectionError(streams,dispatcher),
+                _getProgress(streams),
+                _getListCategory(streams,dispatcher),
+              ],
+            )
+        );
+
+      },
+    );
   }
 
-  Widget _buildConnectionError(NewsStreams streams) {
+  Widget _buildConnectionError(NewsStreams streams,dispatcher) {
     return StreamBuilder(
         stream: streams.errorConection.get,
         initialData: false,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData && snapshot.data) {
             return ErroConection(tryAgain: () {
-              dispatch(LoadNews()..data = false);
+              dispatcher(LoadNews()..data = false);
             });
           } else {
             return Container();
@@ -41,7 +46,7 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
         });
   }
 
-  Widget _getListViewWidget(NewsStreams streams) {
+  Widget _getListViewWidget(NewsStreams streams,dispatcher) {
     return Container(
       child: StreamBuilder(
           stream: streams.noticies.get,
@@ -67,7 +72,7 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
                     } else {
 
                       if (index + 1 >= news.length) {
-                        dispatch(LoadMoreNews());
+                        dispatcher(LoadMoreNews());
                       }
 
                       return news[index];
@@ -76,7 +81,9 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
 
               return AnimatedContent(
                 show: news.length > 0,
-                child: RefreshIndicator(onRefresh: myRefresh, child: listView),
+                child: RefreshIndicator(onRefresh: (){
+                  return myRefresh(dispatcher);
+                }, child: listView),
               );
 
             }else{
@@ -86,7 +93,7 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
             }
 
           }
-          ),
+      ),
     );
   }
 
@@ -105,7 +112,7 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
     );
   }
 
-  Widget _getListCategory(NewsStreams streams) {
+  Widget _getListCategory(NewsStreams streams,dispatcher) {
     return StreamBuilder(
       stream: streams.categoriesName.get,
       builder: (_,snapshot){
@@ -118,7 +125,7 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
             child: CustomTab(
               itens: list,
               tabSelected: (index) {
-                dispatch(ClickCategory()..data = index);
+                dispatcher(ClickCategory()..data = index);
               },
             ),
           );
@@ -134,13 +141,7 @@ class NewsView extends BlocStatelessView<NewsBloc,NewsStreams> {
 
   }
 
-  Future<Null> myRefresh() async {
-    dispatch(LoadNews());
+  Future<Null> myRefresh(dispatcher) async {
+    dispatcher(LoadNews());
   }
-
-  @override
-  void eventReceiver(EventsBase event) {
-
-  }
-
 }

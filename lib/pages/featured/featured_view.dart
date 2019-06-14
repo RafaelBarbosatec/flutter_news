@@ -8,24 +8,31 @@ import 'package:FlutterNews/widgets/pageTransform/page_transformer.dart';
 import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
 
-class FeaturedView extends BlocStatelessView<FeaturedBloc,FeaturedStreams> {
+class FeaturedView extends StatelessWidget {
 
   @override
-  Widget buildView(BuildContext context, FeaturedStreams streams) {
+  Widget build(BuildContext context) {
 
-    return Stack(
-      children: <Widget>[
-        new Stack(
+    return Bsev<FeaturedBloc,FeaturedStreams>(
+      builder: (context,dispatcher,streams){
+
+        return Stack(
           children: <Widget>[
-            new Container(
-              child: _buildFeatureds(streams),
+            new Stack(
+              children: <Widget>[
+                new Container(
+                  child: _buildFeatureds(streams),
+                ),
+                _getProgress(streams)
+              ],
             ),
-            _getProgress(streams)
+            _buildErrorConnection(streams,dispatcher)
           ],
-        ),
-        _buildErrorConnection(streams)
-      ],
+        );
+
+      }
     );
+
   }
 
   Widget _getProgress(FeaturedStreams streams) {
@@ -44,7 +51,7 @@ class FeaturedView extends BlocStatelessView<FeaturedBloc,FeaturedStreams> {
             return new Container();
           }
         }
-        );
+    );
   }
 
   _buildFeatureds(FeaturedStreams streams) {
@@ -73,31 +80,27 @@ class FeaturedView extends BlocStatelessView<FeaturedBloc,FeaturedStreams> {
               });
 
           return AnimatedOpacity(
-              opacity: length > 0 ? 1 : 0,
-              duration: Duration(milliseconds: 300),
-              child: fearured,
+            opacity: length > 0 ? 1 : 0,
+            duration: Duration(milliseconds: 300),
+            child: fearured,
           );
 
         });
   }
 
-  Widget _buildErrorConnection(FeaturedStreams streams) {
+  Widget _buildErrorConnection(FeaturedStreams streams,dispatcher) {
     return StreamBuilder(
         stream: streams.errorConnection.get,
         initialData: false,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData && snapshot.data) {
             return ErroConection(tryAgain: () {
-              dispatch(LoadFeatured());
+              dispatcher(LoadFeatured());
             });
           } else {
             return Container();
           }
         });
-  }
-
-  @override
-  void eventReceiver(EventsBase event) {
   }
 
 }

@@ -21,7 +21,7 @@ packages:
       name: bsev
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.5"
+    version: "0.8.0"
   charcode:
     dependency: transitive
     description:
@@ -57,7 +57,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.0+1"
+    version: "0.12.0+2"
   http_parser:
     dependency: transitive
     description:
@@ -113,7 +113,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.1+1"
   quiver:
     dependency: transitive
     description:
@@ -134,7 +134,7 @@ packages:
       name: share
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0+1"
+    version: "0.6.1+1"
   sky_engine:
     dependency: transitive
     description: flutter

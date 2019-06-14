@@ -8,30 +8,35 @@ import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
 
-class SearchView extends BlocStatelessView<SearchBloc,SearchStreams> {
+class SearchView extends StatelessWidget {
 
   final String query;
 
   SearchView(this.query);
 
   @override
-  Widget buildView(BuildContext context, SearchStreams streams) {
+  Widget build(BuildContext context) {
 
-    dispatch(LoadSearch()..data = query);
+    return Bsev<SearchBloc,SearchStreams>(
+      dataToBloc: query,
+      builder: (context,dispatcher,streams){
 
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(query),
-      ),
-      body: Stack(
-        children: <Widget>[
-          _getListViewWidget(streams),
-          _getProgress(streams),
-          _getEmpty(streams),
-          _buildConnectionError(streams)
-        ],
-      ),
+        return new Scaffold(
+          appBar: new AppBar(
+            title: new Text(query),
+          ),
+          body: Stack(
+            children: <Widget>[
+              _getListViewWidget(streams),
+              _getProgress(streams),
+              _getEmpty(streams),
+              _buildConnectionError(streams,dispatcher)
+            ],
+          ),
+        );
+      },
     );
+
   }
 
   Widget _getListViewWidget(SearchStreams streams) {
@@ -44,12 +49,12 @@ class SearchView extends BlocStatelessView<SearchBloc,SearchStreams> {
             List news = snapshot.data;
 
             var listView = ListView.builder(
-                  itemCount: news.length,
-                  padding: new EdgeInsets.only(top: 5.0),
-                  itemBuilder: (context, index) {
-                    return news[index];
-                  }
-                );
+                itemCount: news.length,
+                padding: new EdgeInsets.only(top: 5.0),
+                itemBuilder: (context, index) {
+                  return news[index];
+                }
+            );
 
             return AnimatedContent(
               show: news.length > 0,
@@ -97,14 +102,14 @@ class SearchView extends BlocStatelessView<SearchBloc,SearchStreams> {
         });
   }
 
-  Widget _buildConnectionError(SearchStreams streams) {
+  Widget _buildConnectionError(SearchStreams streams,dispatcher) {
     return StreamBuilder(
         stream: streams.error.get,
         initialData: false,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData && snapshot.data) {
             return ErroConection(tryAgain: () {
-              dispatch(LoadSearch()..data = query);
+              dispatcher(LoadSearch()..data = query);
             });
           } else {
             return Container();
@@ -112,7 +117,4 @@ class SearchView extends BlocStatelessView<SearchBloc,SearchStreams> {
         });
   }
 
-  @override
-  void eventReceiver(EventsBase event) {
-  }
 }

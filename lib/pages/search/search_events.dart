@@ -1,7 +1,5 @@
-
-
 import 'package:bsev/bsev.dart';
 
-class SearchEvents extends EventsBase{}
-
-class LoadSearch extends SearchEvents{}
+class LoadSearch extends EventsBase {
+  String query;
+}

@@ -1,10 +1,8 @@
-
 import 'package:FlutterNews/pages/home/home_streams.dart';
 import 'package:bsev/bsev.dart';
 
-class HomeBloc extends BlocBase<HomeStreams,EventsBase>{
-
-  HomeBloc(){
+class HomeBloc extends BlocBase<HomeStreams> {
+  HomeBloc() {
     streams = HomeStreams();
   }
 
@@ -17,5 +15,4 @@ class HomeBloc extends BlocBase<HomeStreams,EventsBase>{
   void initView() {
     // TODO: implement initView
   }
-
 }

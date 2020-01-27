@@ -1,8 +1,9 @@
-
 import 'package:bsev/bsev.dart';
 
-class NewsEvents extends EventsBase{}
+class LoadNews extends EventsBase {}
 
-class LoadNews extends NewsEvents{}
-class LoadMoreNews extends NewsEvents{}
-class ClickCategory extends NewsEvents{}
+class LoadMoreNews extends EventsBase {}
+
+class ClickCategory extends EventsBase {
+  int position;
+}

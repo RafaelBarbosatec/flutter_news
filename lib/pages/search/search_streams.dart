@@ -1,16 +1,16 @@
-
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:bsev/bsev.dart';
 
-class SearchStreams implements StreamsBase{
+class SearchStreams extends StreamsBase {
+  BehaviorSubjectCreate<bool> progress =
+      BehaviorSubjectCreate(initValue: false);
 
-  BehaviorSubjectCreate<bool> progress = BehaviorSubjectCreate();
+  BehaviorSubjectCreate<bool> error = BehaviorSubjectCreate(initValue: false);
 
-  BehaviorSubjectCreate<bool> error = BehaviorSubjectCreate();
+  BehaviorSubjectCreate<bool> empty = BehaviorSubjectCreate(initValue: false);
 
-  BehaviorSubjectCreate<bool> empty = BehaviorSubjectCreate();
-
-  BehaviorSubjectCreate<List<Notice>> noticies = BehaviorSubjectCreate();
+  BehaviorSubjectCreate<List<Notice>> noticies =
+      BehaviorSubjectCreate(initValue: List());
 
   @override
   void dispose() {
@@ -19,5 +19,4 @@ class SearchStreams implements StreamsBase{
     empty.close();
     noticies.close();
   }
-
 }

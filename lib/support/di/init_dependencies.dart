@@ -32,7 +32,7 @@ injectBlocs() {
 }
 
 injectRepository() {
-  registerDependency((i) {
+  registerSingleton((i) {
     Api _api;
     switch (Flavors().getFlavor()) {
       case Flavor.PROD:

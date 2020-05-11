@@ -17,17 +17,17 @@ class SearchView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Bsev<SearchBloc, SearchStreams>(
       dataToBloc: query,
-      builder: (context, dispatcher, streams) {
-        return new Scaffold(
-          appBar: new AppBar(
-            title: new Text(query),
+      builder: (context, communication) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(query),
           ),
           body: Stack(
             children: <Widget>[
-              _getListViewWidget(streams),
-              _getProgress(streams),
-              _getEmpty(streams),
-              _buildConnectionError(streams, dispatcher)
+              _getListViewWidget(communication.streams),
+              _getProgress(communication.streams),
+              _getEmpty(communication.streams),
+              _buildConnectionError(communication)
             ],
           ),
         );
@@ -37,67 +37,49 @@ class SearchView extends StatelessWidget {
 
   Widget _getListViewWidget(SearchStreams streams) {
     return StreamListener<List<Notice>>(
-        stream: streams.noticies.get,
+        stream: streams.noticies,
         builder: (BuildContext context, snapshot) {
           List news = snapshot.data;
-
-          var listView = ListView.builder(
-              itemCount: news.length,
-              padding: new EdgeInsets.only(top: 5.0),
-              itemBuilder: (context, index) {
-                return news[index];
-              });
-
           return AnimatedContent(
             show: news.length > 0,
-            child: listView,
+            child: ListView.builder(
+              itemCount: news.length,
+              padding: const EdgeInsets.only(top: 5.0),
+              itemBuilder: (context, index) {
+                return news[index];
+              },
+            ),
           );
         });
   }
 
   Widget _getProgress(SearchStreams streams) {
-    return StreamListener<bool>(
-        stream: streams.progress.get,
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.data) {
-            return new Container(
-              child: new Center(
-                child: new CircularProgressIndicator(),
-              ),
-            );
-          } else {
-            return new Container();
-          }
-        });
+    return streams.progress.builder<bool>((value) {
+      return value
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SizedBox.shrink();
+    });
   }
 
   Widget _getEmpty(SearchStreams streams) {
-    return StreamListener<bool>(
-        stream: streams.empty.get,
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.data) {
-            return Container(
-              child: new Center(
-                child: new Text(getString("erro_busca")),
-              ),
-            );
-          } else {
-            return Container();
-          }
-        });
+    return streams.empty.builder<bool>((value) {
+      return value
+          ? Center(
+              child: Text(getString("erro_busca")),
+            )
+          : SizedBox.shrink();
+    });
   }
 
-  Widget _buildConnectionError(SearchStreams streams, dispatcher) {
-    return StreamListener<bool>(
-        stream: streams.error.get,
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.data) {
-            return ErroConection(tryAgain: () {
-              dispatcher(LoadSearch()..query = query);
-            });
-          } else {
-            return Container();
-          }
-        });
+  Widget _buildConnectionError(BlocCommunication<SearchStreams> communication) {
+    return communication.streams.error.builder((value) {
+      return value
+          ? ErroConection(tryAgain: () {
+              communication.dispatcher(LoadSearch()..query = query);
+            })
+          : SizedBox.shrink();
+    });
   }
 }

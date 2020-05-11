@@ -12,7 +12,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Bsev<HomeBloc, HomeStreams>(
-      builder: (context, dispatcher, streams) {
+      builder: (context, communication) {
         return Scaffold(
           body: Container(
             color: Colors.grey[200],
@@ -24,13 +24,13 @@ class HomeView extends StatelessWidget {
                   Container(
                     child: SearchWidget(),
                   ),
-                  Expanded(child: _getContent(streams))
+                  Expanded(child: _getContent(communication.streams))
                 ],
               ),
             ),
           ),
           bottomNavigationBar: BottomNavigation((index) {
-            streams.tabPosition.set(index);
+            communication.streams.tabPosition.set(index);
           }), // This trailing comma makes auto-formatting nicer for build methods.
         );
       },
@@ -39,7 +39,7 @@ class HomeView extends StatelessWidget {
 
   Widget _getContent(HomeStreams streams) {
     return StreamListener<int>(
-        stream: streams.tabPosition.get,
+        stream: streams.tabPosition,
         builder: (BuildContext context, snapshot) {
           switch (snapshot.data) {
             case 0:

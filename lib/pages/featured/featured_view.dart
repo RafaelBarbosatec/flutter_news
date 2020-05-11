@@ -12,77 +12,68 @@ class FeaturedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Bsev<FeaturedBloc, FeaturedStreams>(
-        builder: (context, dispatcher, streams) {
+        builder: (context, communication) {
       return Stack(
         children: <Widget>[
-          new Stack(
+          Stack(
             children: <Widget>[
-              new Container(
-                child: _buildFeatureds(streams),
-              ),
-              _getProgress(streams)
+              _buildFeatured(communication.streams),
+              _getProgress(communication.streams)
             ],
           ),
-          _buildErrorConnection(streams, dispatcher)
+          _buildErrorConnection(communication)
         ],
       );
     });
   }
 
   Widget _getProgress(FeaturedStreams streams) {
-    return StreamListener<bool>(
-        stream: streams.progress.get,
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.data) {
-            return Center(
-              child: new CircularProgressIndicator(),
-            );
-          } else {
-            return new Container();
-          }
-        });
+    return streams.progress.builder((value) {
+      return value
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SizedBox.shrink();
+    });
   }
 
-  _buildFeatureds(FeaturedStreams streams) {
-    return StreamListener<List<Notice>>(
-        stream: streams.noticies.get,
+  _buildFeatured(FeaturedStreams streams) {
+    return Container(
+      child: StreamListener<List<Notice>>(
+        stream: streams.noticies,
         builder: (BuildContext context, snapshot) {
           List _list = snapshot.data;
 
-          Widget fearured =
-              PageTransformer(pageViewBuilder: (context, visibilityResolver) {
-            return new PageView.builder(
-              controller: new PageController(viewportFraction: 0.9),
-              itemCount: _list.length,
-              itemBuilder: (context, index) {
-                final item = IntroNews.fromNotice(_list[index]);
-                final pageVisibility =
-                    visibilityResolver.resolvePageVisibility(index);
-                return new IntroNewsItem(
-                    item: item, pageVisibility: pageVisibility);
-              },
-            );
-          });
+          if (_list.isEmpty) return SizedBox.shrink();
 
-          return AnimatedOpacity(
-            opacity: _list.length > 0 ? 1 : 0,
-            duration: Duration(milliseconds: 300),
-            child: fearured,
+          return PageTransformer(
+            pageViewBuilder: (context, visibilityResolver) {
+              return new PageView.builder(
+                controller: new PageController(viewportFraction: 0.9),
+                itemCount: _list.length,
+                itemBuilder: (context, index) {
+                  final item = IntroNews.fromNotice(_list[index]);
+                  final pageVisibility =
+                      visibilityResolver.resolvePageVisibility(index);
+                  return new IntroNewsItem(
+                      item: item, pageVisibility: pageVisibility);
+                },
+              );
+            },
           );
-        });
+        },
+      ),
+    );
   }
 
-  Widget _buildErrorConnection(FeaturedStreams streams, dispatcher) {
-    return StreamListener<bool>(
-        stream: streams.errorConnection.get,
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.data) {
-            return ErroConection(tryAgain: () {
-              dispatcher(LoadFeatured());
-            });
-          } else {
-            return Container();
-          }
-        });
+  Widget _buildErrorConnection(
+      BlocCommunication<FeaturedStreams> communication) {
+    return communication.streams.errorConnection.builder((value) {
+      return value
+          ? ErroConection(tryAgain: () {
+              communication.dispatcher(LoadFeatured());
+            })
+          : SizedBox.shrink();
+    });
   }
 }

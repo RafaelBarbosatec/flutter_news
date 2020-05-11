@@ -14,99 +14,86 @@ class NewsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Bsev<NewsBloc, NewsStreams>(
-      builder: (context, dispatcher, streams) {
+      builder: (context, communication) {
         return new Container(
             padding: EdgeInsets.only(top: 2.0),
             child: new Stack(
               children: <Widget>[
-                _getListViewWidget(streams, dispatcher),
-                _buildConnectionError(streams, dispatcher),
-                _getProgress(streams),
-                _getListCategory(streams, dispatcher),
+                _getListViewWidget(communication),
+                _buildConnectionError(communication),
+                _getProgress(communication.streams),
+                _getListCategory(communication),
               ],
             ));
       },
     );
   }
 
-  Widget _buildConnectionError(NewsStreams streams, dispatcher) {
-    return StreamListener<bool>(
-        stream: streams.errorConection.get,
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.data) {
-            return ErroConection(tryAgain: () {
-              dispatcher(LoadNews());
-            });
-          } else {
-            return Container();
-          }
-        });
-  }
-
-  Widget _getListViewWidget(NewsStreams streams, dispatcher) {
+  Widget _getListViewWidget(BlocCommunication<NewsStreams> communication) {
     return Container(
       child: StreamListener<List<Notice>>(
-          stream: streams.noticies.get,
+          stream: communication.streams.noticies,
           builder: (_, snapshot) {
             List news = snapshot.data;
-
-            ListView listView = new ListView.builder(
-                itemCount: news.length,
-                padding: new EdgeInsets.only(top: 5.0),
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return Container(
-                      margin: EdgeInsets.only(top: 50.0),
-                      child: news[index],
-                    );
-                  } else {
-                    if (index + 1 >= news.length) {
-                      dispatcher(LoadMoreNews());
-                    }
-
-                    return news[index];
-                  }
-                });
 
             return AnimatedContent(
               show: news.length > 0,
               child: RefreshIndicator(
-                  onRefresh: () {
-                    return myRefresh(dispatcher);
+                onRefresh: () {
+                  return myRefresh(communication.dispatcher);
+                },
+                child: ListView.builder(
+                  itemCount: news.length,
+                  padding: new EdgeInsets.only(top: 5.0),
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return Container(
+                        margin: const EdgeInsets.only(top: 50.0),
+                        child: news[index],
+                      );
+                    } else {
+                      if (index + 1 >= news.length) {
+                        communication.dispatcher(LoadMoreNews());
+                      }
+                      return news[index];
+                    }
                   },
-                  child: listView),
+                ),
+              ),
             );
           }),
     );
   }
 
-  Widget _getProgress(NewsStreams streams) {
-    return Center(
-      child: StreamListener<bool>(
-          stream: streams.progress.get,
-          builder: (BuildContext context, snapshot) {
-            if (snapshot.data) {
-              return new CircularProgressIndicator();
-            } else {
-              return new Container();
-            }
-          }),
-    );
+  Widget _buildConnectionError(BlocCommunication<NewsStreams> communication) {
+    return communication.streams.errorConection.builder<bool>((value) {
+      return value
+          ? ErroConection(tryAgain: () {
+              communication.dispatcher(LoadNews());
+            })
+          : SizedBox.shrink();
+    });
   }
 
-  Widget _getListCategory(NewsStreams streams, dispatcher) {
-    return StreamListener<List<String>>(
-      stream: streams.categoriesName.get,
-      builder: (_, snapshot) {
-        List<String> list = snapshot.data;
-        return CustomTab(
-          itens: list,
-          tabSelected: (index) {
-            dispatcher(ClickCategory()..position = index);
-          },
-        );
-      },
-    );
+  Widget _getProgress(NewsStreams streams) {
+    return streams.progress.builder<bool>((value) {
+      return value
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Container();
+    });
+  }
+
+  Widget _getListCategory(BlocCommunication<NewsStreams> communication) {
+    return communication.streams.categoriesName.builder<List<String>>((value) {
+      return CustomTab(
+        itens: value,
+        tabSelected: (index) {
+          communication.dispatcher(ClickCategory()..position = index);
+        },
+      );
+    });
   }
 
   Future<Null> myRefresh(dispatcher) async {

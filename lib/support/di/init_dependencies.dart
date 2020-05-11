@@ -6,11 +6,10 @@ import 'package:FlutterNews/pages/news/news_bloc.dart';
 import 'package:FlutterNews/pages/news/news_streams.dart';
 import 'package:FlutterNews/pages/search/search_result_bloc.dart';
 import 'package:FlutterNews/pages/search/search_streams.dart';
+import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
+import 'package:FlutterNews/support/conection/api.dart';
 import 'package:bsev/bsev.dart';
 import 'package:bsev/flavors.dart';
-
-import '../../repository/notice_repository/notice_repository.dart';
-import '../conection/api.dart';
 
 initDependencies() {
   injectRepository();
@@ -18,16 +17,15 @@ initDependencies() {
 }
 
 injectBlocs() {
-  registerBlocFactory<NewsBloc, NewsStreams>(
+  registerBloc<NewsBloc, NewsStreams>(
       (i) => NewsBloc(i.getDependency()), () => NewsStreams());
 
-  registerBlocFactory<FeaturedBloc, FeaturedStreams>(
+  registerBloc<FeaturedBloc, FeaturedStreams>(
       (i) => FeaturedBloc(i.getDependency()), () => FeaturedStreams());
 
-  registerBlocFactory<HomeBloc, HomeStreams>(
-      (i) => HomeBloc(), () => HomeStreams());
+  registerBloc<HomeBloc, HomeStreams>((i) => HomeBloc(), () => HomeStreams());
 
-  registerBlocFactory<SearchBloc, SearchStreams>(
+  registerBloc<SearchBloc, SearchStreams>(
       (i) => SearchBloc(i.getDependency()), () => SearchStreams());
 }
 

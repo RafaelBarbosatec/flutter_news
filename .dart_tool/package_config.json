@@ -213,7 +213,7 @@
     },
     {
       "name": "url_launcher",
-      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.4.1",
+      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.4.5",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -254,7 +254,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2020-05-11T21:27:41.241310Z",
+  "generated": "2020-05-11T21:29:07.711623Z",
   "generator": "pub",
   "generatorVersion": "2.7.2"
 }

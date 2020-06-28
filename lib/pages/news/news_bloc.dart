@@ -21,7 +21,7 @@ class NewsBloc extends BlocBase<NewsStreams> {
   ];
   List<String> _categoriesNames = List();
   List<Notice> _newsInner = List();
-  bool _carregando = false;
+  bool _loading = false;
 
   NewsBloc(this.repository) {
     _categoriesNames.add(getString("cat_geral"));
@@ -56,8 +56,8 @@ class NewsBloc extends BlocBase<NewsStreams> {
   }
 
   _load(bool isMore) {
-    if (!_carregando) {
-      _carregando = true;
+    if (!_loading) {
+      _loading = true;
 
       if (isMore) {
         _page++;
@@ -89,17 +89,16 @@ class NewsBloc extends BlocBase<NewsStreams> {
 
     streams.noticies.set(_newsInner);
 
-    _carregando = false;
+    _loading = false;
   }
 
   _showImplError(onError) {
-    print(onError);
     if (onError is FetchDataException) {
       print("codigo: ${onError.code()}");
     }
     streams.errorConection.set(true);
     streams.progress.set(false);
-    _carregando = false;
+    _loading = false;
   }
 
   void cleanList() {

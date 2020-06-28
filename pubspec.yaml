@@ -7,10 +7,10 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  url_launcher: ^5.4.5
-  share: ^0.6.0+1
+  url_launcher: ^5.4.11
+  share: ^0.6.4+3
   http: ^0.12.1
-  bsev: ^1.0.2
+  bsev: ^1.0.3
 
 dev_dependencies:
   flutter_test:

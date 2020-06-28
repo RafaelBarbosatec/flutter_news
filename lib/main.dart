@@ -11,7 +11,7 @@ import 'support/di/init_dependencies.dart';
 void main() => runApp(new NewsApp());
 
 class NewsApp extends StatelessWidget {
-  MyLocalizationsDelegate myLocation = const MyLocalizationsDelegate();
+  final MyLocalizationsDelegate myLocation = const MyLocalizationsDelegate();
 
   NewsApp() {
     Flavors.configure(Flavor.PROD);

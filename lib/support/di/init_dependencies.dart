@@ -18,19 +18,19 @@ initDependencies() {
 
 injectBlocs() {
   registerBloc<NewsBloc, NewsStreams>(
-      (i) => NewsBloc(i.getDependency()), () => NewsStreams());
+      (i) => NewsBloc(i.get()), () => NewsStreams());
 
   registerBloc<FeaturedBloc, FeaturedStreams>(
-      (i) => FeaturedBloc(i.getDependency()), () => FeaturedStreams());
+      (i) => FeaturedBloc(i.get()), () => FeaturedStreams());
 
   registerBloc<HomeBloc, HomeStreams>((i) => HomeBloc(), () => HomeStreams());
 
   registerBloc<SearchBloc, SearchStreams>(
-      (i) => SearchBloc(i.getDependency()), () => SearchStreams());
+      (i) => SearchBloc(i.get()), () => SearchStreams());
 }
 
 injectRepository() {
-  registerSingleton((i) {
+  registerSingletonDependency((i) {
     Api _api;
     switch (Flavors().getFlavor()) {
       case Flavor.PROD:
@@ -46,6 +46,5 @@ injectRepository() {
     return _api;
   });
 
-  registerDependency<NoticeRepository>(
-      (i) => NoticeRepositoryImpl(i.getDependency()));
+  registerDependency<NoticeRepository>((i) => NoticeRepositoryImpl(i.get()));
 }

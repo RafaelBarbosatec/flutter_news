@@ -38,7 +38,6 @@ class FeaturedBloc extends BlocBase<FeaturedStreams> {
   }
 
   _showImplError(onError) {
-    print(onError);
     if (onError is FetchDataException) {
       print("codigo: ${onError.code()}");
     }

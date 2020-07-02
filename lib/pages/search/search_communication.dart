@@ -1,7 +1,7 @@
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:bsev/bsev.dart';
 
-class SearchStreams extends StreamsBase {
+class SearchCommunication extends CommunicationBase {
   BehaviorSubjectCreate<bool> progress =
       BehaviorSubjectCreate(initValue: false);
 
@@ -18,5 +18,6 @@ class SearchStreams extends StreamsBase {
     error.close();
     empty.close();
     noticies.close();
+    super.dispose();
   }
 }

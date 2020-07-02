@@ -1,7 +1,7 @@
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:bsev/bsev.dart';
 
-class FeaturedStreams extends StreamsBase {
+class FeaturedCommunication extends CommunicationBase {
   BehaviorSubjectCreate<bool> progress = BehaviorSubjectCreate();
   BehaviorSubjectCreate<bool> errorConnection = BehaviorSubjectCreate();
   BehaviorSubjectCreate<List<Notice>> noticies =
@@ -12,5 +12,6 @@ class FeaturedStreams extends StreamsBase {
     progress.close();
     errorConnection.close();
     noticies.close();
+    super.dispose();
   }
 }

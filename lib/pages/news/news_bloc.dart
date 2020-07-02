@@ -1,12 +1,12 @@
+import 'package:FlutterNews/pages/news/news_communication.dart';
 import 'package:FlutterNews/pages/news/news_events.dart';
-import 'package:FlutterNews/pages/news/news_streams.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
 import 'package:FlutterNews/support/conection/api.dart';
 import 'package:FlutterNews/support/util/StringsLocation.dart';
 import 'package:bsev/bsev.dart';
 
-class NewsBloc extends BlocBase<NewsStreams> {
+class NewsBloc extends BlocBase<NewsCommunication> {
   final NoticeRepository repository;
 
   int _page = 0;
@@ -34,7 +34,7 @@ class NewsBloc extends BlocBase<NewsStreams> {
 
   @override
   void initView() {
-    streams.categoriesName.set(_categoriesNames);
+    communication.categoriesName.set(_categoriesNames);
     _load(false);
   }
 
@@ -65,9 +65,9 @@ class NewsBloc extends BlocBase<NewsStreams> {
         _page = 0;
       }
 
-      streams.errorConection.set(false);
+      communication.errorConection.set(false);
 
-      streams.progress.set(true);
+      communication.progress.set(true);
 
       String category = _categories[_currentCategory];
 
@@ -79,7 +79,7 @@ class NewsBloc extends BlocBase<NewsStreams> {
   }
 
   _showNews(List<Notice> news, bool isMore) {
-    streams.progress.set(false);
+    communication.progress.set(false);
 
     if (isMore) {
       _newsInner.addAll(news);
@@ -87,7 +87,7 @@ class NewsBloc extends BlocBase<NewsStreams> {
       _newsInner = news;
     }
 
-    streams.noticies.set(_newsInner);
+    communication.noticies.set(_newsInner);
 
     _loading = false;
   }
@@ -96,13 +96,13 @@ class NewsBloc extends BlocBase<NewsStreams> {
     if (onError is FetchDataException) {
       print("codigo: ${onError.code()}");
     }
-    streams.errorConection.set(true);
-    streams.progress.set(false);
+    communication.errorConection.set(true);
+    communication.progress.set(false);
     _loading = false;
   }
 
   void cleanList() {
     _newsInner = List();
-    streams.noticies.set(_newsInner);
+    communication.noticies.set(_newsInner);
   }
 }

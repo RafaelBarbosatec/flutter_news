@@ -1,6 +1,6 @@
 import 'package:FlutterNews/pages/featured/featured_bloc.dart';
+import 'package:FlutterNews/pages/featured/featured_communication.dart';
 import 'package:FlutterNews/pages/featured/featured_events.dart';
-import 'package:FlutterNews/pages/featured/featured_streams.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:FlutterNews/widgets/pageTransform/intro_page_item.dart';
@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 class FeaturedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Bsev<FeaturedBloc, FeaturedStreams>(
+    return Bsev<FeaturedBloc, FeaturedCommunication>(
         builder: (context, communication) {
       return Stack(
         children: <Widget>[
           Stack(
             children: <Widget>[
-              _buildFeatured(communication.streams),
-              _getProgress(communication.streams)
+              _buildFeatured(communication),
+              _getProgress(communication)
             ],
           ),
           _buildErrorConnection(communication)
@@ -27,7 +27,7 @@ class FeaturedView extends StatelessWidget {
     });
   }
 
-  Widget _getProgress(FeaturedStreams streams) {
+  Widget _getProgress(FeaturedCommunication streams) {
     return streams.progress.builder((value) {
       return value
           ? Center(
@@ -37,7 +37,7 @@ class FeaturedView extends StatelessWidget {
     });
   }
 
-  _buildFeatured(FeaturedStreams streams) {
+  _buildFeatured(FeaturedCommunication streams) {
     return Container(
       child: StreamListener<List<Notice>>(
         stream: streams.noticies,
@@ -66,9 +66,8 @@ class FeaturedView extends StatelessWidget {
     );
   }
 
-  Widget _buildErrorConnection(
-      BlocCommunication<FeaturedStreams> communication) {
-    return communication.streams.errorConnection.builder((value) {
+  Widget _buildErrorConnection(FeaturedCommunication communication) {
+    return communication.errorConnection.builder((value) {
       return value
           ? ErroConection(tryAgain: () {
               communication.dispatcher(LoadFeatured());

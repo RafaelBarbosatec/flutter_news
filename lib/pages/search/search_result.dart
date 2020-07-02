@@ -1,6 +1,6 @@
+import 'package:FlutterNews/pages/search/search_communication.dart';
 import 'package:FlutterNews/pages/search/search_events.dart';
 import 'package:FlutterNews/pages/search/search_result_bloc.dart';
-import 'package:FlutterNews/pages/search/search_streams.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/support/util/StringsLocation.dart';
 import 'package:FlutterNews/widgets/AnimatedContent.dart';
@@ -15,7 +15,7 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Bsev<SearchBloc, SearchStreams>(
+    return Bsev<SearchBloc, SearchCommunication>(
       dataToBloc: query,
       builder: (context, communication) {
         return Scaffold(
@@ -24,9 +24,9 @@ class SearchView extends StatelessWidget {
           ),
           body: Stack(
             children: <Widget>[
-              _getListViewWidget(communication.streams),
-              _getProgress(communication.streams),
-              _getEmpty(communication.streams),
+              _getListViewWidget(communication),
+              _getProgress(communication),
+              _getEmpty(communication),
               _buildConnectionError(communication)
             ],
           ),
@@ -35,7 +35,7 @@ class SearchView extends StatelessWidget {
     );
   }
 
-  Widget _getListViewWidget(SearchStreams streams) {
+  Widget _getListViewWidget(SearchCommunication streams) {
     return StreamListener<List<Notice>>(
         stream: streams.noticies,
         builder: (BuildContext context, snapshot) {
@@ -53,7 +53,7 @@ class SearchView extends StatelessWidget {
         });
   }
 
-  Widget _getProgress(SearchStreams streams) {
+  Widget _getProgress(SearchCommunication streams) {
     return streams.progress.builder<bool>((value) {
       return value
           ? Center(
@@ -63,7 +63,7 @@ class SearchView extends StatelessWidget {
     });
   }
 
-  Widget _getEmpty(SearchStreams streams) {
+  Widget _getEmpty(SearchCommunication streams) {
     return streams.empty.builder<bool>((value) {
       return value
           ? Center(
@@ -73,8 +73,8 @@ class SearchView extends StatelessWidget {
     });
   }
 
-  Widget _buildConnectionError(BlocCommunication<SearchStreams> communication) {
-    return communication.streams.error.builder((value) {
+  Widget _buildConnectionError(SearchCommunication communication) {
+    return communication.error.builder((value) {
       return value
           ? ErroConection(tryAgain: () {
               communication.dispatcher(LoadSearch()..query = query);

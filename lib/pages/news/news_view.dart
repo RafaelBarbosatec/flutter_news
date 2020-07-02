@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:FlutterNews/pages/news/news_bloc.dart';
+import 'package:FlutterNews/pages/news/news_communication.dart';
 import 'package:FlutterNews/pages/news/news_events.dart';
-import 'package:FlutterNews/pages/news/news_streams.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/widgets/AnimatedContent.dart';
 import 'package:FlutterNews/widgets/custom_tab.dart';
@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 class NewsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Bsev<NewsBloc, NewsStreams>(
+    return Bsev<NewsBloc, NewsCommunication>(
       builder: (context, communication) {
         return new Container(
             padding: EdgeInsets.only(top: 2.0),
@@ -21,7 +21,7 @@ class NewsView extends StatelessWidget {
               children: <Widget>[
                 _getListViewWidget(communication),
                 _buildConnectionError(communication),
-                _getProgress(communication.streams),
+                _getProgress(communication),
                 _getListCategory(communication),
               ],
             ));
@@ -29,10 +29,10 @@ class NewsView extends StatelessWidget {
     );
   }
 
-  Widget _getListViewWidget(BlocCommunication<NewsStreams> communication) {
+  Widget _getListViewWidget(NewsCommunication communication) {
     return Container(
       child: StreamListener<List<Notice>>(
-          stream: communication.streams.noticies,
+          stream: communication.noticies,
           builder: (_, snapshot) {
             List news = snapshot.data;
 
@@ -65,8 +65,8 @@ class NewsView extends StatelessWidget {
     );
   }
 
-  Widget _buildConnectionError(BlocCommunication<NewsStreams> communication) {
-    return communication.streams.errorConection.builder<bool>((value) {
+  Widget _buildConnectionError(NewsCommunication communication) {
+    return communication.errorConection.builder<bool>((value) {
       return value
           ? ErroConection(tryAgain: () {
               communication.dispatcher(LoadNews());
@@ -75,7 +75,7 @@ class NewsView extends StatelessWidget {
     });
   }
 
-  Widget _getProgress(NewsStreams streams) {
+  Widget _getProgress(NewsCommunication streams) {
     return streams.progress.builder<bool>((value) {
       return value
           ? Center(
@@ -85,8 +85,8 @@ class NewsView extends StatelessWidget {
     });
   }
 
-  Widget _getListCategory(BlocCommunication<NewsStreams> communication) {
-    return communication.streams.categoriesName.builder<List<String>>((value) {
+  Widget _getListCategory(NewsCommunication communication) {
+    return communication.categoriesName.builder<List<String>>((value) {
       return CustomTab(
         itens: value,
         tabSelected: (index) {

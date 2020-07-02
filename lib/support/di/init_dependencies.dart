@@ -1,11 +1,11 @@
 import 'package:FlutterNews/pages/featured/featured_bloc.dart';
-import 'package:FlutterNews/pages/featured/featured_streams.dart';
+import 'package:FlutterNews/pages/featured/featured_communication.dart';
 import 'package:FlutterNews/pages/home/home_bloc.dart';
-import 'package:FlutterNews/pages/home/home_streams.dart';
+import 'package:FlutterNews/pages/home/home_communication.dart';
 import 'package:FlutterNews/pages/news/news_bloc.dart';
-import 'package:FlutterNews/pages/news/news_streams.dart';
+import 'package:FlutterNews/pages/news/news_communication.dart';
+import 'package:FlutterNews/pages/search/search_communication.dart';
 import 'package:FlutterNews/pages/search/search_result_bloc.dart';
-import 'package:FlutterNews/pages/search/search_streams.dart';
 import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
 import 'package:FlutterNews/support/conection/api.dart';
 import 'package:bsev/bsev.dart';
@@ -17,16 +17,25 @@ initDependencies() {
 }
 
 injectBlocs() {
-  registerBloc<NewsBloc, NewsStreams>(
-      (i) => NewsBloc(i.get()), () => NewsStreams());
+  registerBloc<NewsBloc, NewsCommunication>(
+    (i) => NewsBloc(i.get()),
+    () => NewsCommunication(),
+  );
 
-  registerBloc<FeaturedBloc, FeaturedStreams>(
-      (i) => FeaturedBloc(i.get()), () => FeaturedStreams());
+  registerBloc<FeaturedBloc, FeaturedCommunication>(
+    (i) => FeaturedBloc(i.get()),
+    () => FeaturedCommunication(),
+  );
 
-  registerBloc<HomeBloc, HomeStreams>((i) => HomeBloc(), () => HomeStreams());
+  registerBloc<HomeBloc, HomeCommunication>(
+    (i) => HomeBloc(),
+    () => HomeCommunication(),
+  );
 
-  registerBloc<SearchBloc, SearchStreams>(
-      (i) => SearchBloc(i.get()), () => SearchStreams());
+  registerBloc<SearchBloc, SearchCommunication>(
+    (i) => SearchBloc(i.get()),
+    () => SearchCommunication(),
+  );
 }
 
 injectRepository() {

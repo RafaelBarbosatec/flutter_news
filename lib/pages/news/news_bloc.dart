@@ -6,7 +6,7 @@ import 'package:FlutterNews/support/conection/api.dart';
 import 'package:FlutterNews/support/util/StringsLocation.dart';
 import 'package:bsev/bsev.dart';
 
-class NewsBloc extends BlocBase<NewsCommunication> {
+class NewsBloc extends Bloc<NewsCommunication> {
   final NoticeRepository repository;
 
   int _page = 0;
@@ -33,7 +33,7 @@ class NewsBloc extends BlocBase<NewsCommunication> {
   }
 
   @override
-  void initView() {
+  void init() {
     communication.categoriesName.set(_categoriesNames);
     _load(false);
   }

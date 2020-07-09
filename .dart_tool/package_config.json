@@ -27,7 +27,7 @@
     },
     {
       "name": "bsev",
-      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/bsev-2.0.0",
+      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/bsev-2.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.6"
     },
@@ -213,7 +213,13 @@
     },
     {
       "name": "url_launcher",
-      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.4.11",
+      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "url_launcher_linux",
+      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-0.0.1+1",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
@@ -253,7 +259,7 @@
       "packageUri": "lib/"
     }
   ],
-  "generated": "2020-07-02T17:04:36.484388Z",
+  "generated": "2020-07-09T14:30:37.373437Z",
   "generator": "pub",
   "generatorVersion": "2.8.4"
 }

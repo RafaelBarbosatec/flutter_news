@@ -1,7 +1,7 @@
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:bsev/bsev.dart';
 
-class SearchCommunication extends CommunicationBase {
+class SearchCommunication extends Communication {
   BehaviorSubjectCreate<bool> progress =
       BehaviorSubjectCreate(initValue: false);
 

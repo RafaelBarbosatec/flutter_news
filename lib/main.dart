@@ -1,7 +1,7 @@
 import 'package:FlutterNews/pages/home/home_view.dart';
 import 'package:FlutterNews/support/di/init_dependencies.dart';
 import 'package:FlutterNews/support/localization/MyLocalizationsDelegate.dart';
-import 'package:bsev/flavors.dart';
+import 'package:bsev/bsev.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

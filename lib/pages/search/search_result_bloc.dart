@@ -5,13 +5,13 @@ import 'package:FlutterNews/repository/notice_repository/notice_repository.dart'
 import 'package:FlutterNews/support/conection/api.dart';
 import 'package:bsev/bsev.dart';
 
-class SearchBloc extends BlocBase<SearchCommunication> {
+class SearchBloc extends Bloc<SearchCommunication> {
   final NoticeRepository repository;
 
   SearchBloc(this.repository);
 
   @override
-  void initView() {
+  void init() {
     _load(data);
   }
 

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Bsev<HomeBloc, HomeCommunication>(
+    return BsevBuilder<HomeBloc, HomeCommunication>(
       builder: (context, communication) {
         return Scaffold(
           body: Container(

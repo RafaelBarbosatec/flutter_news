@@ -5,13 +5,13 @@ import 'package:FlutterNews/repository/notice_repository/notice_repository.dart'
 import 'package:FlutterNews/support/conection/api.dart';
 import 'package:bsev/bsev.dart';
 
-class FeaturedBloc extends BlocBase<FeaturedCommunication> {
+class FeaturedBloc extends Bloc<FeaturedCommunication> {
   final NoticeRepository repository;
 
   FeaturedBloc(this.repository);
 
   @override
-  void initView() {
+  void init() {
     _load();
   }
 

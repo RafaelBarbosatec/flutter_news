@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 class NewsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Bsev<NewsBloc, NewsCommunication>(
+    return BsevBuilder<NewsBloc, NewsCommunication>(
       builder: (context, communication) {
         return new Container(
             padding: EdgeInsets.only(top: 2.0),

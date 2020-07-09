@@ -1,3 +1,3 @@
-import 'package:bsev/events_base.dart';
+import 'package:bsev/bsev.dart';
 
 class LoadFeatured extends EventsBase {}

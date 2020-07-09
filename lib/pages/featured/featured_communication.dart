@@ -1,7 +1,7 @@
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:bsev/bsev.dart';
 
-class FeaturedCommunication extends CommunicationBase {
+class FeaturedCommunication extends Communication {
   BehaviorSubjectCreate<bool> progress = BehaviorSubjectCreate();
   BehaviorSubjectCreate<bool> errorConnection = BehaviorSubjectCreate();
   BehaviorSubjectCreate<List<Notice>> noticies =

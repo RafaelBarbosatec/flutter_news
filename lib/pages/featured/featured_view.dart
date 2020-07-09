@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class FeaturedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Bsev<FeaturedBloc, FeaturedCommunication>(
+    return BsevBuilder<FeaturedBloc, FeaturedCommunication>(
         builder: (context, communication) {
       return Stack(
         children: <Widget>[

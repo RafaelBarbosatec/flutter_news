@@ -15,7 +15,7 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Bsev<SearchBloc, SearchCommunication>(
+    return BsevBuilder<SearchBloc, SearchCommunication>(
       dataToBloc: query,
       builder: (context, communication) {
         return Scaffold(

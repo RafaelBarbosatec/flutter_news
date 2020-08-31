@@ -63,7 +63,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_localizations:
-    dependency: "direct main"
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"

@@ -35,6 +35,7 @@ class FeaturedView extends StatelessWidget {
     return Container(
       child: cube.newsList.build<List<Notice>>(
         (value) {
+          if (value.isEmpty) return Container();
           return PageTransformer(
             pageViewBuilder: (context, visibilityResolver) {
               return new PageView.builder(
@@ -45,7 +46,9 @@ class FeaturedView extends StatelessWidget {
                   final pageVisibility =
                       visibilityResolver.resolvePageVisibility(index);
                   return new IntroNewsItem(
-                      item: item, pageVisibility: pageVisibility);
+                    item: item,
+                    pageVisibility: pageVisibility,
+                  );
                 },
               );
             },

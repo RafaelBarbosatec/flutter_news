@@ -1,5 +1,6 @@
 name: FlutterNews
 description: A new Flutter application.
+version: 1.0.0+1
 
 dependencies:
   flutter:

@@ -11,7 +11,7 @@ class SearchCube extends Cube {
   final progress = ObservableValue<bool>(value: false);
   final error = ObservableValue<bool>(value: false);
   final empty = ObservableValue<bool>(value: false);
-  final newsList = ObservableList<Notice>(value: []);
+  final noticeList = ObservableList<Notice>(value: []);
 
   @override
   void ready() {
@@ -32,7 +32,7 @@ class SearchCube extends Cube {
   _showNews(List<Notice> news) {
     progress.value = false;
     if (news.length > 0) {
-      newsList.addAll(news);
+      noticeList.addAll(news);
       empty.value = false;
     } else {
       empty.value = true;

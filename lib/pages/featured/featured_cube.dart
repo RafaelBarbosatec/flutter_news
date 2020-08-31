@@ -10,7 +10,7 @@ class FeaturedCube extends Cube {
 
   final progress = ObservableValue<bool>(value: false);
   final errorConnection = ObservableValue<bool>(value: false);
-  final newsList = ObservableList<Notice>(value: []);
+  final noticeList = ObservableList<Notice>(value: []);
 
   @override
   void ready() {
@@ -18,7 +18,7 @@ class FeaturedCube extends Cube {
     super.ready();
   }
 
-  load() {
+  void load() {
     progress.value = true;
     errorConnection.value = false;
 
@@ -30,7 +30,7 @@ class FeaturedCube extends Cube {
 
   _showNews(List<Notice> news) {
     progress.value = false;
-    newsList.addAll(news);
+    noticeList.addAll(news);
   }
 
   _showImplError(onError) {

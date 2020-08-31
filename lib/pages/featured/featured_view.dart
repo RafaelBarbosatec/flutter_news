@@ -33,7 +33,7 @@ class FeaturedView extends StatelessWidget {
 
   Widget _buildFeatured(FeaturedCube cube) {
     return Container(
-      child: cube.newsList.build<List<Notice>>(
+      child: cube.noticeList.build<List<Notice>>(
         (value) {
           if (value.isEmpty) return Container();
           return PageTransformer(

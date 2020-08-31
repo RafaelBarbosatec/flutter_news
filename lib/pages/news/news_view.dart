@@ -28,7 +28,7 @@ class NewsView extends StatelessWidget {
   }
 
   Widget _getListViewWidget(NewsCube cube) {
-    return cube.noticies.build<List<Notice>>((value) {
+    return cube.noticeList.build<List<Notice>>((value) {
       return AnimatedContent(
         show: value.length > 0,
         child: RefreshIndicator(
@@ -58,7 +58,7 @@ class NewsView extends StatelessWidget {
   }
 
   Widget _buildConnectionError(NewsCube cube) {
-    return cube.errorConection.build<bool>((value) {
+    return cube.errorConnection.build<bool>((value) {
       return value
           ? ErroConection(tryAgain: () {
               cube.load(false);

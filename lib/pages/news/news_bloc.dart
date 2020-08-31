@@ -26,9 +26,9 @@ class NewsCube extends Cube {
     categoriesName.add(getString("cat_negocios"));
   }
 
-  final errorConection = ObservableValue<bool>(value: false);
+  final errorConnection = ObservableValue<bool>(value: false);
   final progress = ObservableValue<bool>(value: false);
-  final noticies = ObservableList<Notice>(value: []);
+  final noticeList = ObservableList<Notice>(value: []);
   final categoriesName = ObservableList<String>(value: []);
 
   @override
@@ -47,12 +47,12 @@ class NewsCube extends Cube {
       if (isMore) {
         _page++;
       } else {
-        noticies.value = [];
-        noticies.notify();
+        noticeList.value = [];
+        noticeList.notify();
         _page = 0;
       }
 
-      errorConection.value = false;
+      errorConnection.value = false;
 
       progress.value = true;
 
@@ -69,9 +69,9 @@ class NewsCube extends Cube {
     progress.value = false;
 
     if (isMore) {
-      noticies.addAll(news);
+      noticeList.addAll(news);
     } else {
-      noticies.value = news;
+      noticeList.value = news;
     }
   }
 
@@ -79,7 +79,7 @@ class NewsCube extends Cube {
     if (onError is FetchDataException) {
       print("codigo: ${onError.code()}");
     }
-    errorConection.value = true;
+    errorConnection.value = true;
     progress.value = false;
   }
 }

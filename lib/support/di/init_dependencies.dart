@@ -1,7 +1,7 @@
 import 'package:FlutterNews/pages/featured/featured_cube.dart';
 import 'package:FlutterNews/pages/home/home_cube.dart';
 import 'package:FlutterNews/pages/news/news_bloc.dart';
-import 'package:FlutterNews/pages/search/search_result_bloc.dart';
+import 'package:FlutterNews/pages/search/search_cube.dart';
 import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
 import 'package:FlutterNews/support/conection/api.dart';
 import 'package:cubes/cubes.dart';

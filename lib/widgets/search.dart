@@ -1,4 +1,4 @@
-import 'package:FlutterNews/pages/search/search_result.dart';
+import 'package:FlutterNews/pages/search/search_view.dart';
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 

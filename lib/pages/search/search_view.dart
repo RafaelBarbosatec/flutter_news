@@ -1,4 +1,4 @@
-import 'package:FlutterNews/pages/search/search_result_bloc.dart';
+import 'package:FlutterNews/pages/search/search_cube.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/widgets/AnimatedContent.dart';
 import 'package:FlutterNews/widgets/erro_conection.dart';
@@ -33,7 +33,7 @@ class SearchView extends StatelessWidget {
   }
 
   Widget _getListViewWidget(SearchCube cube) {
-    return cube.newsList.build<List<Notice>>((value) {
+    return cube.noticeList.build<List<Notice>>((value) {
       return AnimatedContent(
         show: value.length > 0,
         child: ListView.builder(

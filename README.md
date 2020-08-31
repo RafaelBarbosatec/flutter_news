@@ -28,8 +28,6 @@ Framework: [Flutter](https://flutter.io/)
 
 Language: [Dart](https://www.dartlang.org/)
 
-Architecture: [Bloc](https://www.didierboelens.com/2018/12/reactive-programming---streams---bloc---practical-use-cases/)
-
 ## Tutorial
 [(Medium) - Part 1](https://medium.com/@rafaelbarbosatec/flutter-construindo-uma-linda-aplica%C3%A7%C3%A3o-de-not%C3%ADcias-parte-1-f0cbeecb7ab).
 

@@ -1,34 +1,28 @@
-import 'package:FlutterNews/pages/featured/featured_bloc.dart';
-import 'package:FlutterNews/pages/featured/featured_communication.dart';
-import 'package:FlutterNews/pages/featured/featured_events.dart';
+import 'package:FlutterNews/pages/featured/featured_cube.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:FlutterNews/widgets/pageTransform/intro_page_item.dart';
 import 'package:FlutterNews/widgets/pageTransform/page_transformer.dart';
-import 'package:bsev/bsev.dart';
+import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 
 class FeaturedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BsevBuilder<FeaturedBloc, FeaturedCommunication>(
-        builder: (context, communication) {
+    return CubeBuilder<FeaturedCube>(builder: (context, cube) {
       return Stack(
         children: <Widget>[
           Stack(
-            children: <Widget>[
-              _buildFeatured(communication),
-              _getProgress(communication)
-            ],
+            children: <Widget>[_buildFeatured(cube), _getProgress(cube)],
           ),
-          _buildErrorConnection(communication)
+          _buildErrorConnection(cube)
         ],
       );
     });
   }
 
-  Widget _getProgress(FeaturedCommunication streams) {
-    return streams.progress.builder((value) {
+  Widget _getProgress(FeaturedCube cube) {
+    return cube.progress.build<bool>((value) {
       return value
           ? Center(
               child: CircularProgressIndicator(),
@@ -37,22 +31,17 @@ class FeaturedView extends StatelessWidget {
     });
   }
 
-  _buildFeatured(FeaturedCommunication streams) {
+  Widget _buildFeatured(FeaturedCube cube) {
     return Container(
-      child: StreamListener<List<Notice>>(
-        stream: streams.noticies,
-        builder: (BuildContext context, snapshot) {
-          List _list = snapshot.data;
-
-          if (_list.isEmpty) return SizedBox.shrink();
-
+      child: cube.newsList.build<List<Notice>>(
+        (value) {
           return PageTransformer(
             pageViewBuilder: (context, visibilityResolver) {
               return new PageView.builder(
                 controller: new PageController(viewportFraction: 0.9),
-                itemCount: _list.length,
+                itemCount: value.length,
                 itemBuilder: (context, index) {
-                  final item = IntroNews.fromNotice(_list[index]);
+                  final item = IntroNews.fromNotice(value[index]);
                   final pageVisibility =
                       visibilityResolver.resolvePageVisibility(index);
                   return new IntroNewsItem(
@@ -62,15 +51,16 @@ class FeaturedView extends StatelessWidget {
             },
           );
         },
+        animate: true,
       ),
     );
   }
 
-  Widget _buildErrorConnection(FeaturedCommunication communication) {
-    return communication.errorConnection.builder((value) {
+  Widget _buildErrorConnection(FeaturedCube cube) {
+    return cube.errorConnection.build<bool>((value) {
       return value
           ? ErroConection(tryAgain: () {
-              communication.dispatcher(LoadFeatured());
+              cube.load();
             })
           : SizedBox.shrink();
     });

@@ -1,15 +1,12 @@
 import 'package:FlutterNews/pages/search/search_result.dart';
-import 'package:FlutterNews/support/util/StringsLocation.dart';
+import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 
 class SearchWidget extends StatelessWidget {
   final TextEditingController editingController = new TextEditingController();
-  BuildContext _context;
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
-
     return new Container(
       padding: new EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
       margin: const EdgeInsets.only(),
@@ -32,7 +29,7 @@ class SearchWidget extends StatelessWidget {
                     ),
                     hintText: getString("hint_busca"),
                     border: InputBorder.none),
-                onSubmitted: onSubmitted,
+                onSubmitted: (query) => onSubmitted(query, context),
                 controller: editingController,
               ))
             ],
@@ -42,9 +39,9 @@ class SearchWidget extends StatelessWidget {
     );
   }
 
-  onSubmitted(String query) {
+  onSubmitted(String query, BuildContext context) {
     if (query.isEmpty) return;
-    Navigator.of(_context)
+    Navigator.of(context)
         .push(new MaterialPageRoute(builder: (BuildContext context) {
       return SearchView(query);
     }));

@@ -1,102 +1,97 @@
 import 'dart:async';
 
 import 'package:FlutterNews/pages/news/news_bloc.dart';
-import 'package:FlutterNews/pages/news/news_communication.dart';
-import 'package:FlutterNews/pages/news/news_events.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/widgets/AnimatedContent.dart';
 import 'package:FlutterNews/widgets/custom_tab.dart';
 import 'package:FlutterNews/widgets/erro_conection.dart';
-import 'package:bsev/bsev.dart';
+import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 
 class NewsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BsevBuilder<NewsBloc, NewsCommunication>(
-      builder: (context, communication) {
+    return CubeBuilder<NewsCube>(
+      builder: (context, cube) {
         return new Container(
             padding: EdgeInsets.only(top: 2.0),
             child: new Stack(
               children: <Widget>[
-                _getListViewWidget(communication),
-                _buildConnectionError(communication),
-                _getProgress(communication),
-                _getListCategory(communication),
+                _getListViewWidget(cube),
+                _buildConnectionError(cube),
+                _getProgress(cube),
+                _getListCategory(cube),
               ],
             ));
       },
     );
   }
 
-  Widget _getListViewWidget(NewsCommunication communication) {
-    return Container(
-      child: StreamListener<List<Notice>>(
-          stream: communication.noticies,
-          builder: (_, snapshot) {
-            List news = snapshot.data;
-
-            return AnimatedContent(
-              show: news.length > 0,
-              child: RefreshIndicator(
-                onRefresh: () {
-                  return myRefresh(communication.dispatcher);
-                },
-                child: ListView.builder(
-                  itemCount: news.length,
-                  padding: new EdgeInsets.only(top: 5.0),
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return Container(
-                        margin: const EdgeInsets.only(top: 50.0),
-                        child: news[index],
-                      );
-                    } else {
-                      if (index + 1 >= news.length) {
-                        communication.dispatcher(LoadMoreNews());
-                      }
-                      return news[index];
-                    }
-                  },
-                ),
-              ),
-            );
-          }),
-    );
+  Widget _getListViewWidget(NewsCube cube) {
+    return cube.noticies.build<List<Notice>>((value) {
+      return AnimatedContent(
+        show: value.length > 0,
+        child: RefreshIndicator(
+          onRefresh: () {
+            return myRefresh(cube);
+          },
+          child: ListView.builder(
+            itemCount: value.length,
+            padding: new EdgeInsets.only(top: 5.0),
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Container(
+                  margin: const EdgeInsets.only(top: 50.0),
+                  child: value[index],
+                );
+              } else {
+                if (index + 1 >= value.length) {
+                  cube.load(true);
+                }
+                return value[index];
+              }
+            },
+          ),
+        ),
+      );
+    });
   }
 
-  Widget _buildConnectionError(NewsCommunication communication) {
-    return communication.errorConection.builder<bool>((value) {
+  Widget _buildConnectionError(NewsCube cube) {
+    return cube.errorConection.build<bool>((value) {
       return value
           ? ErroConection(tryAgain: () {
-              communication.dispatcher(LoadNews());
+              cube.load(false);
             })
           : SizedBox.shrink();
     });
   }
 
-  Widget _getProgress(NewsCommunication streams) {
-    return streams.progress.builder<bool>((value) {
-      return value
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Container();
-    });
+  Widget _getProgress(NewsCube cube) {
+    return cube.progress.build<bool>(
+      (value) {
+        return value
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container();
+      },
+      animate: true,
+    );
   }
 
-  Widget _getListCategory(NewsCommunication communication) {
-    return communication.categoriesName.builder<List<String>>((value) {
+  Widget _getListCategory(NewsCube cube) {
+    return cube.categoriesName.build<List<String>>((value) {
       return CustomTab(
         itens: value,
         tabSelected: (index) {
-          communication.dispatcher(ClickCategory()..position = index);
+          cube.categoryClick(index);
         },
       );
     });
   }
 
-  Future<Null> myRefresh(dispatcher) async {
-    dispatcher(LoadNews());
+  Future<Null> myRefresh(NewsCube cube) async {
+    cube.load(false);
   }
 }

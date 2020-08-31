@@ -1,20 +1,20 @@
 import 'package:FlutterNews/pages/home/home_view.dart';
 import 'package:FlutterNews/support/di/init_dependencies.dart';
-import 'package:FlutterNews/support/localization/MyLocalizationsDelegate.dart';
-import 'package:bsev/bsev.dart';
+import 'package:cubes/cubes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'support/di/init_dependencies.dart';
 
 void main() => runApp(new NewsApp());
 
 class NewsApp extends StatelessWidget {
-  final MyLocalizationsDelegate myLocation = const MyLocalizationsDelegate();
+  final cubeLocation = CubesLocalizationDelegate([
+    Locale('en', 'US'),
+    Locale('pt', 'BR'),
+  ], pathFiles: 'resources/lang/');
 
   NewsApp() {
-    Flavors.configure(Flavor.PROD);
     initDependencies();
   }
 
@@ -29,14 +29,8 @@ class NewsApp extends StatelessWidget {
           primaryColor: Colors.blue,
           accentColor: Colors.blue,
           brightness: Brightness.light),
-      supportedLocales: MyLocalizationsDelegate.supportedLocales(),
-      localizationsDelegates: [
-        myLocation,
-        DefaultCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      localeResolutionCallback: myLocation.resolution,
+      localizationsDelegates: cubeLocation.delegates,
+      supportedLocales: cubeLocation.supportedLocations,
       home: HomeView(),
     );
   }

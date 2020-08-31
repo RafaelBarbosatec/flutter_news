@@ -1,11 +1,8 @@
-import 'package:FlutterNews/pages/search/search_communication.dart';
-import 'package:FlutterNews/pages/search/search_events.dart';
 import 'package:FlutterNews/pages/search/search_result_bloc.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
-import 'package:FlutterNews/support/util/StringsLocation.dart';
 import 'package:FlutterNews/widgets/AnimatedContent.dart';
 import 'package:FlutterNews/widgets/erro_conection.dart';
-import 'package:bsev/bsev.dart';
+import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 
 class SearchView extends StatelessWidget {
@@ -15,19 +12,19 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BsevBuilder<SearchBloc, SearchCommunication>(
-      dataToBloc: query,
-      builder: (context, communication) {
+    return CubeBuilder<SearchCube>(
+      initData: query,
+      builder: (context, cube) {
         return Scaffold(
           appBar: AppBar(
             title: Text(query),
           ),
           body: Stack(
             children: <Widget>[
-              _getListViewWidget(communication),
-              _getProgress(communication),
-              _getEmpty(communication),
-              _buildConnectionError(communication)
+              _getListViewWidget(cube),
+              _getProgress(cube),
+              _getEmpty(cube),
+              _buildConnectionError(cube)
             ],
           ),
         );
@@ -35,36 +32,36 @@ class SearchView extends StatelessWidget {
     );
   }
 
-  Widget _getListViewWidget(SearchCommunication streams) {
-    return StreamListener<List<Notice>>(
-        stream: streams.noticies,
-        builder: (BuildContext context, snapshot) {
-          List news = snapshot.data;
-          return AnimatedContent(
-            show: news.length > 0,
-            child: ListView.builder(
-              itemCount: news.length,
-              padding: const EdgeInsets.only(top: 5.0),
-              itemBuilder: (context, index) {
-                return news[index];
-              },
-            ),
-          );
-        });
-  }
-
-  Widget _getProgress(SearchCommunication streams) {
-    return streams.progress.builder<bool>((value) {
-      return value
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : SizedBox.shrink();
+  Widget _getListViewWidget(SearchCube cube) {
+    return cube.newsList.build<List<Notice>>((value) {
+      return AnimatedContent(
+        show: value.length > 0,
+        child: ListView.builder(
+          itemCount: value.length,
+          padding: const EdgeInsets.only(top: 5.0),
+          itemBuilder: (context, index) {
+            return value[index];
+          },
+        ),
+      );
     });
   }
 
-  Widget _getEmpty(SearchCommunication streams) {
-    return streams.empty.builder<bool>((value) {
+  Widget _getProgress(SearchCube cube) {
+    return cube.progress.build<bool>(
+      (value) {
+        return value
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : SizedBox.shrink();
+      },
+      animate: true,
+    );
+  }
+
+  Widget _getEmpty(SearchCube cube) {
+    return cube.empty.build<bool>((value) {
       return value
           ? Center(
               child: Text(getString("erro_busca")),
@@ -73,11 +70,11 @@ class SearchView extends StatelessWidget {
     });
   }
 
-  Widget _buildConnectionError(SearchCommunication communication) {
-    return communication.error.builder((value) {
+  Widget _buildConnectionError(SearchCube cube) {
+    return cube.error.build((value) {
       return value
           ? ErroConection(tryAgain: () {
-              communication.dispatcher(LoadSearch()..query = query);
+              cube.search(query);
             })
           : SizedBox.shrink();
     });

@@ -8,9 +8,9 @@ dependencies:
     sdk: flutter
 
   url_launcher: ^5.4.11
-  share: ^0.6.4+3
-  http: ^0.12.1
-  bsev: ^2.1.0
+  share: ^0.6.5
+  http: ^0.12.2
+  cubes: ^0.2.2
 
 dev_dependencies:
   flutter_test:

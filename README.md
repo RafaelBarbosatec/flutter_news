@@ -22,7 +22,7 @@ Packages | pub
 url_launcher     | [![Pub](https://img.shields.io/pub/v/url_launcher.svg)](https://pub.dartlang.org/packages/url_launcher)
 share    | [![Pub](https://img.shields.io/pub/v/share.svg)](https://pub.dartlang.org/packages/share)
 http    | [![Pub](https://img.shields.io/pub/v/http.svg)](https://pub.dartlang.org/packages/http)
-bsev  | [![Pub](https://img.shields.io/pub/v/bsev.svg)](https://pub.dartlang.org/packages/bsev)
+cubes  | [![Pub](https://img.shields.io/pub/v/cubes.svg)](https://pub.dartlang.org/packages/cubes)
 
 Framework: [Flutter](https://flutter.io/)
 

@@ -3,48 +3,42 @@ import 'package:FlutterNews/repository/notice_repository/notice_repository.dart'
 import 'package:FlutterNews/support/conection/api.dart';
 import 'package:cubes/cubes.dart';
 
-class SearchCube extends Cube {
+class FeaturedCube extends Cube {
+  FeaturedCube(this.repository);
+
   final NoticeRepository repository;
 
-  SearchCube(this.repository);
-
   final progress = ObservableValue<bool>(value: false);
-  final error = ObservableValue<bool>(value: false);
-  final empty = ObservableValue<bool>(value: false);
+  final errorConnection = ObservableValue<bool>(value: false);
   final newsList = ObservableList<Notice>(value: []);
 
   @override
   void ready() {
-    search(data);
+    load();
     super.ready();
   }
 
-  void search(String query) {
+  load() {
     progress.value = true;
-    error.value = false;
+    errorConnection.value = false;
 
     repository
-        .loadSearch(query)
+        .loadNewsRecent()
         .then((news) => _showNews(news))
         .catchError(_showImplError);
   }
 
   _showNews(List<Notice> news) {
     progress.value = false;
-    if (news.length > 0) {
-      newsList.addAll(news);
-      empty.value = false;
-    } else {
-      empty.value = true;
-    }
+    newsList.addAll(news);
   }
 
   _showImplError(onError) {
-    print(onError);
     if (onError is FetchDataException) {
       print("codigo: ${onError.code()}");
     }
-    error.value = true;
+    print(onError);
+    errorConnection.value = true;
     progress.value = false;
   }
 }

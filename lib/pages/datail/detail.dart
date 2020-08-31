@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:FlutterNews/support/util/StringsLocation.dart';
+
 import 'package:FlutterNews/support/util/date_util.dart';
 import 'package:FlutterNews/support/util/functions.dart';
+import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class DetailPage extends StatelessWidget{
-
+class DetailPage extends StatelessWidget {
   final _img;
   final _title;
   final _date;
@@ -18,11 +18,11 @@ class DetailPage extends StatelessWidget{
   final _category;
   final _origin;
 
-  DetailPage(this._img,this._title,this._date,this._description,this._category,this._link,this._origin);
+  DetailPage(this._img, this._title, this._date, this._description,
+      this._category, this._link, this._origin);
 
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(_origin),
@@ -43,11 +43,11 @@ class DetailPage extends StatelessWidget{
           borderRadius: new BorderRadius.circular(6.0),
           child: new ListView(
             children: <Widget>[
-             new Hero(
-                 tag: _title,
-                 child: _getImageNetwork(Functions.getImgResizeUrl(_img,250,''))
-             ),
-              _getBody(_title,_date,_description,_origin,context),
+              new Hero(
+                  tag: _title,
+                  child: _getImageNetwork(
+                      Functions.getImgResizeUrl(_img, 250, ''))),
+              _getBody(_title, _date, _description, _origin, context),
             ],
           ),
         ),
@@ -55,49 +55,46 @@ class DetailPage extends StatelessWidget{
     );
   }
 
-  Widget _getImageNetwork(url){
-
-    try{
-      if(url != '') {
-
+  Widget _getImageNetwork(url) {
+    try {
+      if (url != '') {
         return ClipRRect(
-          borderRadius: new BorderRadius.only(topLeft: Radius.circular(6.0),topRight: Radius.circular(6.0)),
+          borderRadius: new BorderRadius.only(
+              topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
           child: new Container(
             height: 200.0,
             child: new FadeInImage.assetNetwork(
               placeholder: 'assets/place_holder.jpg',
               image: url,
-              fit: BoxFit.cover,),
+              fit: BoxFit.cover,
+            ),
           ),
         );
-      }else{
+      } else {
         return new Container(
           height: 200.0,
           child: new Image.asset('assets/place_holder_3.jpg'),
         );
       }
-
-    }catch(e){
+    } catch (e) {
       return new Container(
         height: 200.0,
         child: new Image.asset('assets/place_holder_3.jpg'),
       );
     }
-
   }
 
-  Widget _getBody(tittle,date,description,origin,context){
-
+  Widget _getBody(tittle, date, description, origin, context) {
     return new Container(
       margin: new EdgeInsets.all(15.0),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _getTittle(tittle),
-          _getDate(date,origin),
+          _getDate(date, origin),
           _getDescription(description),
           _getAntLink(),
-          _getLink(_link,context)
+          _getLink(_link, context)
         ],
       ),
     );
@@ -106,53 +103,46 @@ class DetailPage extends StatelessWidget{
   Widget _getAntLink() {
     return new Container(
       margin: new EdgeInsets.only(top: 30.0),
-      child: new Text("Mais detalhes acesse:",
-        style: new TextStyle(fontWeight: FontWeight.bold,
-            color: Colors.grey[600]
-        ),
+      child: new Text(
+        "Mais detalhes acesse:",
+        style:
+            new TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[600]),
       ),
     );
   }
-  Widget _getLink(link,context){
 
+  Widget _getLink(link, context) {
     return new GestureDetector(
       child: new Text(
         link,
         style: new TextStyle(color: Colors.blue),
       ),
-      onTap: (){
-        _launchURL(link,context);
+      onTap: () {
+        _launchURL(link, context);
       },
     );
-
   }
 
   _getTittle(tittle) {
-    return new Text(tittle,
-    style: new TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 20.0),
+    return new Text(
+      tittle,
+      style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
     );
   }
 
-  _getDate(date,origin) {
-
+  _getDate(date, origin) {
     return new Container(
       margin: new EdgeInsets.only(top: 4.0),
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          new Text(new DateUtil().buildDate(date),
-            style: new TextStyle(
-                fontSize: 10.0,
-                color: Colors.grey
-            ),
+          new Text(
+            new DateUtil().buildDate(date),
+            style: new TextStyle(fontSize: 10.0, color: Colors.grey),
           ),
-          new Text(origin,
-            style: new TextStyle(
-                fontSize: 10.0,
-                color: Colors.grey
-            ),
+          new Text(
+            origin,
+            style: new TextStyle(fontSize: 10.0, color: Colors.grey),
           )
         ],
       ),
@@ -161,19 +151,19 @@ class DetailPage extends StatelessWidget{
 
   _getDescription(description) {
     return new Container(
-      margin: new  EdgeInsets.only(top: 20.0),
+      margin: new EdgeInsets.only(top: 20.0),
       child: new Text(description),
     );
   }
 
-  _launchURL(url,context) async {
-    if(Platform.isAndroid) {
+  _launchURL(url, context) async {
+    if (Platform.isAndroid) {
       if (await canLaunch(url)) {
         await launch(url);
       } else {
         print('Could not launch $url');
       }
-    }else{
+    } else {
       Clipboard.setData(new ClipboardData(text: url));
       _showDialog(context);
     }
@@ -204,5 +194,4 @@ class DetailPage extends StatelessWidget{
       },
     );
   }
-
 }

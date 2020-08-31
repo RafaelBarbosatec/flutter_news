@@ -1,15 +1,13 @@
-import 'package:FlutterNews/support/util/StringsLocation.dart';
+import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 
 class ErroConection extends StatelessWidget {
-
   final VoidCallback tryAgain;
 
   ErroConection({Key key, this.tryAgain}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       child: Center(
         child: new Padding(
@@ -37,7 +35,8 @@ class ErroConection extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: new FlatButton(
-                    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)),
                     onPressed: tryAgain,
                     child: new Text(getString("text_tentar_novamente")),
                     color: Colors.blue,

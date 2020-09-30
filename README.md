@@ -2,7 +2,7 @@
 
 <img src="https://github.com/RafaelBarbosatec/flutter_news/blob/master/imgs/flutter.png" width="200"/>
 
-News application developed for practice, learning and testing the potential of this powerful Framework.
+News application developed for practice, learning and testing the potential of this powerful Framework #Flutter ( Google's UI Tool kit).
 
 <p align="center">
   <img src="https://github.com/RafaelBarbosatec/flutter_news/blob/master/imgs/img1.png" width="200"/>

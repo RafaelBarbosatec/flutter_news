@@ -39,7 +39,7 @@
     },
     {
       "name": "cubes",
-      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/cubes-0.2.2",
+      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/cubes-0.3.3",
       "packageUri": "lib/",
       "languageVersion": "2.7"
     },
@@ -75,7 +75,7 @@
     },
     {
       "name": "get_it",
-      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/get_it-4.0.4",
+      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/get_it-5.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
@@ -135,7 +135,7 @@
     },
     {
       "name": "share",
-      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/share-0.6.5",
+      "rootUri": "file:///Users/rafael.sciensa/flutter/.pub-cache/hosted/pub.dartlang.org/share-0.6.5+2",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
@@ -229,7 +229,7 @@
       "packageUri": "lib/"
     }
   ],
-  "generated": "2020-08-31T17:14:25.932468Z",
+  "generated": "2020-10-09T17:02:04.400053Z",
   "generator": "pub",
-  "generatorVersion": "2.9.1"
+  "generatorVersion": "2.9.2"
 }

@@ -9,10 +9,13 @@ import 'support/di/init_dependencies.dart';
 void main() => runApp(new NewsApp());
 
 class NewsApp extends StatelessWidget {
-  final cubeLocation = CubesLocalizationDelegate([
-    Locale('en', 'US'),
-    Locale('pt', 'BR'),
-  ], pathFiles: 'resources/lang/');
+  final cubeLocation = CubesLocalizationDelegate(
+    [
+      Locale('en', 'US'),
+      Locale('pt', 'BR'),
+    ],
+    pathFiles: 'resources/lang/',
+  );
 
   NewsApp() {
     initDependencies();

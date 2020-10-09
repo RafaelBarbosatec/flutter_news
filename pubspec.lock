@@ -49,7 +49,7 @@ packages:
       name: cubes
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.2"
+    version: "0.3.3"
   fake_async:
     dependency: transitive
     description:
@@ -83,7 +83,7 @@ packages:
       name: get_it
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.4"
+    version: "5.0.1"
   http:
     dependency: "direct main"
     description:
@@ -153,7 +153,7 @@ packages:
       name: share
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.5"
+    version: "0.6.5+2"
   sky_engine:
     dependency: transitive
     description: flutter

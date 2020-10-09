@@ -28,6 +28,8 @@ Framework: [Flutter](https://flutter.io/)
 
 Language: [Dart](https://www.dartlang.org/)
 
+State Manager: [Cubes](https://pub.dartlang.org/packages/cubes)
+
 ## Tutorial
 [(Medium) - Part 1](https://medium.com/@rafaelbarbosatec/flutter-construindo-uma-linda-aplica%C3%A7%C3%A3o-de-not%C3%ADcias-parte-1-f0cbeecb7ab).
 

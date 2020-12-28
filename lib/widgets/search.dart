@@ -27,7 +27,7 @@ class SearchWidget extends StatelessWidget {
                       Icons.search,
                       color: Theme.of(context).accentColor,
                     ),
-                    hintText: getString("hint_busca"),
+                    hintText: Cubes.getString("hint_busca"),
                     border: InputBorder.none),
                 onSubmitted: (query) => onSubmitted(query, context),
                 controller: editingController,
@@ -41,8 +41,7 @@ class SearchWidget extends StatelessWidget {
 
   onSubmitted(String query, BuildContext context) {
     if (query.isEmpty) return;
-    Navigator.of(context)
-        .push(new MaterialPageRoute(builder: (BuildContext context) {
+    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
       return SearchView(query);
     }));
   }

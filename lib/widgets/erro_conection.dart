@@ -26,7 +26,7 @@ class ErroConection extends StatelessWidget {
                   color: Colors.blue,
                 ),
                 new Text(
-                  getString("text_error"),
+                  Cubes.getString("text_error"),
                   style: TextStyle(
                     fontSize: 18.0,
                   ),
@@ -35,10 +35,9 @@ class ErroConection extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: new FlatButton(
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)),
+                    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                     onPressed: tryAgain,
-                    child: new Text(getString("text_tentar_novamente")),
+                    child: new Text(Cubes.getString("text_tentar_novamente")),
                     color: Colors.blue,
                     textColor: Colors.white,
                   ),

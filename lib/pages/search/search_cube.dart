@@ -20,22 +20,19 @@ class SearchCube extends Cube {
   }
 
   void search(String query) {
-    progress.value = true;
-    error.value = false;
+    progress.update(true);
+    error.update(false);
 
-    repository
-        .loadSearch(query)
-        .then((news) => _showNews(news))
-        .catchError(_showImplError);
+    repository.loadSearch(query).then((news) => _showNews(news)).catchError(_showImplError);
   }
 
   _showNews(List<Notice> news) {
-    progress.value = false;
+    progress.update(false);
     if (news.length > 0) {
       noticeList.addAll(news);
-      empty.value = false;
+      empty.update(false);
     } else {
-      empty.value = true;
+      empty.update(true);
     }
   }
 
@@ -44,7 +41,7 @@ class SearchCube extends Cube {
     if (onError is FetchDataException) {
       print("codigo: ${onError.code()}");
     }
-    error.value = true;
-    progress.value = false;
+    error.update(true);
+    progress.update(false);
   }
 }

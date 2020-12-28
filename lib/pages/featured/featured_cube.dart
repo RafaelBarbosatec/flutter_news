@@ -19,17 +19,14 @@ class FeaturedCube extends Cube {
   }
 
   void load() {
-    progress.value = true;
-    errorConnection.value = false;
+    progress.update(true);
+    errorConnection.update(false);
 
-    repository
-        .loadNewsRecent()
-        .then((news) => _showNews(news))
-        .catchError(_showImplError);
+    repository.loadNewsRecent().then((news) => _showNews(news)).catchError(_showImplError);
   }
 
   _showNews(List<Notice> news) {
-    progress.value = false;
+    progress.update(false);
     noticeList.addAll(news);
   }
 
@@ -38,7 +35,7 @@ class FeaturedCube extends Cube {
       print("codigo: ${onError.code()}");
     }
     print(onError);
-    errorConnection.value = true;
-    progress.value = false;
+    errorConnection.update(true);
+    progress.update(false);
   }
 }

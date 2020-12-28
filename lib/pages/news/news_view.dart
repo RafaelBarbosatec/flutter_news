@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:FlutterNews/pages/news/news_bloc.dart';
+import 'package:FlutterNews/pages/news/news_cube.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/widgets/AnimatedContent.dart';
 import 'package:FlutterNews/widgets/custom_tab.dart';

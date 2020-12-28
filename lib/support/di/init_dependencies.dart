@@ -1,6 +1,6 @@
 import 'package:FlutterNews/pages/featured/featured_cube.dart';
 import 'package:FlutterNews/pages/home/home_cube.dart';
-import 'package:FlutterNews/pages/news/news_bloc.dart';
+import 'package:FlutterNews/pages/news/news_cube.dart';
 import 'package:FlutterNews/pages/search/search_cube.dart';
 import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
 import 'package:FlutterNews/support/conection/api.dart';
@@ -12,16 +12,17 @@ initDependencies() {
 }
 
 injectCubes() {
-  registerCube((i) => NewsCube(i.get()));
-  registerCube((i) => FeaturedCube(i.get()));
-  registerCube((i) => HomeCube());
-  registerCube((i) => SearchCube(i.get()));
+  Cubes.registerDependency((i) => NewsCube(i.getDependency()));
+  Cubes.registerDependency((i) => FeaturedCube(i.getDependency()));
+  Cubes.registerDependency((i) => HomeCube());
+  Cubes.registerDependency((i) => SearchCube(i.getDependency()));
 }
 
 injectRepository() {
-  registerSingletonDependency((i) {
-    return Api("http://104.131.18.84");
-  });
+  Cubes.registerDependency(
+    (i) => Api("http://104.131.18.84"),
+    isSingleton: true,
+  );
 
-  registerDependency<NoticeRepository>((i) => NoticeRepositoryImpl(i.get()));
+  Cubes.registerDependency<NoticeRepository>((i) => NoticeRepositoryImpl(i.getDependency()));
 }

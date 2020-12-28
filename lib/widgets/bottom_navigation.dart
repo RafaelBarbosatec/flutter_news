@@ -19,17 +19,20 @@ class _BottomNavigationState extends State<BottomNavigation> {
     final BottomNavigationBar botNavBar = new BottomNavigationBar(
       items: [
         new BottomNavigationBarItem(
-            icon: const Icon(Icons.language),
-            title: Text(getString("tab_recentes")),
-            backgroundColor: Colors.blue),
+          icon: const Icon(Icons.language),
+          label: Cubes.getString("tab_recentes"),
+          backgroundColor: Colors.blue,
+        ),
         new BottomNavigationBarItem(
-            icon: const Icon(Icons.local_library),
-            title: Text(getString("tab_noticias")),
-            backgroundColor: Colors.blue[800]),
+          icon: const Icon(Icons.local_library),
+          label: Cubes.getString("tab_noticias"),
+          backgroundColor: Colors.blue[800],
+        ),
         new BottomNavigationBarItem(
-            icon: const Icon(Icons.info),
-            title: Text(getString("tab_sobre")),
-            backgroundColor: Colors.blue)
+          icon: const Icon(Icons.info),
+          label: Cubes.getString("tab_sobre"),
+          backgroundColor: Colors.blue,
+        )
       ],
       currentIndex: _currentIndex,
       type: _type,

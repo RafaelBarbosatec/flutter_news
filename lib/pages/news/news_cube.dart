@@ -8,22 +8,15 @@ class NewsCube extends Cube {
 
   int _page = 0;
   int _currentCategory = 0;
-  List<String> _categories = [
-    'geral',
-    'sports',
-    'technology',
-    'entertainment',
-    'health',
-    'business'
-  ];
+  List<String> _categories = ['geral', 'sports', 'technology', 'entertainment', 'health', 'business'];
 
   NewsCube(this.repository) {
-    categoriesName.add(getString("cat_geral"));
-    categoriesName.add(getString("cat_esporte"));
-    categoriesName.add(getString("cat_tecnologia"));
-    categoriesName.add(getString("cat_entretenimento"));
-    categoriesName.add(getString("cat_saude"));
-    categoriesName.add(getString("cat_negocios"));
+    categoriesName.add(Cubes.getString("cat_geral"));
+    categoriesName.add(Cubes.getString("cat_esporte"));
+    categoriesName.add(Cubes.getString("cat_tecnologia"));
+    categoriesName.add(Cubes.getString("cat_entretenimento"));
+    categoriesName.add(Cubes.getString("cat_saude"));
+    categoriesName.add(Cubes.getString("cat_negocios"));
   }
 
   final errorConnection = ObservableValue<bool>(value: false);
@@ -47,31 +40,27 @@ class NewsCube extends Cube {
       if (isMore) {
         _page++;
       } else {
-        noticeList.value = [];
-        noticeList.notify();
+        noticeList.clear();
         _page = 0;
       }
 
-      errorConnection.value = false;
+      errorConnection.update(false);
 
-      progress.value = true;
+      progress.update(true);
 
       String category = _categories[_currentCategory];
 
-      repository
-          .loadNews(category, _page)
-          .then((news) => _showNews(news, isMore))
-          .catchError(_showImplError);
+      repository.loadNews(category, _page).then((news) => _showNews(news, isMore)).catchError(_showImplError);
     }
   }
 
   _showNews(List<Notice> news, bool isMore) {
-    progress.value = false;
+    progress.update(false);
 
     if (isMore) {
       noticeList.addAll(news);
     } else {
-      noticeList.value = news;
+      noticeList.update(news);
     }
   }
 
@@ -79,7 +68,7 @@ class NewsCube extends Cube {
     if (onError is FetchDataException) {
       print("codigo: ${onError.code()}");
     }
-    errorConnection.value = true;
-    progress.value = false;
+    errorConnection.update(true);
+    progress.update(false);
   }
 }

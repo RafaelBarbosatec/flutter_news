@@ -18,8 +18,7 @@ class DetailPage extends StatelessWidget {
   final _category;
   final _origin;
 
-  DetailPage(this._img, this._title, this._date, this._description,
-      this._category, this._link, this._origin);
+  DetailPage(this._img, this._title, this._date, this._description, this._category, this._link, this._origin);
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +42,7 @@ class DetailPage extends StatelessWidget {
           borderRadius: new BorderRadius.circular(6.0),
           child: new ListView(
             children: <Widget>[
-              new Hero(
-                  tag: _title,
-                  child: _getImageNetwork(
-                      Functions.getImgResizeUrl(_img, 250, ''))),
+              new Hero(tag: _title, child: _getImageNetwork(Functions.getImgResizeUrl(_img, 250, ''))),
               _getBody(_title, _date, _description, _origin, context),
             ],
           ),
@@ -59,8 +55,7 @@ class DetailPage extends StatelessWidget {
     try {
       if (url != '') {
         return ClipRRect(
-          borderRadius: new BorderRadius.only(
-              topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
+          borderRadius: new BorderRadius.only(topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
           child: new Container(
             height: 200.0,
             child: new FadeInImage.assetNetwork(
@@ -105,8 +100,7 @@ class DetailPage extends StatelessWidget {
       margin: new EdgeInsets.only(top: 30.0),
       child: new Text(
         "Mais detalhes acesse:",
-        style:
-            new TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[600]),
+        style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[600]),
       ),
     );
   }
@@ -180,11 +174,11 @@ class DetailPage extends StatelessWidget {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          content: new Text(getString("text_copy")),
+          content: new Text(Cubes.getString("text_copy")),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text(getString("text_fechar")),
+              child: new Text(Cubes.getString("text_fechar")),
               onPressed: () {
                 Navigator.of(context).pop();
               },

@@ -64,7 +64,7 @@ class SearchView extends StatelessWidget {
     return cube.empty.build<bool>((value) {
       return value
           ? Center(
-              child: Text(getString("erro_busca")),
+              child: Text(Cubes.getString("erro_busca")),
             )
           : SizedBox.shrink();
     });

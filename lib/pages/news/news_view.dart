@@ -8,22 +8,19 @@ import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 
-class NewsView extends StatelessWidget {
+class NewsView extends CubeWidget<NewsCube> {
   @override
-  Widget build(BuildContext context) {
-    return CubeBuilder<NewsCube>(
-      builder: (context, cube) {
-        return new Container(
-            padding: EdgeInsets.only(top: 2.0),
-            child: new Stack(
-              children: <Widget>[
-                _getListViewWidget(cube),
-                _buildConnectionError(cube),
-                _getProgress(cube),
-                _getListCategory(cube),
-              ],
-            ));
-      },
+  Widget buildView(BuildContext context, NewsCube cube) {
+    return new Container(
+      padding: EdgeInsets.only(top: 2.0),
+      child: new Stack(
+        children: <Widget>[
+          _getListViewWidget(cube),
+          _buildConnectionError(cube),
+          _getProgress(cube),
+          _getListCategory(cube),
+        ],
+      ),
     );
   }
 

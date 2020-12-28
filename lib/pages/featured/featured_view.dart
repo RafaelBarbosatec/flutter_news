@@ -6,19 +6,20 @@ import 'package:FlutterNews/widgets/pageTransform/page_transformer.dart';
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 
-class FeaturedView extends StatelessWidget {
+class FeaturedView extends CubeWidget<FeaturedCube> {
   @override
-  Widget build(BuildContext context) {
-    return CubeBuilder<FeaturedCube>(builder: (context, cube) {
-      return Stack(
-        children: <Widget>[
-          Stack(
-            children: <Widget>[_buildFeatured(cube), _getProgress(cube)],
-          ),
-          _buildErrorConnection(cube)
-        ],
-      );
-    });
+  Widget buildView(BuildContext context, FeaturedCube cube) {
+    return Stack(
+      children: <Widget>[
+        Stack(
+          children: <Widget>[
+            _buildFeatured(cube),
+            _getProgress(cube),
+          ],
+        ),
+        _buildErrorConnection(cube)
+      ],
+    );
   }
 
   Widget _getProgress(FeaturedCube cube) {
@@ -43,8 +44,7 @@ class FeaturedView extends StatelessWidget {
                 itemCount: value.length,
                 itemBuilder: (context, index) {
                   final item = IntroNews.fromNotice(value[index]);
-                  final pageVisibility =
-                      visibilityResolver.resolvePageVisibility(index);
+                  final pageVisibility = visibilityResolver.resolvePageVisibility(index);
                   return new IntroNewsItem(
                     item: item,
                     pageVisibility: pageVisibility,

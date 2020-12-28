@@ -5,30 +5,28 @@ import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 
-class SearchView extends StatelessWidget {
+class SearchView extends CubeWidget<SearchCube> {
   final String query;
 
   SearchView(this.query);
 
   @override
-  Widget build(BuildContext context) {
-    return CubeBuilder<SearchCube>(
-      initData: query,
-      builder: (context, cube) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(query),
-          ),
-          body: Stack(
-            children: <Widget>[
-              _getListViewWidget(cube),
-              _getProgress(cube),
-              _getEmpty(cube),
-              _buildConnectionError(cube)
-            ],
-          ),
-        );
-      },
+  get initData => query;
+
+  @override
+  Widget buildView(BuildContext context, SearchCube cube) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(query),
+      ),
+      body: Stack(
+        children: <Widget>[
+          _getListViewWidget(cube),
+          _getProgress(cube),
+          _getEmpty(cube),
+          _buildConnectionError(cube),
+        ],
+      ),
     );
   }
 

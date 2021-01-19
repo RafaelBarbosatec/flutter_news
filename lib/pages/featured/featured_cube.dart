@@ -13,9 +13,9 @@ class FeaturedCube extends Cube {
   final noticeList = ObservableList<Notice>(value: []);
 
   @override
-  void ready() {
+  void onReady(Object arguments) {
     load();
-    super.ready();
+    super.onReady(arguments);
   }
 
   void load() {

@@ -11,7 +11,7 @@ class SearchView extends CubeWidget<SearchCube> {
   SearchView(this.query);
 
   @override
-  get initData => query;
+  get arguments => query;
 
   @override
   Widget buildView(BuildContext context, SearchCube cube) {

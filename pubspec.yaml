@@ -9,7 +9,7 @@ dependencies:
   url_launcher: ^5.4.11
   share: ^0.6.5+4
   http: ^0.12.2
-  cubes: ^0.9.0
+  cubes: ^0.10.3
 
 dev_dependencies:
   flutter_test:

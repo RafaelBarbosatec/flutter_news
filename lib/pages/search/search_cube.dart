@@ -14,9 +14,9 @@ class SearchCube extends Cube {
   final noticeList = ObservableList<Notice>(value: []);
 
   @override
-  void ready() {
-    search(data);
-    super.ready();
+  void onReady(Object arguments) {
+    search(arguments);
+    super.onReady(arguments);
   }
 
   void search(String query) {

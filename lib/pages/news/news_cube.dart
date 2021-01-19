@@ -25,9 +25,9 @@ class NewsCube extends Cube {
   final categoriesName = ObservableList<String>(value: []);
 
   @override
-  void ready() {
+  void onReady(Object arguments) {
     load(false);
-    super.ready();
+    super.onReady(arguments);
   }
 
   void categoryClick(int position) {

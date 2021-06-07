@@ -8,7 +8,15 @@ class NewsCube extends Cube {
 
   int _page = 0;
   int _currentCategory = 0;
-  List<String> _categories = ['geral', 'sports', 'technology', 'entertainment', 'health', 'business'];
+  bool lastPage = false;
+  List<String> _categories = [
+    'geral',
+    'sports',
+    'technology',
+    'entertainment',
+    'health',
+    'business'
+  ];
 
   NewsCube(this.repository) {
     categoriesName.add(Cubes.getString("cat_geral"));
@@ -40,6 +48,7 @@ class NewsCube extends Cube {
       if (isMore) {
         _page++;
       } else {
+        lastPage = false;
         noticeList.clear();
         _page = 0;
       }
@@ -50,7 +59,10 @@ class NewsCube extends Cube {
 
       String category = _categories[_currentCategory];
 
-      repository.loadNews(category, _page).then((news) => _showNews(news, isMore)).catchError(_showImplError);
+      repository
+          .loadNews(category, _page)
+          .then((news) => _showNews(news, isMore))
+          .catchError(_showImplError);
     }
   }
 
@@ -58,6 +70,9 @@ class NewsCube extends Cube {
     progress.update(false);
 
     if (isMore) {
+      if (news.isEmpty) {
+        lastPage = true;
+      }
       noticeList.addAll(news);
     } else {
       noticeList.update(news);

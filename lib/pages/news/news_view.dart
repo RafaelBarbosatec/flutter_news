@@ -42,7 +42,7 @@ class NewsView extends CubeWidget<NewsCube> {
                   child: value[index],
                 );
               } else {
-                if (index + 1 >= value.length) {
+                if (index + 1 >= value.length && !cube.lastPage) {
                   cube.load(true);
                 }
                 return value[index];

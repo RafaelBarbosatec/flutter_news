@@ -1,18 +1,15 @@
 import 'package:FlutterNews/pages/datail/detail.dart';
 import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
 import 'package:FlutterNews/support/util/FadeInRoute.dart';
+import 'package:FlutterNews/support/util/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+
 import 'page_transformer.dart';
 
 class IntroNews {
-  IntroNews(this.title,
-      this.category,
-      this.imageUrl,
-      this.description,
-      this.date,
-      this.link,
-      this.origin);
+  IntroNews(this.title, this.category, this.imageUrl, this.description,
+      this.date, this.link, this.origin);
 
   final String title;
   final String category;
@@ -22,8 +19,8 @@ class IntroNews {
   final String link;
   final String origin;
 
-  IntroNews.fromNotice(Notice notice) :
-        title = notice.title,
+  IntroNews.fromNotice(Notice notice)
+      : title = notice.title,
         category = notice.category,
         imageUrl = notice.img,
         description = notice.description,
@@ -83,8 +80,8 @@ class IntroNewsItem extends StatelessWidget {
         padding: const EdgeInsets.only(top: 16.0),
         child: new Text(
           item.title,
-          style: textTheme.title
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 18.0),
+          style: textTheme.title.copyWith(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
       ),
@@ -104,11 +101,9 @@ class IntroNewsItem extends StatelessWidget {
     );
   }
 
-  Widget _getImageNetwork(url){
-
-    try{
-      if(url != '') {
-
+  Widget _getImageNetwork(url) {
+    try {
+      if (url != '') {
         return ClipRRect(
           borderRadius: new BorderRadius.circular(8.0),
           child: new FadeInImage.assetNetwork(
@@ -121,25 +116,16 @@ class IntroNewsItem extends StatelessWidget {
             ),
           ),
         );
-      }else{
+      } else {
         return new Image.asset('assets/place_holder_2.jpg');
       }
-
-    }catch(e){
+    } catch (e) {
       return new Image.asset('assets/place_holder_2.jpg');
     }
-
-  }
-
-  String _getImageUrl(url,height,width){
-
-    return 'http://104.131.18.84/notice/tim.php?src=$url&h=$height&w=$width';
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     final imageOverlayGradient = new DecoratedBox(
       decoration: new BoxDecoration(
         gradient: new LinearGradient(
@@ -162,13 +148,16 @@ class IntroNewsItem extends StatelessWidget {
         elevation: 4.0,
         borderRadius: new BorderRadius.circular(8.0),
         child: InkWell(
-          onTap: (){
+          onTap: () {
             openDetail(context);
           },
           child: new Stack(
             fit: StackFit.expand,
             children: [
-              new Hero(tag: item.title,child: _getImageNetwork(_getImageUrl(item.imageUrl, 400, ''))),
+              new Hero(
+                  tag: item.title,
+                  child: _getImageNetwork(
+                      Functions.getImgResizeUrl(item.imageUrl, 400, ''))),
               _getOverlayGradient(),
               _buildTextContainer(context),
             ],
@@ -179,9 +168,9 @@ class IntroNewsItem extends StatelessWidget {
   }
 
   _getOverlayGradient() {
-
     return ClipRRect(
-      borderRadius: new BorderRadius.only(bottomLeft: Radius.circular(8.0),bottomRight: Radius.circular(8.0)),
+      borderRadius: new BorderRadius.only(
+          bottomLeft: Radius.circular(8.0), bottomRight: Radius.circular(8.0)),
       child: new DecoratedBox(
         decoration: new BoxDecoration(
           gradient: new LinearGradient(
@@ -197,16 +186,9 @@ class IntroNewsItem extends StatelessWidget {
     );
   }
 
-
   void openDetail(BuildContext context) {
     Navigator.of(context).push(FadeInRoute(
-        widget: DetailPage(
-            item.imageUrl,
-            item.title,
-            item.date,
-            item.description,
-            item.category,
-            item.link,
-            item.origin)));
+        widget: DetailPage(item.imageUrl, item.title, item.date,
+            item.description, item.category, item.link, item.origin)));
   }
 }

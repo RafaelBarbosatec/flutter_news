@@ -1,4 +1,4 @@
-# FlutterNews
+# flutter_news
 
 <img src="https://github.com/RafaelBarbosatec/flutter_news/blob/master/imgs/flutter.png" width="200"/>
 

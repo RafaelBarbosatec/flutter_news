@@ -1,7 +1,7 @@
-import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
-import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
-import 'package:FlutterNews/support/conection/api.dart';
 import 'package:cubes/cubes.dart';
+import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/repository/notice_repository/notice_repository.dart';
+import 'package:flutter_news/support/conection/api.dart';
 
 class SearchCube extends Cube {
   final NoticeRepository repository;
@@ -14,16 +14,21 @@ class SearchCube extends Cube {
   final noticeList = ObservableList<Notice>(value: []);
 
   @override
-  void onReady(Object arguments) {
+  void onReady(Object? arguments) {
     search(arguments);
     super.onReady(arguments);
   }
 
-  void search(String query) {
+  void search(Object? query) {
     progress.update(true);
     error.update(false);
 
-    repository.loadSearch(query).then((news) => _showNews(news)).catchError(_showImplError);
+    if (query != null && query is String) {
+      repository
+          .loadSearch(query)
+          .then((news) => _showNews(news))
+          .catchError(_showImplError);
+    }
   }
 
   _showNews(List<Notice> news) {

@@ -1,7 +1,6 @@
-import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
-import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
-import 'package:FlutterNews/support/conection/api.dart';
 import 'package:cubes/cubes.dart';
+import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/repository/notice_repository/notice_repository.dart';
 
 class NewsCube extends Cube {
   final NoticeRepository repository;
@@ -27,13 +26,13 @@ class NewsCube extends Cube {
     categoriesName.add(Cubes.getString("cat_negocios"));
   }
 
-  final errorConnection = ObservableValue<bool>(value: false);
-  final progress = ObservableValue<bool>(value: false);
-  final noticeList = ObservableList<Notice>(value: []);
-  final categoriesName = ObservableList<String>(value: []);
+  final errorConnection = false.obsValue;
+  final progress = false.obsValue;
+  final noticeList = <Notice>[].obsValue;
+  final categoriesName = <String>[].obsValue;
 
   @override
-  void onReady(Object arguments) {
+  void onReady(Object? arguments) {
     load(false);
     super.onReady(arguments);
   }
@@ -44,35 +43,33 @@ class NewsCube extends Cube {
   }
 
   void load(bool isMore) {
-    if (!progress.value) {
-      if (isMore) {
-        _page++;
-      } else {
-        lastPage = false;
-        noticeList.clear();
-        _page = 0;
-      }
+    if (progress.value) return;
 
-      errorConnection.update(false);
-
-      progress.update(true);
-
-      String category = _categories[_currentCategory];
-
-      repository
-          .loadNews(category, _page)
-          .then((news) => _showNews(news, isMore))
-          .catchError(_showImplError);
+    if (isMore) {
+      _page++;
+    } else {
+      lastPage = false;
+      noticeList.clear();
+      _page = 0;
     }
+
+    errorConnection.update(false);
+
+    progress.update(true);
+
+    String category = _categories[_currentCategory];
+
+    repository
+        .loadNews(category, _page)
+        .then((news) => _showNews(news, isMore))
+        .catchError(_showImplError);
   }
 
   _showNews(List<Notice> news, bool isMore) {
     progress.update(false);
 
     if (isMore) {
-      if (news.isEmpty) {
-        lastPage = true;
-      }
+      lastPage = news.isEmpty;
       noticeList.addAll(news);
     } else {
       noticeList.update(news);
@@ -80,9 +77,6 @@ class NewsCube extends Cube {
   }
 
   _showImplError(onError) {
-    if (onError is FetchDataException) {
-      print("codigo: ${onError.code()}");
-    }
     errorConnection.update(true);
     progress.update(false);
   }

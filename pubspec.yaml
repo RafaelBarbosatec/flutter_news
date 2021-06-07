@@ -1,18 +1,18 @@
-name: FlutterNews
+name: flutter_news
 description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.9.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   url_launcher: ^5.4.11
-  share: ^0.6.5+4
-  http: ^0.12.2
-  cubes: ^0.10.3
+  share: ^2.0.4
+  http: ^0.13.3
+  cubes: ^1.0.2
 
 dev_dependencies:
   flutter_test:

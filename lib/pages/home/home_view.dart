@@ -1,11 +1,11 @@
-import 'package:FlutterNews/pages/featured/featured_view.dart';
-import 'package:FlutterNews/pages/home/home_cube.dart';
-import 'package:FlutterNews/pages/info/info.dart';
-import 'package:FlutterNews/pages/news/news_view.dart';
-import 'package:FlutterNews/widgets/bottom_navigation.dart';
-import 'package:FlutterNews/widgets/search.dart';
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_news/pages/featured/featured_view.dart';
+import 'package:flutter_news/pages/home/home_cube.dart';
+import 'package:flutter_news/pages/info/info.dart';
+import 'package:flutter_news/pages/news/news_view.dart';
+import 'package:flutter_news/widgets/bottom_navigation.dart';
+import 'package:flutter_news/widgets/search.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -54,6 +54,5 @@ class HomeView extends StatelessWidget {
       },
       animate: true,
     );
-    ;
   }
 }

@@ -1,10 +1,10 @@
-import 'package:FlutterNews/pages/featured/featured_cube.dart';
-import 'package:FlutterNews/pages/home/home_cube.dart';
-import 'package:FlutterNews/pages/news/news_cube.dart';
-import 'package:FlutterNews/pages/search/search_cube.dart';
-import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
-import 'package:FlutterNews/support/conection/api.dart';
 import 'package:cubes/cubes.dart';
+import 'package:flutter_news/pages/featured/featured_cube.dart';
+import 'package:flutter_news/pages/home/home_cube.dart';
+import 'package:flutter_news/pages/news/news_cube.dart';
+import 'package:flutter_news/pages/search/search_cube.dart';
+import 'package:flutter_news/repository/notice_repository/notice_repository.dart';
+import 'package:flutter_news/support/conection/api.dart';
 
 initDependencies() {
   injectRepository();
@@ -24,5 +24,6 @@ injectRepository() {
     isSingleton: true,
   );
 
-  Cubes.registerDependency<NoticeRepository>((i) => NoticeRepositoryImpl(i.getDependency()));
+  Cubes.registerDependency<NoticeRepository>(
+      (i) => NoticeRepositoryImpl(i.getDependency()));
 }

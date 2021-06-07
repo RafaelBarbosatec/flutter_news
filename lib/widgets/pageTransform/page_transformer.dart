@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 /// A function that builds a [PageView] lazily.
 typedef PageView PageViewBuilder(
-    BuildContext context, PageVisibilityResolver visibilityResolver);
+    BuildContext context, PageVisibilityResolver? visibilityResolver);
 
 /// A class that can be used to compute visibility information about
 /// the current page.
 class PageVisibilityResolver {
   PageVisibilityResolver({
-    ScrollMetrics metrics,
-    double viewPortFraction,
-  }) : this._pageMetrics = metrics,
+    required ScrollMetrics metrics,
+    required double viewPortFraction,
+  })   : this._pageMetrics = metrics,
         this._viewPortFraction = viewPortFraction;
 
   final ScrollMetrics _pageMetrics;
@@ -40,11 +39,11 @@ class PageVisibilityResolver {
   }
 
   double _calculatePagePosition(int index) {
-    final double viewPortFraction = _viewPortFraction ?? 1.0;
+    final double viewPortFraction = _viewPortFraction;
     final double pageViewWidth =
-        (_pageMetrics?.viewportDimension ?? 1.0) * viewPortFraction;
+        (_pageMetrics.viewportDimension) * viewPortFraction;
     final double pageX = pageViewWidth * index;
-    final double scrollX = (_pageMetrics?.pixels ?? 0.0);
+    final double scrollX = (_pageMetrics.pixels);
     final double pagePosition = (pageX - scrollX) / pageViewWidth;
     final double safePagePosition = !pagePosition.isNaN ? pagePosition : 0.0;
 
@@ -61,8 +60,8 @@ class PageVisibilityResolver {
 /// A class that contains visibility information about the current page.
 class PageVisibility {
   PageVisibility({
-    @required this.visibleFraction,
-    @required this.pagePosition,
+    required this.visibleFraction,
+    required this.pagePosition,
   });
 
   /// How much of the page is currently visible, between 0.0 and 1.0.
@@ -94,7 +93,7 @@ class PageVisibility {
 /// to easily do it, in the form of [PageVisibility].
 class PageTransformer extends StatefulWidget {
   PageTransformer({
-    @required this.pageViewBuilder,
+    required this.pageViewBuilder,
   });
 
   final PageViewBuilder pageViewBuilder;
@@ -104,12 +103,11 @@ class PageTransformer extends StatefulWidget {
 }
 
 class _PageTransformerState extends State<PageTransformer> {
-  PageVisibilityResolver _visibilityResolver;
+  PageVisibilityResolver? _visibilityResolver;
 
   @override
   Widget build(BuildContext context) {
-    final pageView = widget.pageViewBuilder(
-        context, _visibilityResolver ?? new PageVisibilityResolver());
+    final pageView = widget.pageViewBuilder(context, _visibilityResolver);
 
     final controller = pageView.controller;
     final viewPortFraction = controller.viewportFraction;
@@ -122,6 +120,7 @@ class _PageTransformerState extends State<PageTransformer> {
             viewPortFraction: viewPortFraction,
           );
         });
+        return false;
       },
       child: pageView,
     );

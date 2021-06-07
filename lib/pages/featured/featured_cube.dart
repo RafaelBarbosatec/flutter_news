@@ -1,19 +1,18 @@
-import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
-import 'package:FlutterNews/repository/notice_repository/notice_repository.dart';
-import 'package:FlutterNews/support/conection/api.dart';
 import 'package:cubes/cubes.dart';
+import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/repository/notice_repository/notice_repository.dart';
 
 class FeaturedCube extends Cube {
   FeaturedCube(this.repository);
 
   final NoticeRepository repository;
 
-  final progress = ObservableValue<bool>(value: false);
-  final errorConnection = ObservableValue<bool>(value: false);
-  final noticeList = ObservableList<Notice>(value: []);
+  final progress = false.obsValue;
+  final errorConnection = false.obsValue;
+  final noticeList = <Notice>[].obsValue;
 
   @override
-  void onReady(Object arguments) {
+  void onReady(Object? arguments) {
     load();
     super.onReady(arguments);
   }
@@ -22,19 +21,18 @@ class FeaturedCube extends Cube {
     progress.update(true);
     errorConnection.update(false);
 
-    repository.loadNewsRecent().then((news) => _showNews(news)).catchError(_showImplError);
+    repository
+        .loadNewsRecent()
+        .then((news) => _showNews(news))
+        .catchError(_showImplError);
   }
 
-  _showNews(List<Notice> news) {
+  void _showNews(List<Notice> news) {
     progress.update(false);
     noticeList.addAll(news);
   }
 
-  _showImplError(onError) {
-    if (onError is FetchDataException) {
-      print("codigo: ${onError.code()}");
-    }
-    print(onError);
+  void _showImplError(onError) {
     errorConnection.update(true);
     progress.update(false);
   }

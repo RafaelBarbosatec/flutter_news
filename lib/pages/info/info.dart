@@ -8,14 +8,20 @@ class Info extends StatefulWidget {
 }
 
 class _InfoState extends State<Info> with TickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> animation;
+  late AnimationController animationController;
+  late Animation<double> animation;
 
   @override
   void initState() {
-    animationController = new AnimationController(vsync: this, duration: new Duration(milliseconds: 500));
+    animationController = new AnimationController(
+      vsync: this,
+      duration: new Duration(milliseconds: 500),
+    );
 
-    CurvedAnimation curve = CurvedAnimation(parent: animationController, curve: Curves.decelerate);
+    CurvedAnimation curve = CurvedAnimation(
+      parent: animationController,
+      curve: Curves.decelerate,
+    );
     animation = Tween(begin: 0.0, end: 1.0).animate(curve);
 
     super.initState();
@@ -35,9 +41,12 @@ class _InfoState extends State<Info> with TickerProviderStateMixin {
             children: <Widget>[
               _getTittle(),
               _getContent(Cubes.getString("text_info")),
-              _getContentSecond("Framework", "flutter.io", "https://flutter.io/"),
-              _getContentSecond("Repository", "flutter_news", "https://github.com/RafaelBarbosatec/flutter_news"),
-              _getContentSecond("Developer", "RafaelBarbosaTec", "http://rafaelbarbosatec.github.io/"),
+              _getContentSecond(
+                  "Framework", "flutter.io", "https://flutter.io/"),
+              _getContentSecond("Repository", "flutter_news",
+                  "https://github.com/RafaelBarbosatec/flutter_news"),
+              _getContentSecond("Developer", "RafaelBarbosaTec",
+                  "http://rafaelbarbosatec.github.io/"),
             ],
           ),
         ),
@@ -48,8 +57,9 @@ class _InfoState extends State<Info> with TickerProviderStateMixin {
   Widget _getTittle() {
     return Center(
       child: new Text(
-        "FlutterNews",
-        style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 25.0),
+        "flutter_news",
+        style: new TextStyle(
+            fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 25.0),
       ),
     );
   }

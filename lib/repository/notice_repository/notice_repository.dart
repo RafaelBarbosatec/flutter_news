@@ -1,5 +1,5 @@
-import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
-import 'package:FlutterNews/support/conection/api.dart';
+import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/support/conection/api.dart';
 
 abstract class NoticeRepository {
   Future<List<Notice>> loadNews(String category, int page);
@@ -31,12 +31,9 @@ class NoticeRepositoryImpl implements NoticeRepository {
   Future<List<Notice>> loadSearch(String query) async {
     final Map result = await _api.get("/notice/search/$query");
 
-    if (result['op']) {
-      return result['data']
-          .map<Notice>((notice) => new Notice.fromMap(notice))
-          .toList();
-    } else {
-      return List();
-    }
+    if (result['op'] == false) return [];
+    return result['data']
+        .map<Notice>((notice) => new Notice.fromMap(notice))
+        .toList();
   }
 }

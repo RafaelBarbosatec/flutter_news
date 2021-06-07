@@ -39,9 +39,9 @@
     },
     {
       "name": "cubes",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/cubes-0.10.3",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/cubes-1.0.2",
       "packageUri": "lib/",
-      "languageVersion": "2.7"
+      "languageVersion": "2.12"
     },
     {
       "name": "fake_async",
@@ -75,21 +75,21 @@
     },
     {
       "name": "get_it",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/get_it-5.0.4",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/get_it-7.1.3",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.12"
     },
     {
       "name": "http",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.3",
       "packageUri": "lib/",
-      "languageVersion": "2.4"
+      "languageVersion": "2.12"
     },
     {
       "name": "http_parser",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-3.1.3",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "intl",
@@ -117,9 +117,9 @@
     },
     {
       "name": "mime",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/mime-0.9.7",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/mime-1.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "path",
@@ -129,9 +129,9 @@
     },
     {
       "name": "pedantic",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.8.0+1",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.11.0",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.12"
     },
     {
       "name": "plugin_platform_interface",
@@ -141,9 +141,9 @@
     },
     {
       "name": "share",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/share-0.6.5+4",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/share-2.0.4",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.12"
     },
     {
       "name": "sky_engine",
@@ -230,13 +230,13 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "FlutterNews",
+      "name": "flutter_news",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "2.9"
+      "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-06-07T15:43:46.132278Z",
+  "generated": "2021-06-07T17:21:14.479948Z",
   "generator": "pub",
   "generatorVersion": "2.12.3"
 }

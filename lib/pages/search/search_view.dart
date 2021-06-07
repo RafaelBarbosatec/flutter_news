@@ -1,9 +1,10 @@
-import 'package:FlutterNews/pages/search/search_cube.dart';
-import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
-import 'package:FlutterNews/widgets/AnimatedContent.dart';
-import 'package:FlutterNews/widgets/erro_conection.dart';
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_news/pages/news/widgets/notice_widget.dart';
+import 'package:flutter_news/pages/search/search_cube.dart';
+import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/widgets/AnimatedContent.dart';
+import 'package:flutter_news/widgets/erro_conection.dart';
 
 class SearchView extends CubeWidget<SearchCube> {
   final String query;
@@ -38,7 +39,9 @@ class SearchView extends CubeWidget<SearchCube> {
           itemCount: value.length,
           padding: const EdgeInsets.only(top: 5.0),
           itemBuilder: (context, index) {
-            return value[index];
+            return NoticeWidget(
+              item: value[index],
+            );
           },
         ),
       );
@@ -69,7 +72,7 @@ class SearchView extends CubeWidget<SearchCube> {
   }
 
   Widget _buildConnectionError(SearchCube cube) {
-    return cube.error.build((value) {
+    return cube.error.build<bool>((value) {
       return value
           ? ErroConection(tryAgain: () {
               cube.search(query);

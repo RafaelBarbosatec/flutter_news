@@ -1,8 +1,8 @@
-import 'package:FlutterNews/pages/home/home_view.dart';
-import 'package:FlutterNews/support/di/init_dependencies.dart';
 import 'package:cubes/cubes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_news/pages/home/home_view.dart';
+import 'package:flutter_news/support/di/init_dependencies.dart';
 
 import 'support/di/init_dependencies.dart';
 

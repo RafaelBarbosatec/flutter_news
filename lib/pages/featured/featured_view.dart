@@ -1,10 +1,10 @@
-import 'package:FlutterNews/pages/featured/featured_cube.dart';
-import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
-import 'package:FlutterNews/widgets/erro_conection.dart';
-import 'package:FlutterNews/widgets/pageTransform/intro_page_item.dart';
-import 'package:FlutterNews/widgets/pageTransform/page_transformer.dart';
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_news/pages/featured/featured_cube.dart';
+import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/widgets/erro_conection.dart';
+import 'package:flutter_news/widgets/pageTransform/intro_page_item.dart';
+import 'package:flutter_news/widgets/pageTransform/page_transformer.dart';
 
 class FeaturedView extends CubeWidget<FeaturedCube> {
   @override
@@ -39,14 +39,16 @@ class FeaturedView extends CubeWidget<FeaturedCube> {
           if (value.isEmpty) return Container();
           return PageTransformer(
             pageViewBuilder: (context, visibilityResolver) {
-              return new PageView.builder(
+              return PageView.builder(
                 controller: new PageController(viewportFraction: 0.9),
                 itemCount: value.length,
                 itemBuilder: (context, index) {
-                  final item = IntroNews.fromNotice(value[index]);
-                  final pageVisibility = visibilityResolver.resolvePageVisibility(index);
-                  return new IntroNewsItem(
-                    item: item,
+                  final pageVisibility =
+                      visibilityResolver?.resolvePageVisibility(index) ??
+                          PageVisibility(visibleFraction: 1, pagePosition: 0.0);
+
+                  return HighlightWidget(
+                    item: value[index],
                     pageVisibility: pageVisibility,
                   );
                 },

@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
 
 class AnimatedContent extends StatefulWidget {
-
   final Widget child;
   final bool show;
 
-  const AnimatedContent({Key key, this.child, this.show = false}) : super(key: key);
+  const AnimatedContent({Key? key, required this.child, this.show = false})
+      : super(key: key);
 
   @override
   AnimatedContentState createState() => AnimatedContentState();
 }
 
-class AnimatedContentState extends State<AnimatedContent> with TickerProviderStateMixin{
-
-  AnimationController animationController;
-  Animation<Offset> animationSlideUp;
+class AnimatedContentState extends State<AnimatedContent>
+    with TickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation<Offset> animationSlideUp;
 
   @override
   void initState() {
     animationController = new AnimationController(
-        vsync: this, duration: new Duration(milliseconds: 600));
+      vsync: this,
+      duration: new Duration(milliseconds: 600),
+    );
 
-    animationSlideUp = new Tween(begin: Offset(0.0, 5.0), end: Offset(0.0, 0.0))
-        .animate(CurvedAnimation(
-        parent: animationController, curve: Curves.ease));
+    animationSlideUp = new Tween(
+      begin: Offset(0.0, 5.0),
+      end: Offset(0.0, 0.0),
+    ).animate(CurvedAnimation(parent: animationController, curve: Curves.ease));
 
-    if(widget.show){
+    if (widget.show) {
       animationController.forward();
     }
 
@@ -34,10 +37,10 @@ class AnimatedContentState extends State<AnimatedContent> with TickerProviderSta
 
   @override
   void didUpdateWidget(AnimatedContent oldWidget) {
-    if(widget != oldWidget){
-      if(widget.show && !oldWidget.show){
+    if (widget != oldWidget) {
+      if (widget.show && !oldWidget.show) {
         animationController.forward(from: 0.0);
-      }else if(!widget.show){
+      } else if (!widget.show) {
         animationController.reverse();
       }
     }

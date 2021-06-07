@@ -1,46 +1,23 @@
-import 'package:FlutterNews/pages/datail/detail.dart';
-import 'package:FlutterNews/repository/notice_repository/model/notice.dart';
-import 'package:FlutterNews/support/util/FadeInRoute.dart';
-import 'package:FlutterNews/support/util/functions.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_news/pages/datail/detail.dart';
+import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/support/util/FadeInRoute.dart';
+import 'package:flutter_news/support/util/functions.dart';
 
 import 'page_transformer.dart';
 
-class IntroNews {
-  IntroNews(this.title, this.category, this.imageUrl, this.description,
-      this.date, this.link, this.origin);
-
-  final String title;
-  final String category;
-  final String imageUrl;
-  final String date;
-  final String description;
-  final String link;
-  final String origin;
-
-  IntroNews.fromNotice(Notice notice)
-      : title = notice.title,
-        category = notice.category,
-        imageUrl = notice.img,
-        description = notice.description,
-        date = notice.date,
-        link = notice.link,
-        origin = notice.origin;
-}
-
-class IntroNewsItem extends StatelessWidget {
-  IntroNewsItem({
-    @required this.item,
-    @required this.pageVisibility,
+class HighlightWidget extends StatelessWidget {
+  HighlightWidget({
+    required this.item,
+    required this.pageVisibility,
   });
 
-  final IntroNews item;
+  final Notice item;
   final PageVisibility pageVisibility;
 
   Widget _applyTextEffects({
-    @required double translationFactor,
-    @required Widget child,
+    required double translationFactor,
+    required Widget child,
   }) {
     final double xTranslation = pageVisibility.pagePosition * translationFactor;
 
@@ -64,7 +41,7 @@ class IntroNewsItem extends StatelessWidget {
       translationFactor: 300.0,
       child: new Text(
         item.category,
-        style: textTheme.caption.copyWith(
+        style: textTheme.caption?.copyWith(
           color: Colors.white70,
           fontWeight: FontWeight.bold,
           letterSpacing: 2.0,
@@ -80,8 +57,11 @@ class IntroNewsItem extends StatelessWidget {
         padding: const EdgeInsets.only(top: 16.0),
         child: new Text(
           item.title,
-          style: textTheme.title.copyWith(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18.0),
+          style: textTheme.headline6?.copyWith(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0,
+          ),
           textAlign: TextAlign.center,
         ),
       ),
@@ -126,19 +106,6 @@ class IntroNewsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageOverlayGradient = new DecoratedBox(
-      decoration: new BoxDecoration(
-        gradient: new LinearGradient(
-          begin: FractionalOffset.bottomCenter,
-          end: FractionalOffset.topCenter,
-          colors: [
-            const Color(0xFF000000),
-            const Color(0x00000000),
-          ],
-        ),
-      ),
-    );
-
     return new Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 16.0,
@@ -157,7 +124,7 @@ class IntroNewsItem extends StatelessWidget {
               new Hero(
                   tag: item.title,
                   child: _getImageNetwork(
-                      Functions.getImgResizeUrl(item.imageUrl, 400, ''))),
+                      Functions.getImgResizeUrl(item.img, 400, ''))),
               _getOverlayGradient(),
               _buildTextContainer(context),
             ],
@@ -187,8 +154,12 @@ class IntroNewsItem extends StatelessWidget {
   }
 
   void openDetail(BuildContext context) {
-    Navigator.of(context).push(FadeInRoute(
-        widget: DetailPage(item.imageUrl, item.title, item.date,
-            item.description, item.category, item.link, item.origin)));
+    Navigator.of(context).push(
+      FadeInRoute(
+        widget: DetailPage(
+          notice: item,
+        ),
+      ),
+    );
   }
 }

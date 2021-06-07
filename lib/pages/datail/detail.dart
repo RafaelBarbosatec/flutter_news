@@ -1,30 +1,25 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:FlutterNews/support/util/date_util.dart';
-import 'package:FlutterNews/support/util/functions.dart';
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/support/util/date_util.dart';
+import 'package:flutter_news/support/util/functions.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatelessWidget {
-  final _img;
-  final _title;
-  final _date;
-  final _description;
-  final _link;
-  final _category;
-  final _origin;
+  final Notice notice;
 
-  DetailPage(this._img, this._title, this._date, this._description, this._category, this._link, this._origin);
+  const DetailPage({Key? key, required this.notice}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(_origin),
+        title: new Text(notice.origin),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.share),
@@ -42,8 +37,19 @@ class DetailPage extends StatelessWidget {
           borderRadius: new BorderRadius.circular(6.0),
           child: new ListView(
             children: <Widget>[
-              new Hero(tag: _title, child: _getImageNetwork(Functions.getImgResizeUrl(_img, 250, ''))),
-              _getBody(_title, _date, _description, _origin, context),
+              new Hero(
+                tag: notice.title,
+                child: _getImageNetwork(
+                  Functions.getImgResizeUrl(notice.img, 250, ''),
+                ),
+              ),
+              _getBody(
+                notice.title,
+                notice.date,
+                notice.description,
+                notice.origin,
+                context,
+              ),
             ],
           ),
         ),
@@ -55,7 +61,8 @@ class DetailPage extends StatelessWidget {
     try {
       if (url != '') {
         return ClipRRect(
-          borderRadius: new BorderRadius.only(topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
+          borderRadius: new BorderRadius.only(
+              topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
           child: new Container(
             height: 200.0,
             child: new FadeInImage.assetNetwork(
@@ -89,7 +96,7 @@ class DetailPage extends StatelessWidget {
           _getDate(date, origin),
           _getDescription(description),
           _getAntLink(),
-          _getLink(_link, context)
+          _getLink(notice.link, context)
         ],
       ),
     );
@@ -100,7 +107,8 @@ class DetailPage extends StatelessWidget {
       margin: new EdgeInsets.only(top: 30.0),
       child: new Text(
         "Mais detalhes acesse:",
-        style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[600]),
+        style:
+            new TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[600]),
       ),
     );
   }
@@ -164,7 +172,7 @@ class DetailPage extends StatelessWidget {
   }
 
   Future shareNotice() async {
-    await Share.share("$_title:\n$_link");
+    await Share.share("${notice.title}:\n${notice.link}");
   }
 
   void _showDialog(context) {
@@ -177,7 +185,7 @@ class DetailPage extends StatelessWidget {
           content: new Text(Cubes.getString("text_copy")),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
+            new TextButton(
               child: new Text(Cubes.getString("text_fechar")),
               onPressed: () {
                 Navigator.of(context).pop();

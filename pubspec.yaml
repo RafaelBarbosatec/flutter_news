@@ -9,7 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  url_launcher: ^5.4.11
+  url_launcher: ^6.0.6
   share: ^2.0.4
   http: ^0.13.3
   cubes: ^1.0.2
@@ -17,6 +17,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: "^0.9.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "imgs/icone.png"
 
 flutter:
 

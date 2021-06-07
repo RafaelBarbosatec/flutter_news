@@ -2,6 +2,18 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "archive",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/archive-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "args",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "async",
       "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.5.0",
       "packageUri": "lib/",
@@ -38,6 +50,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "crypto",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "cubes",
       "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/cubes-1.0.2",
       "packageUri": "lib/",
@@ -52,6 +70,12 @@
     {
       "name": "flutter",
       "rootUri": "file:///Users/rafaelbarbosa/flutter/packages/flutter",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_launcher_icons",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_launcher_icons-0.9.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -88,6 +112,12 @@
     {
       "name": "http_parser",
       "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "image",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/image-3.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -134,10 +164,16 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "plugin_platform_interface",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.1",
+      "name": "petitparser",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-4.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "plugin_platform_interface",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "share",
@@ -195,37 +231,55 @@
     },
     {
       "name": "url_launcher",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.5.0",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.0.6",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.12"
     },
     {
       "name": "url_launcher_linux",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-0.0.1+1",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-2.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.12"
     },
     {
       "name": "url_launcher_macos",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-0.0.1+2",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-2.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.12"
     },
     {
       "name": "url_launcher_platform_interface",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_platform_interface-1.0.5",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_platform_interface-2.0.3",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "url_launcher_web",
-      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-0.1.0+2",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-2.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "url_launcher_windows",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "vector_math",
       "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "xml",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/xml-5.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "yaml",
+      "rootUri": "file:///Users/rafaelbarbosa/flutter/.pub-cache/hosted/pub.dartlang.org/yaml-3.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -236,7 +290,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-06-07T17:21:14.479948Z",
+  "generated": "2021-06-07T17:48:15.069111Z",
   "generator": "pub",
   "generatorVersion": "2.12.3"
 }

@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="flutter_news"
+        android:label="FlutterNews"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true">
         <activity

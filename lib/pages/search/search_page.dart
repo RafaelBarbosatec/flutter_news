@@ -4,7 +4,7 @@ import 'package:flutter_news/pages/news/widgets/notice_widget.dart';
 import 'package:flutter_news/pages/search/search_cube.dart';
 import 'package:flutter_news/repository/notice/model/notice.dart';
 import 'package:flutter_news/widgets/animated_content.dart';
-import 'package:flutter_news/widgets/erro_conection.dart';
+import 'package:flutter_news/widgets/error_connection.dart';
 
 class SearchPage extends CubeWidget<SearchCube> {
   final String query;
@@ -74,7 +74,7 @@ class SearchPage extends CubeWidget<SearchCube> {
   Widget _buildConnectionError(SearchCube cube) {
     return cube.error.build<bool>((value) {
       return value
-          ? ErroConection(tryAgain: () {
+          ? ErrorConnection(tryAgain: () {
               cube.search(query);
             })
           : SizedBox.shrink();

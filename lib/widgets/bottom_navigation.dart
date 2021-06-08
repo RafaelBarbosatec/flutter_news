@@ -16,7 +16,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    final BottomNavigationBar botNavBar = new BottomNavigationBar(
+    return BottomNavigationBar(
       items: [
         new BottomNavigationBarItem(
           icon: const Icon(Icons.language),
@@ -43,7 +43,5 @@ class _BottomNavigationState extends State<BottomNavigation> {
         });
       },
     );
-
-    return botNavBar;
   }
 }

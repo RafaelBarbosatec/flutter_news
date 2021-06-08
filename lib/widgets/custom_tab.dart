@@ -16,20 +16,16 @@ class _CustomTabState extends State<CustomTab> {
 
   @override
   Widget build(BuildContext context) {
-    return _getListCategory();
-  }
-
-  Widget _getListCategory() {
-    ListView listCategory = new ListView.builder(
+    return Container(
+      height: 50.0,
+      child: ListView.builder(
         itemCount: widget.itens.length,
         scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.only(right: 10),
         itemBuilder: (context, index) {
           return _buildCategoryItem(index);
-        });
-
-    return new Container(
-      height: 50.0,
-      child: listCategory,
+        },
+      ),
       color: Colors.grey[200]?.withAlpha(200),
     );
   }

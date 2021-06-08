@@ -1,10 +1,10 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 
-class ErroConection extends StatelessWidget {
+class ErrorConnection extends StatelessWidget {
   final VoidCallback? tryAgain;
 
-  ErroConection({Key? key, this.tryAgain}) : super(key: key);
+  ErrorConnection({Key? key, this.tryAgain}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,8 @@ class ErroConection extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   child: new FlatButton(
                     shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)),
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
                     onPressed: tryAgain,
                     child: new Text(Cubes.getString("text_tentar_novamente")),
                     color: Colors.blue,

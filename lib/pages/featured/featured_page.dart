@@ -2,7 +2,7 @@ import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news/pages/featured/featured_cube.dart';
 import 'package:flutter_news/repository/notice/model/notice.dart';
-import 'package:flutter_news/widgets/erro_conection.dart';
+import 'package:flutter_news/widgets/error_connection.dart';
 import 'package:flutter_news/widgets/page_transform/intro_page_item.dart';
 import 'package:flutter_news/widgets/page_transform/page_transformer.dart';
 
@@ -64,7 +64,7 @@ class FeaturedPage extends CubeWidget<FeaturedCube> {
   Widget _buildErrorConnection(FeaturedCube cube) {
     return cube.errorConnection.build<bool>((value) {
       return value
-          ? ErroConection(tryAgain: () {
+          ? ErrorConnection(tryAgain: () {
               cube.load();
             })
           : SizedBox.shrink();

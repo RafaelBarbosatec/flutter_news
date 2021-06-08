@@ -8,7 +8,7 @@ class NewsCube extends Cube {
   int _page = 0;
   int _currentCategory = 0;
   bool lastPage = false;
-  List<String> _categories = [
+  final List<String> _categories = [
     'geral',
     'sports',
     'technology',
@@ -65,7 +65,7 @@ class NewsCube extends Cube {
         .catchError(_showImplError);
   }
 
-  _showNews(List<Notice> news, bool isMore) {
+  void _showNews(List<Notice> news, bool isMore) {
     progress.update(false);
 
     if (isMore) {
@@ -76,7 +76,7 @@ class NewsCube extends Cube {
     }
   }
 
-  _showImplError(onError) {
+  void _showImplError(onError) {
     errorConnection.update(true);
     progress.update(false);
   }

@@ -1,10 +1,10 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_news/pages/home/home_view.dart';
-import 'package:flutter_news/support/di/init_dependencies.dart';
+import 'package:flutter_news/pages/home/home_page.dart';
+import 'package:flutter_news/support/di/dependency_injection.dart';
 
-import 'support/di/init_dependencies.dart';
+import 'support/di/dependency_injection.dart';
 
 void main() => runApp(new NewsApp());
 
@@ -18,7 +18,7 @@ class NewsApp extends StatelessWidget {
   );
 
   NewsApp() {
-    initDependencies();
+    DependencyInjection.inject();
   }
 
   // This widget is the root of your application.
@@ -28,13 +28,14 @@ class NewsApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter News',
       theme: new ThemeData(
-          primarySwatch: Colors.blue,
-          primaryColor: Colors.blue,
-          accentColor: Colors.blue,
-          brightness: Brightness.light),
+        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
+        accentColor: Colors.blue,
+        brightness: Brightness.light,
+      ),
       localizationsDelegates: cubeLocation.delegates,
       supportedLocales: cubeLocation.supportedLocations,
-      home: HomeView(),
+      home: HomePage(),
     );
   }
 }

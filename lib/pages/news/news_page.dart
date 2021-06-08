@@ -4,12 +4,12 @@ import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news/pages/news/news_cube.dart';
 import 'package:flutter_news/pages/news/widgets/notice_widget.dart';
-import 'package:flutter_news/repository/notice_repository/model/notice.dart';
-import 'package:flutter_news/widgets/AnimatedContent.dart';
+import 'package:flutter_news/repository/notice/model/notice.dart';
+import 'package:flutter_news/widgets/animated_content.dart';
 import 'package:flutter_news/widgets/custom_tab.dart';
 import 'package:flutter_news/widgets/erro_conection.dart';
 
-class NewsView extends CubeWidget<NewsCube> {
+class NewsPage extends CubeWidget<NewsCube> {
   @override
   Widget buildView(BuildContext context, NewsCube cube) {
     return new Container(

@@ -1,7 +1,7 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_news/pages/datail/detail.dart';
-import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/pages/datail/detail_page.dart';
+import 'package:flutter_news/repository/notice/model/notice.dart';
 import 'package:flutter_news/support/util/date_util.dart';
 import 'package:flutter_news/support/util/functions.dart';
 

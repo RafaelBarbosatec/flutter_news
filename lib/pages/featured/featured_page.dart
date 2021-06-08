@@ -1,12 +1,12 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news/pages/featured/featured_cube.dart';
-import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/repository/notice/model/notice.dart';
 import 'package:flutter_news/widgets/erro_conection.dart';
-import 'package:flutter_news/widgets/pageTransform/intro_page_item.dart';
-import 'package:flutter_news/widgets/pageTransform/page_transformer.dart';
+import 'package:flutter_news/widgets/page_transform/intro_page_item.dart';
+import 'package:flutter_news/widgets/page_transform/page_transformer.dart';
 
-class FeaturedView extends CubeWidget<FeaturedCube> {
+class FeaturedPage extends CubeWidget<FeaturedCube> {
   @override
   Widget buildView(BuildContext context, FeaturedCube cube) {
     return Stack(

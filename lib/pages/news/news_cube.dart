@@ -1,6 +1,6 @@
 import 'package:cubes/cubes.dart';
-import 'package:flutter_news/repository/notice_repository/model/notice.dart';
-import 'package:flutter_news/repository/notice_repository/notice_repository.dart';
+import 'package:flutter_news/repository/notice/model/notice.dart';
+import 'package:flutter_news/repository/notice/notice_repository.dart';
 
 class NewsCube extends Cube {
   final NoticeRepository repository;

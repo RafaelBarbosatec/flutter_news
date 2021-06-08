@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/repository/notice/model/notice.dart';
 import 'package:flutter_news/support/util/date_util.dart';
 import 'package:flutter_news/support/util/functions.dart';
 import 'package:share/share.dart';

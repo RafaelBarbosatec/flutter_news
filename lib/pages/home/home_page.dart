@@ -1,13 +1,13 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_news/pages/featured/featured_view.dart';
+import 'package:flutter_news/pages/featured/featured_page.dart';
 import 'package:flutter_news/pages/home/home_cube.dart';
-import 'package:flutter_news/pages/info/info.dart';
-import 'package:flutter_news/pages/news/news_view.dart';
+import 'package:flutter_news/pages/info/info_page.dart';
+import 'package:flutter_news/pages/news/news_page.dart';
 import 'package:flutter_news/widgets/bottom_navigation.dart';
 import 'package:flutter_news/widgets/search.dart';
 
-class HomeView extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CubeBuilder<HomeCube>(
@@ -41,13 +41,13 @@ class HomeView extends StatelessWidget {
       (value) {
         switch (value) {
           case 0:
-            return FeaturedView();
+            return FeaturedPage();
             break;
           case 1:
-            return NewsView();
+            return NewsPage();
             break;
           case 2:
-            return Info();
+            return InfoPage();
           default:
             return Container();
         }

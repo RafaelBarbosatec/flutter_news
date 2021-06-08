@@ -1,6 +1,6 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_news/pages/search/search_view.dart';
+import 'package:flutter_news/pages/search/search_page.dart';
 
 class SearchWidget extends StatelessWidget {
   final TextEditingController editingController = new TextEditingController();
@@ -43,7 +43,7 @@ class SearchWidget extends StatelessWidget {
     if (query.isEmpty) return;
     Navigator.of(context)
         .push(new MaterialPageRoute(builder: (BuildContext context) {
-      return SearchView(query);
+      return SearchPage(query);
     }));
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news/pages/datail/detail.dart';
-import 'package:flutter_news/repository/notice_repository/model/notice.dart';
-import 'package:flutter_news/support/util/FadeInRoute.dart';
+import 'package:flutter_news/pages/datail/detail_page.dart';
+import 'package:flutter_news/repository/notice/model/notice.dart';
+import 'package:flutter_news/support/util/fade_in_route.dart';
 import 'package:flutter_news/support/util/functions.dart';
 
 import 'page_transformer.dart';

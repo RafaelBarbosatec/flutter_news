@@ -2,14 +2,14 @@ import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news/pages/news/widgets/notice_widget.dart';
 import 'package:flutter_news/pages/search/search_cube.dart';
-import 'package:flutter_news/repository/notice_repository/model/notice.dart';
-import 'package:flutter_news/widgets/AnimatedContent.dart';
+import 'package:flutter_news/repository/notice/model/notice.dart';
+import 'package:flutter_news/widgets/animated_content.dart';
 import 'package:flutter_news/widgets/erro_conection.dart';
 
-class SearchView extends CubeWidget<SearchCube> {
+class SearchPage extends CubeWidget<SearchCube> {
   final String query;
 
-  SearchView(this.query);
+  SearchPage(this.query);
 
   @override
   get arguments => query;

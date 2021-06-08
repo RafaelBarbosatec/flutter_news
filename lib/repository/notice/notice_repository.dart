@@ -1,4 +1,4 @@
-import 'package:flutter_news/repository/notice_repository/model/notice.dart';
+import 'package:flutter_news/repository/notice/model/notice.dart';
 import 'package:flutter_news/support/conection/api.dart';
 
 abstract class NoticeRepository {

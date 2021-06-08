@@ -2,12 +2,12 @@ import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Info extends StatefulWidget {
+class InfoPage extends StatefulWidget {
   @override
-  _InfoState createState() => _InfoState();
+  _InfoPageState createState() => _InfoPageState();
 }
 
-class _InfoState extends State<Info> with TickerProviderStateMixin {
+class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> animation;
 

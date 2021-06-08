@@ -2,7 +2,7 @@ import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news/pages/search/search_page.dart';
 
-class SearchWidget extends StatelessWidget {
+class SearchBarWidget extends StatelessWidget {
   final TextEditingController editingController = new TextEditingController();
 
   @override
@@ -23,12 +23,13 @@ class SearchWidget extends StatelessWidget {
                   child: new TextField(
                 maxLines: 1,
                 decoration: new InputDecoration(
-                    icon: Icon(
-                      Icons.search,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    hintText: Cubes.getString("hint_busca"),
-                    border: InputBorder.none),
+                  icon: Icon(
+                    Icons.search,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  hintText: Cubes.getString("hint_busca"),
+                  border: InputBorder.none,
+                ),
                 onSubmitted: (query) => onSubmitted(query, context),
                 controller: editingController,
               ))
@@ -39,11 +40,12 @@ class SearchWidget extends StatelessWidget {
     );
   }
 
-  onSubmitted(String query, BuildContext context) {
+  void onSubmitted(String query, BuildContext context) {
     if (query.isEmpty) return;
-    Navigator.of(context)
-        .push(new MaterialPageRoute(builder: (BuildContext context) {
-      return SearchPage(query);
-    }));
+    Navigator.of(context).push(
+      new MaterialPageRoute(builder: (BuildContext context) {
+        return SearchPage(query);
+      }),
+    );
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter_news/pages/home/home_cube.dart';
 import 'package:flutter_news/pages/info/info_page.dart';
 import 'package:flutter_news/pages/news/news_page.dart';
 import 'package:flutter_news/widgets/bottom_navigation.dart';
-import 'package:flutter_news/widgets/search.dart';
+import 'package:flutter_news/widgets/search_bar_widget.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Container(
-                    child: SearchWidget(),
+                    child: SearchBarWidget(),
                   ),
                   Expanded(child: _getContent(cube))
                 ],
